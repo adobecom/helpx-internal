@@ -8,24 +8,15 @@
  */
 
 main .note {
-  max-width: 65vw;
-  padding: 10px 10px;
-  border-left: 5px solid var(--highlight-color);
-  box-shadow: 0 0 25px 15px #999999;
-  margin: 50px auto 0 auto;
-  background-color: var(--background-color);
-  font-size: 14px;
+  border: 2px solid #707070;
+  border-radius: 4px;
+  padding: 10px 20px;
+  color: #707070;
+  margin: 20px auto 0 auto;
+  display: table;
 }
 
-main .note {
-  border: solid 1px #fff;
-  outline: solid 21px var(--highlight-color);
-  background-color: var(--highlight-color);
-}
-
-@media (min-width: 768px) {
-  main .note {
-    padding: 20px 70px;
-    font-size: 17px;
-  }
+main .note > div:before {
+  font-weight: bold;
+  content: 'Note:';
 }
