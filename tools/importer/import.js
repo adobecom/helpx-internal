@@ -75,13 +75,13 @@ const createDescriptionBlock = (main, document) => {
   const el = document.querySelector('.page-description p');
   if (el) {
     description = el.textContent;
+
+    const div = document.createElement('h3');
+    div.innerHTML = description;
+    el.insertAdjacentElement('beforebegin', div);
+  
+    el.remove();
   }
-
-  const div = document.createElement('h3');
-  div.innerHTML = description;
-  el.insertAdjacentElement('beforebegin', div);
-
-  el.remove();
 };
 
 const createInternalBannerBlock = (main, document) => {
