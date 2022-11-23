@@ -12,6 +12,54 @@
 /* global WebImporter */
 /* eslint-disable no-console, class-methods-use-this */
 
+
+
+const createAccordionBlocks = (main, document) => {
+  const accordions = document.querySelectorAll('.accordion');
+  // fast return
+  if (!accordions) {
+    return;
+  }
+
+  accordions.forEach((accordion) => {
+    const items = accordion.querySelectorAll('.spectrum-Accordion-item');
+    const tableRef = document.createElement('table');
+
+    // Insert a row at the end of the table
+    let newRow = tableRef.insertRow(-1);
+    // Insert a cell in the row at index 0
+    let newCell = newRow.insertCell(0);
+    // Append a text node to the cell
+    newCell.appendChild(document.createTextNode('Accordion (seo)'));
+    
+    if (items) {
+      items.forEach((item) => {
+        const text = document.createTextNode(item.querySelector('.spectrum-Accordion-itemHeader').textContent);
+        const content = item.querySelector('.spectrum-Accordion-itemContent');
+
+        // Insert a row at the end of the table
+        let newRow = tableRef.insertRow(-1);
+        // Insert a cell in the row at index 0
+        let newCell = newRow.insertCell(0);
+        // Append a text node to the cell
+        newCell.appendChild(text);
+
+        // Insert a row at the end of the table
+        let newRow2 = tableRef.insertRow(-1);
+        // Insert a cell in the row at index 0
+        let newCell2 = newRow2.insertCell(0);
+        // Append a text node to the cell
+        newCell2.appendChild(content);
+      });
+
+      accordion.insertAdjacentElement('beforebegin', tableRef);
+
+      accordion.remove();
+    }
+  });
+
+};
+
 // TODO - render proper section/block
 const createFeedbackBlock = (main, document) => {
   const el = document.querySelector('.feedback');
@@ -243,6 +291,8 @@ export default {
     createFeedbackBlock(main, document);
 
     createTableBlocks(main, document);
+
+    createAccordionBlocks(main, document);
 
     createTitleBlock(main, document);
 
