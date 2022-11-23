@@ -18,6 +18,12 @@ const createFeedbackBlock = (main, document) => {
   if (el) {
     el.remove();
   }
+
+  const el2 = document.querySelector('#root_feedback_xfreference');
+  if (el2) {
+    el2.remove();
+  }
+
 };
 
 const createTitleBlock = (main, document) => {
@@ -151,6 +157,11 @@ const createNoteBlock = (main, document) => {
 
   // find the .helpx-note element
   const noteEl = document.querySelector('.helpx-note');
+
+  // nothing to do, return fast
+  if (!noteEl) {
+    return;
+  }
 
   // find the title text
   const title = noteEl.querySelector('.note-title');
