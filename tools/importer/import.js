@@ -12,6 +12,79 @@
 /* global WebImporter */
 /* eslint-disable no-console, class-methods-use-this */
 
+// TODO - render proper section/block
+const createFeedbackBlock = (main, document) => {
+  const el = document.querySelector('.feedback');
+  if (el) {
+    el.remove();
+  }
+};
+
+const createTitleBlock = (main, document) => {
+
+  /*
+    search
+  */
+ // TODO - render proper search section/block
+ document.querySelector('#search-container').remove();
+ document.querySelector('.back-to-search').remove();
+
+  /*
+    title
+  */
+
+  let title = '';
+
+  const el = document.querySelector('.titleBar h1');
+  if (el) {
+    title = el.textContent;
+  }
+
+  // el.insertAdjacentElement('beforebegin', document.createElement('hr'));
+
+  const div = document.createElement('h2');
+  div.innerHTML = title;
+  el.insertAdjacentElement('beforebegin', div);
+    
+  const cells = [
+    ['Section Metadata'],
+    ['style', 'dark, l spacing'],
+    ['background', ''],
+  ];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  el.insertAdjacentElement('beforebegin', table);
+
+  // el.insertAdjacentElement('beforebegin', document.createElement('hr'));
+
+  el.remove();
+};
+
+const createDescriptionBlock = (main, document) => {
+
+  /*
+    search
+  */
+ // TODO - render proper search section/block
+//  document.querySelector('.page-description').remove();
+
+  /*
+    description
+  */
+
+  let description = '';
+
+  const el = document.querySelector('.page-description p');
+  if (el) {
+    description = el.textContent;
+  }
+
+  const div = document.createElement('h3');
+  div.innerHTML = description;
+  el.insertAdjacentElement('beforebegin', div);
+
+  el.remove();
+};
+
 const createInternalBannerBlock = (main, document) => {
   const note = {};
 
@@ -34,7 +107,7 @@ const createInternalBannerBlock = (main, document) => {
     
   const cells = [
     ['Section Metadata'],
-    ['Style', 'internal-banner'],
+    ['style', 'internal-banner'],
   ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
   el.insertAdjacentElement('beforebegin', table);
@@ -100,7 +173,7 @@ const createNoteBlock = (main, document) => {
   
   const cells = [
     ['Section Metadata'],
-    ['Style', 'note'],
+    ['style', 'note'],
   ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
   
@@ -117,36 +190,26 @@ const createNoteBlock = (main, document) => {
   // return meta;
 };
 
+// TODO - render proper block/section for this content
 const createToCBlock = (main, document) => {
-  // const toc = {};
-
-  // // find the .helpx-note element
-  // const noteEl = document.querySelector('.helpx-note');
-
-  // // find the title text
-  // const title = noteEl.querySelector('.note-title');
-  // if (title) {
-  //   note.title = title.innerHTML.replace(/[\n\t]/gm, '');
-  // }
-
-  // // find the text
-  // const text = noteEl.querySelector('.cmp-text');
-  // if (text) {
-  //   note.text = text.innerHTML.replace(/[\n\t]/gm, '');
-  // }
+  // const cells = [
+  //   ['Table of contents'],
+  //   ['Sign In Block'],
+  //   ['On this page'],
+  // ];
+  // const table = WebImporter.DOMUtils.createTable(cells, document);
   
-  const cells = [
-    ['Table of contents'],
-    ['Sign In Block'],
-    ['On this page'],
-  ];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  
-  // append the block to the main element
-  main.append(table);
+  // // append the block to the main element
+  // main.append(table);
 
-  // returning the meta object might be usefull to other rules
-  // return meta;
+
+  let el = document.querySelector('.xfreference');
+  if (el) {
+    let parent = el.closest('.position');
+    if (parent) {
+      parent.remove();
+    }
+  }
 };
 
 export default {
@@ -169,9 +232,19 @@ export default {
       blocks
     */
 
-    createInternalBannerBlock(main, document);
+    /*
+      blocks
+    */
+
+    createFeedbackBlock(main, document);
 
     createTableBlocks(main, document);
+
+    createTitleBlock(main, document);
+
+    createDescriptionBlock(main, document);
+
+    createInternalBannerBlock(main, document);
 
     createNoteBlock(main, document);
 
@@ -193,6 +266,7 @@ export default {
       // right top side menu, display none in original page
       '.plan-card__sections',
       '.plan-card-i18nData',
+      // '.position:has(.xfreference)',
     ]);
 
     return main;

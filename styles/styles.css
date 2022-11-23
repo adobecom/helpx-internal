@@ -7,6 +7,14 @@
  *
  */
 
+/* main > div {
+  width: 100%!important;
+  margin: 0 auto;
+  max-width: 1260px;
+  padding-left: 70px!important;
+  padding-right: 70px!important;
+} */
+
 main .note {
   border: 2px solid #707070;
   border-radius: 4px;
@@ -14,6 +22,7 @@ main .note {
   color: #707070;
   margin: 20px auto 0 auto;
   display: table;
+  font-size: 14px;
 }
 
 main .note > div:before {
@@ -35,3 +44,11 @@ table, th, td {
 table th {
   background-color: #ededed;
 }
+
+/* main .dark {
+  max-width : none;
+}
+
+main div.section:has(.banner) {
+  max-width : none;
+} */
