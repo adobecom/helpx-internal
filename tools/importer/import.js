@@ -12,6 +12,40 @@
 /* global WebImporter */
 /* eslint-disable no-console, class-methods-use-this */
 
+const createInternalBannerBlock = (main, document) => {
+  const note = {};
+
+  // find the .helpx-note element
+  const el = document.querySelector('.internalBanner');
+
+  el.insertAdjacentElement('beforebegin', document.createElement('hr'));
+
+  // const div = document.createElement('div');
+  // div.innerHTML = 'INTERNAL';
+  // el.insertAdjacentElement('beforebegin', div);
+
+  let dateEl = el.querySelector('.applies-to-container');
+  if (dateEl) {
+    let date = dateEl.textContent.replace(/\s+/gm, ' ').trim();
+    const div = document.createElement('div');
+    div.innerHTML = date;
+    el.insertAdjacentElement('beforebegin', div);
+  }
+    
+  const cells = [
+    ['Section Metadata'],
+    ['Style', 'internal-banner'],
+  ];
+  const table = WebImporter.DOMUtils.createTable(cells, document);
+  el.insertAdjacentElement('beforebegin', table);
+
+  el.insertAdjacentElement('beforebegin', document.createElement('hr'));
+
+  el.remove();
+  // returning the meta object might be usefull to other rules
+  // return meta;
+};
+
 const createTableBlocks = (main, document) => {
   
 
@@ -134,6 +168,8 @@ export default {
     /*
       blocks
     */
+
+    createInternalBannerBlock(main, document);
 
     createTableBlocks(main, document);
 
