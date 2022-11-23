@@ -20,3 +20,18 @@ main .note > div:before {
   font-weight: bold;
   content: 'Note:';
 }
+
+body table {
+  font-size: 16px;
+  border-spacing: 0;
+}
+
+table, th, td {
+  padding: 9px 10px;
+  border: 1px solid #bdbdbd!important;
+  border-collapse: collapse!important;
+}
+
+table th {
+  background-color: #ededed;
+}
