@@ -60,13 +60,6 @@ const createTitleBlock = (main, document) => {
 };
 
 const createDescriptionBlock = (main, document) => {
-
-  /*
-    search
-  */
- // TODO - render proper search section/block
-//  document.querySelector('.page-description').remove();
-
   /*
     description
   */
