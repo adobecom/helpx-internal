@@ -95,19 +95,19 @@ const createInternalBannerBlock = (main, document) => {
   // const div = document.createElement('div');
   // div.innerHTML = 'INTERNAL';
   // el.insertAdjacentElement('beforebegin', div);
+    
+  const cells = [
+    ['internal-banner'],
+  ];
 
   let dateEl = el.querySelector('.applies-to-container');
   if (dateEl) {
     let date = dateEl.textContent.replace(/\s+/gm, ' ').trim();
-    const div = document.createElement('div');
-    div.innerHTML = date;
-    el.insertAdjacentElement('beforebegin', div);
+    cells.push(['text', date]);
+    // const div = document.createElement('div');
+    // div.innerHTML = date;
+    // el.insertAdjacentElement('beforebegin', div);
   }
-    
-  const cells = [
-    ['Section Metadata'],
-    ['style', 'internal-banner'],
-  ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
   el.insertAdjacentElement('beforebegin', table);
 
