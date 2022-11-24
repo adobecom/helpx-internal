@@ -15,6 +15,7 @@
 
 
 const createAccordionBlocks = (main, document) => {
+
   const accordions = document.querySelectorAll('.accordion');
   // fast return
   if (!accordions) {
@@ -34,8 +35,12 @@ const createAccordionBlocks = (main, document) => {
     
     if (items) {
       items.forEach((item) => {
+
         const text = document.createTextNode(item.querySelector('.spectrum-Accordion-itemHeader').textContent);
         const content = item.querySelector('.spectrum-Accordion-itemContent');
+
+        // remove br as they wrongly add a "\" character in the output
+        WebImporter.DOMUtils.remove(content, [ 'br' ]);
 
         // Insert a row at the end of the table
         let newRow = tableRef.insertRow(-1);
