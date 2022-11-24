@@ -23,12 +23,23 @@ main .note {
   margin: 20px auto 0 auto;
   display: table;
   font-size: 14px;
+  width: 100%;
+  max-width: 1200px;
 }
 
+main .note.caution {
+  border: 2px solid #e1951d;
+}
+
+main .note.alert {
+  border: 1px solid #e34850;
+}
+
+/* 
 main .note > div:before {
   font-weight: bold;
   content: 'Note:';
-}
+} */
 
 body table {
   font-size: 16px;
@@ -44,11 +55,3 @@ table, th, td {
 table th {
   background-color: #ededed;
 }
-
-/* main .dark {
-  max-width : none;
-}
-
-main div.section:has(.banner) {
-  max-width : none;
-} */
