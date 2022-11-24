@@ -27,9 +27,9 @@ const createAccordionBlocks = (main, document) => {
     const tableRef = document.createElement('table');
 
     // Insert a row at the end of the table
-    let newRow = tableRef.insertRow(-1);
+    const newRow = tableRef.insertRow(-1);
     // Insert a cell in the row at index 0
-    let newCell = newRow.insertCell(0);
+    const newCell = newRow.insertCell(0);
     // Append a text node to the cell
     newCell.appendChild(document.createTextNode('Accordion (seo)'));
     
@@ -43,16 +43,16 @@ const createAccordionBlocks = (main, document) => {
         WebImporter.DOMUtils.remove(content, [ 'br' ]);
 
         // Insert a row at the end of the table
-        let newRow = tableRef.insertRow(-1);
+        const newRow = tableRef.insertRow(-1);
         // Insert a cell in the row at index 0
-        let newCell = newRow.insertCell(0);
+        const newCell = newRow.insertCell(0);
         // Append a text node to the cell
         newCell.appendChild(text);
 
         // Insert a row at the end of the table
-        let newRow2 = tableRef.insertRow(-1);
+        const newRow2 = tableRef.insertRow(-1);
         // Insert a cell in the row at index 0
-        let newCell2 = newRow2.insertCell(0);
+        const newCell2 = newRow2.insertCell(0);
         // Append a text node to the cell
         newCell2.appendChild(content);
       });
@@ -153,9 +153,9 @@ const createInternalBannerBlock = (main, document) => {
     ['internal-banner'],
   ];
 
-  let dateEl = el.querySelector('.applies-to-container');
+  const dateEl = el.querySelector('.applies-to-container');
   if (dateEl) {
-    let date = dateEl.textContent.replace(/\s+/gm, ' ').trim();
+    const date = dateEl.textContent.replace(/\s+/gm, ' ').trim();
     cells.push(['text', date]);
     // const div = document.createElement('div');
     // div.innerHTML = date;
@@ -174,7 +174,7 @@ const createInternalBannerBlock = (main, document) => {
 const createTableBlocks = (main, document) => {
   
 
-  let tables = document.querySelectorAll('table');
+  const tables = document.querySelectorAll('table');
 
   tables.forEach((tableEl) => {
     /*
@@ -188,11 +188,11 @@ const createTableBlocks = (main, document) => {
 
     const clone = tableEl.cloneNode(true);
 
-    let tableRef = document.createElement('table');
+    const tableRef = document.createElement('table');
     // Insert a row at the end of the table
-    let newRow = tableRef.insertRow(-1);
+    const newRow = tableRef.insertRow(-1);
     // Insert a cell in the row at index 0
-    let newCell = newRow.insertCell(0);
+    const newCell = newRow.insertCell(0);
   
     // Append a text node to the cell
     newCell.appendChild(clone);
@@ -269,9 +269,9 @@ const createToCBlock = (main, document) => {
   // main.append(table);
 
 
-  let el = document.querySelector('.xfreference');
+  const el = document.querySelector('.xfreference');
   if (el) {
-    let parent = el.closest('.position');
+    const parent = el.closest('.position');
     if (parent) {
       parent.remove();
     }
