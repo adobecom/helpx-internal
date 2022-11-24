@@ -177,6 +177,15 @@ const createTableBlocks = (main, document) => {
   let tables = document.querySelectorAll('table');
 
   tables.forEach((tableEl) => {
+    /*
+      exclusions
+    */
+    // table inside an accordion, the import helper (in this file)
+    // will already put the table in a table cell
+    if (tableEl.closest('.spectrum-Accordion-item')) {
+      return;
+    }
+
     const clone = tableEl.cloneNode(true);
 
     let tableRef = document.createElement('table');
@@ -293,9 +302,11 @@ export default {
       blocks
     */
 
-    createFeedbackBlock(main, document);
-
     createTableBlocks(main, document);
+
+    createMetadataBlock(main, document);
+
+    createFeedbackBlock(main, document);
 
     createAccordionBlocks(main, document);
 
