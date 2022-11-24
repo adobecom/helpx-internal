@@ -12,10 +12,36 @@
 /* global WebImporter */
 /* eslint-disable no-console, class-methods-use-this */
 
+const createMetadataBlock = (main, document) => {
+  // list of <meta name="..." content="..." /> tags to parse
+  const metaTagNames = [
+    'title',
+    'description',
+    'creationDate',
+    'lastModifiedDate',
+  ];
+
+  const meta = {};
+
+  metaTagNames.forEach((name) => {
+    const metaEl = document.querySelector(`meta[name="${name}"]`);
+    if (metaEl) {
+      const content = metaEl.getAttribute('content');
+      if (content) {
+        meta[name] = content;
+      }
+    }
+  });
+
+  // helper to create the metadata block
+  const block = WebImporter.Blocks.getMetadataBlock(document, meta);
+
+  // append the block to the main element
+  main.append(block);
+};
 
 
 const createAccordionBlocks = (main, document) => {
-
   const accordions = document.querySelectorAll('.accordion');
   // fast return
   if (!accordions) {
