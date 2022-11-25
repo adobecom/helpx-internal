@@ -55,3 +55,8 @@ table, th, td {
 table th {
   background-color: #ededed;
 }
+
+.columns {
+  max-width: 1200px;
+  margin: 0 auto;
+}

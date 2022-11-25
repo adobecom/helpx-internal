@@ -25,6 +25,7 @@ import createDescriptionBlock from "./rules/description.js";
 import createInternalBannerBlock from "./rules/internal-banner.js";
 import createTableBlocks from "./rules/tables.js";
 import createToCBlock from "./rules/toc.js";
+import createColumnsFromDexterFlexContainers from "./rules/dexter-flexcontainers.js";
 
 export default {
   /**
@@ -64,6 +65,7 @@ export default {
 
     createToCBlock(main, document);
 
+    createColumnsFromDexterFlexContainers(main, document);
 
     /*
       clean
