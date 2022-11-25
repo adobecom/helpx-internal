@@ -26,6 +26,8 @@ import createInternalBannerBlock from "./rules/internal-banner.js";
 import createTableBlocks from "./rules/tables.js";
 import createToCBlock from "./rules/toc.js";
 import createColumnsFromDexterFlexContainers from "./rules/dexter-flexcontainers.js";
+import createBeforeAfterSliders from "./rules/before-and-after.js";
+
 
 export default {
   /**
@@ -66,6 +68,8 @@ export default {
     createToCBlock(main, document);
 
     createColumnsFromDexterFlexContainers(main, document);
+  
+    createBeforeAfterSliders(main, document);
 
     /*
       clean
