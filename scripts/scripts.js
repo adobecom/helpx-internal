@@ -98,6 +98,7 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
 function buildAutoBlocks(main) {
   try {
     buildInternalBanner(main);
+    fixTableHeaders(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -130,6 +131,35 @@ async function buildInternalBanner(block) {
       text.innerHTML = `Last updated on ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`; 
     }
   }
+}
+
+// tables
+function fixTableHeaders(main) {
+  var tables = main.querySelectorAll('table');
+  tables.forEach((t) => {
+    // remove empty lines
+    var lines = t.querySelectorAll('tbody tr');
+    lines.forEach((l) => {
+      const content = l.innerHTML.replaceAll('<td></td>', '').trim();
+      if (content === '') {
+          l.remove();
+      }
+    });
+
+    // fix header rowspan
+    const headerFirstRow = t.querySelector('thead tr:first-of-type');
+    const nHeaderTDs = headerFirstRow.querySelectorAll('th')?.length;
+    const bodyFirstRow = t.querySelector('tbody tr:first-of-type');
+    const nBodyTDs = bodyFirstRow.querySelectorAll('td')?.length;
+    if (nHeaderTDs === 2 && nBodyTDs === 3) {
+        const tHead = t.querySelector('thead');
+        if (tHead) {
+            tHead.appendChild(bodyFirstRow);
+            bodyFirstRow.querySelector('td:empty')?.remove();
+            tHead.querySelector('tr:first-of-type th:first-of-type')?.setAttribute('rowspan', 2);
+        }
+    }
+});
 }
 
 
