@@ -30,19 +30,13 @@ function handleHelpxNote(el, document) {
   }
   
   const cells = [
-    ['Section Metadata'],
-    ['style', `note, ${style}`],
+    ['Note'],
+    [note.text],
+    ['type', style],
   ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
-  
-  // append the block to the main element
-  el.insertAdjacentElement('beforebegin', document.createElement('hr'));
-  const d = document.createElement('div');
-  d.innerHTML = note.text;
 
-  el.insertAdjacentElement('beforebegin', d);
   el.insertAdjacentElement('beforebegin', table);
-  el.insertAdjacentElement('beforebegin', document.createElement('hr'));
 }
 
 
@@ -59,17 +53,11 @@ function handleAlertContainer(el, document) {
   }
   
   const cells = [
-    ['Section Metadata'],
-    ['style', `note, alert`],
+    ['Note'],
+    [note.text],
+    ['type', `alert`],
   ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
   
-  // append the block to the main element
-  el.insertAdjacentElement('beforebegin', document.createElement('hr'));
-  const d = document.createElement('div');
-  d.innerHTML = note.text;
-
-  el.insertAdjacentElement('beforebegin', d);
   el.insertAdjacentElement('beforebegin', table);
-  el.insertAdjacentElement('beforebegin', document.createElement('hr'));
 }

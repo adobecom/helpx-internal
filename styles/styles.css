@@ -15,33 +15,9 @@
   padding-right: 70px!important;
 } */
 
-main .note {
-  border: 2px solid #707070;
-  border-radius: 4px;
-  padding: 10px 20px;
-  color: #707070;
-  margin: 20px auto 0 auto;
-  display: table;
-  font-size: 14px;
-  width: 100%;
-  max-width: 1200px;
 body {
   line-height: 21px;
 }
-
-main .note.caution {
-  border: 2px solid #e1951d;
-}
-
-main .note.alert {
-  border: 1px solid #e34850;
-}
-
-/* 
-main .note > div:before {
-  font-weight: bold;
-  content: 'Note:';
-} */
 
 body table {
   font-size: 16px;
