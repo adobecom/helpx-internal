@@ -61,9 +61,82 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
 
 (async function loadPage() {
   setConfig({ ...CONFIG, miloLibs });
+
   await loadArea();
+
+  buildAutoBlocks(document);
+
+  /*
+    extra features start
+  */
+
+  document.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
+
+  /*
+    extra features end
+  */
+
   loadDelayed();
 }());
+
+
+
+/*
+ * ------------------------------------------------------------
+ * helpx-internal specifics
+ * ------------------------------------------------------------
+ */
+
+/*
+ * global blocks
+ */
+
+/**
+ * Builds all synthetic blocks in a container element.
+ * @param {Element} main The container element
+ */
+function buildAutoBlocks(main) {
+  try {
+    buildInternalBanner(main);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Auto Blocking failed', error);
+  }
+}
+
+// internal banner
+async function buildInternalBanner(block) {
+  const title = block.querySelector('.page-title');
+  
+  if (title) {
+    const banner = document.createElement('div');
+    banner.classList.add('section', 'internal-banner');
+    
+    const div = document.createElement('h2');
+    div.innerHTML = 'INTERNAL';
+    div.classList.add("banner");
+    banner.append(div);
+    title.insertAdjacentElement('afterend', banner);
+    
+    const text = document.createElement('div');
+    text.classList.add("content", "last-updated");
+    text.innerHTML = '&nbsp;';
+    banner.append(text);
+    
+    const index = await fetchIndex('query-index');
+    const found = index.data.find((entry) => entry.path.indexOf(window.location.pathname) > -1);
+    if (found) {
+      var dateFormat = new Date(parseInt(found.lastModified + '000', 10));
+      text.innerHTML = `Last updated on ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`; 
+    }
+  }
+}
+
+
+
+/*
+ * utils
+ */
 
 /**
  * Sanitizes a name for use as class name.
@@ -110,4 +183,50 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
     }
   });
   return config;
+}
+
+export async function fetchIndex(indexFile, pageSize = 500) {
+  const handleIndex = async (offset) => {
+    const resp = await fetch(`/${indexFile}.json?limit=${pageSize}&offset=${offset}`);
+    const json = await resp.json();
+
+    const newIndex = {
+      complete: (json.limit + json.offset) === json.total,
+      offset: json.offset + pageSize,
+      promise: null,
+      data: [...window.index[indexFile].data, ...json.data],
+    };
+
+    return newIndex;
+  };
+
+  window.index = window.index || {};
+  window.index[indexFile] = window.index[indexFile] || {
+    data: [],
+    offset: 0,
+    complete: false,
+    promise: null,
+  };
+
+  // Return index if already loaded
+  if (window.index[indexFile].complete) {
+    return window.index[indexFile];
+  }
+
+  // Return promise if index is currently loading
+  if (window.index[indexFile].promise) {
+    return window.index[indexFile].promise;
+  }
+
+  window.index[indexFile].promise = handleIndex(window.index[indexFile].offset);
+  const newIndex = await (window.index[indexFile].promise);
+  window.index[indexFile] = newIndex;
+
+  return newIndex;
+}
+
+function getMonthShortName(monthNo) {
+  const date = new Date();
+  date.setMonth(monthNo - 1);
+  return date.toLocaleString('en-US', { month: 'short' });
 }
