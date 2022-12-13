@@ -25,6 +25,8 @@ main .note {
   font-size: 14px;
   width: 100%;
   max-width: 1200px;
+body {
+  line-height: 21px;
 }
 
 main .note.caution {
@@ -60,6 +62,16 @@ table th {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.page-title {
+  padding: 10px!important;
+}
+
+.accordion dd div {
+  padding-top: 10px;
+}
+
+
 /*
   internal banner
 */
