@@ -25,7 +25,7 @@ export default function createTitleBlock(main, document) {
     
   const cells = [
     ['Section Metadata'],
-    ['style', 'dark, xs spacing'],
+    ['style', 'dark, xs spacing, page-title'],
   ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
 
