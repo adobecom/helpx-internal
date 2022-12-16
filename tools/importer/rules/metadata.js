@@ -4,6 +4,18 @@ export default function createMetadataBlock(main, document) {
   const metaTagNames = [
     'title',
     'description',
+    'keywords',
+    'articleGroup',
+    'topicTags',
+    'primaryProduct',
+    'primaryProductName',
+    'product',
+    'productNames',
+    'fi_code',
+    'sap_code',
+    'serp-content-type',
+    'entity_id',
+    'template',
     'creationDate',
     'lastModifiedDate',
   ];
