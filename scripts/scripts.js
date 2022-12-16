@@ -98,6 +98,7 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
 function buildAutoBlocks(main) {
   try {
     buildInternalBanner(main);
+    buildOnThisPageSection(main);
     fixTableHeaders(main);
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -113,7 +114,7 @@ async function buildInternalBanner(block) {
     const banner = document.createElement('div');
     banner.classList.add('section', 'internal-banner');
     
-    const div = document.createElement('h2');
+    const div = document.createElement('p');
     div.innerHTML = 'INTERNAL';
     div.classList.add("banner");
     banner.append(div);

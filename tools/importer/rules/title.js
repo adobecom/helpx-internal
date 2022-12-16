@@ -19,7 +19,7 @@ export default function createTitleBlock(main, document) {
     title = el.textContent;
   }
 
-  const div = document.createElement('h2');
+  const div = document.createElement('h1');
   div.innerHTML = title;
   el.insertAdjacentElement('beforebegin', div);
     

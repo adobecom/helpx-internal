@@ -39,14 +39,26 @@ table th {
   margin: 0 auto;
 }
 
-.page-title {
-  padding: 10px!important;
-}
-
 .accordion dd div {
   padding-top: 10px;
 }
 
+.section > .content {
+  display: block;
+  max-width: var(--grid-container-width);
+  margin: 0 auto;
+}
+
+/*
+* title
+*/
+
+.page-title {
+  padding: 10px!important;
+  font-size: 36px;
+  font-weight: 500;
+  color: white!important;
+}
 
 /*
   internal banner
