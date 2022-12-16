@@ -98,7 +98,6 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
 function buildAutoBlocks(main) {
   try {
     buildInternalBanner(main);
-    buildOnThisPageSection(main);
     fixTableHeaders(main);
   } catch (error) {
     // eslint-disable-next-line no-console
