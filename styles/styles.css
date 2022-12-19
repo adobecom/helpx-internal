@@ -43,7 +43,7 @@ table th {
   padding-top: 10px;
 }
 
-.section > .content {
+/*.section >*/ .content {
   display: block;
   max-width: var(--grid-container-width);
   margin: 0 auto;
@@ -93,4 +93,19 @@ main .last-updated.content {
   color: #4b4b4b;
   padding-top: 32px;
   padding-bottom: 32px;
+}
+
+/*
+ * footer
+ */
+
+footer {
+  background: #fafafa;
+  color: #505050;
+  font-size: 11px;
+  margin-top: 20px;
+  padding-top: 20px;
+  padding: 20px 0;
+  position: relative;
+  text-align: center;
 }
