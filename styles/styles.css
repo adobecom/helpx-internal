@@ -109,3 +109,43 @@ footer {
   position: relative;
   text-align: center;
 }
+
+/*
+ * content layout
+ */
+
+.layout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-content: flex-start;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 60px;
+}
+
+/*
+ * on this page
+ */
+
+.on-this-page {
+  display: flex;
+  width: 30%;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+}
+
+.on-this-page h5 {
+  margin: 0 0 auto;
+  display: block;
+  margin-block-start: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+
+}
+
+.on-this-page a {
+  margin-left: 15px;
+}

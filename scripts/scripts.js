@@ -97,13 +97,32 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
  */
 function buildAutoBlocks(main) {
   try {
+    buildLayout(main);
     buildInternalBanner(main);
     fixTableHeaders(main);
     buildFooter(main);
+    buildOnThisPageSection(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
+}
+
+// layout
+ function buildLayout(main) {
+  const layout = document.createElement('div');
+  layout.classList.add('layout-container');
+  main.append(layout);
+
+  const content = document.createElement('div');
+  content.classList.add('content-container');
+  layout.append(content);
+
+  main.querySelectorAll('.section').forEach((s) => {
+    if (s.classList.length === 1) {
+      content.append(s);
+    }
+  });
 }
 
 // footer
@@ -180,6 +199,43 @@ function fixTableHeaders(main) {
         }
     }
 });
+}
+
+// "on this page" section
+function buildOnThisPageSection(main) {
+  const layout = document.querySelector('.layout-container');
+  if (!layout) {
+    return;
+  }
+
+  const headings = main.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  const container = document.createElement('div');
+  container.classList.add('on-this-page');
+
+  const title = document.createElement('h5');
+  title.textContent = "On this page:";
+  container.append(title);
+
+  headings.forEach((h) => {
+    if (h.closest('.page-title') === null) {
+      console.log(h.textContent);
+      const src = h.textContent.toLowerCase().replaceAll(' ', '-');
+      const level = h.tagName.charAt(1);
+      const href = '#' + src;
+      const anchor = document.createElement('a');
+      anchor.setAttribute('href', href);
+      h.insertAdjacentElement('beforeBegin', anchor);
+
+      const link = document.createElement('a');
+      link.setAttribute('href', href);
+      link.textContent = h.textContent;
+
+      container.append(link);
+    }
+  });
+
+  layout.append(container);
 }
 
 
