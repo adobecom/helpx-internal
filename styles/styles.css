@@ -43,7 +43,7 @@ table th {
   padding-top: 10px;
 }
 
-/*.section >*/ .content {
+.content {
   display: block;
   max-width: var(--grid-container-width);
   margin: 0 auto;
