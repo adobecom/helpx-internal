@@ -134,7 +134,7 @@ footer {
   flex-direction: column;
   gap: 20px;
   position: sticky;
-  top: 0;
+  top: 20px;
   background: url('https://main--helpx-internal--adobecom.hlx.page/media_1b45f544d71effad595a85747635d01832a3c0149.png');
   background-color: rgb(234, 234, 234);
   padding: 10px 10px 10px 10px;
@@ -143,7 +143,6 @@ footer {
 .on-this-page h5 {
   margin: 0 0 auto;
   display: block;
-  margin-block-start: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
 
