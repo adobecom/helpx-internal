@@ -103,6 +103,8 @@ export default {
       '.plan-card__sections',
       '.plan-card-i18nData',
       // '.position:has(.xfreference)',
+      '#sidebar',
+      '#internal-article-bar-container',
     ]);
 
     return main;
