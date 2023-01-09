@@ -1,0 +1,9 @@
+.video-description {
+  font-style: italic;
+  margin: 10px 0;
+}
+
+.video-author {
+  margin-top: 0;
+  font-weight: 600;
+}
