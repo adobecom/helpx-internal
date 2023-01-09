@@ -5,8 +5,11 @@ export default function createTitleBlock(main, document) {
   */
 
   // TODO - render proper search section/block
-  document.querySelector('#search-container').remove();
-  document.querySelector('.back-to-search').remove();
+  var sEl = document.querySelector('#search-container');
+  if (sEl) sEl.remove();
+
+  sEl = document.querySelector('.back-to-search');
+  if (sEl) sEl.remove();
 
   /*
     title
