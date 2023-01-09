@@ -21,7 +21,7 @@ export default function createVideosEmbed(main, document) {
         }
           
         let cells = [
-          ['video'],
+          ['helpx video'],
           ['url', link],
         ];
   
