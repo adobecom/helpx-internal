@@ -22,15 +22,6 @@ function hasSchema(host) {
 (() => {
   window.hlx.initSidekick({
     hlx3: true,
-    libraries: [
-      {
-        text: 'Blocks',
-        paths: [
-          'https://main--milo--adobecom.hlx.page/docs/library/blocks.json',
-          'https://main--bacom--adobecom.hlx.page/docs/library/blocks.json',
-        ],
-      },
-    ],
     plugins: [
       {
         id: 'send-to-caas',
