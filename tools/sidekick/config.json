@@ -1,6 +1,6 @@
 {
   "project": "HelpX Internal",
-  "host": "adobe.com",
+  "host": "helpx-internal.corp.adobe.com",
   "plugins": [
     {
       "id": "library",
