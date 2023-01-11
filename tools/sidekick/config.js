@@ -34,7 +34,7 @@ function hasSchema(host) {
     plugins: [
       {
         id: 'send-to-caas',
-        condition: (s) => s.isHelix() && s.isContent() && !window.location.pathname.endsWith('.json'),
+        condition: (s) => s.isHelix() && s.isProd() && !window.location.pathname.endsWith('.json'),
         button: {
           text: 'Send to CaaS',
           action: async (_, sk) => {
@@ -53,6 +53,7 @@ function hasSchema(host) {
             const domain = 'https://main--milo--adobecom.hlx.page';
             const { config } = s;
             const script = document.createElement('script');
+            script.type = 'module';
             script.onload = () => {
               const skEvent = new CustomEvent(
                 'hlx:library-loaded',
