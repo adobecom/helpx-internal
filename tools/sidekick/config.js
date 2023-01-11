@@ -27,7 +27,7 @@ function hasSchema(host) {
         text: 'Blocks',
         paths: [
           'https://main--milo--adobecom.hlx.page/docs/library/blocks.json',
-          'https://main--helpx-internal--adobecom.hlx.page/docs/library/blocks.json',
+          'https://main--bacom--adobecom.hlx.page/docs/library/blocks.json',
         ],
       },
     ],
