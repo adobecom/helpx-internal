@@ -5,6 +5,8 @@ Franklin Sidekick
 
 When editing a document, the library plugin exposes a list of samples of Blocks that authors can copy-paste directly into the documents (without having to deal with table manipulation)
 
+https://user-images.githubusercontent.com/40354404/212114068-f222cb75-d1c8-403f-9708-7c0a21ba816b.webm
+
 ### 1. Sidekick code configuration in project
 
 Added files
