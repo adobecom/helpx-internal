@@ -9,11 +9,18 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+/* variables */
+:root {
+  --note--default-color: #707070;
+  --note--caution-color: #e1951d;
+  --note--alert-color: #e34850;
+}
 
+/* default */
 .note {
-  border: 2px solid #707070;
+  border: 2px solid var(--note--default-color);
   border-radius: 4px;
-  color: #707070;
+  color: var(--note--default-color);
   margin: 20px auto 0 auto;
   display: table;
   font-size: 14px;
@@ -50,7 +57,7 @@
 
 /* caution */
 .note.caution {
-  border: 2px solid #e1951d;
+  border: 2px solid var(--note--caution-color);
 }
 .note.caution > div.content:before {
   content: 'Caution:';
@@ -61,7 +68,7 @@
 
 /* alert */
 .note.alert {
-  border: 2px solid #e34850;
+  border: 2px solid var(--note--alert-color);
 }
 .note.alert > div.content:before {
   content: '';
