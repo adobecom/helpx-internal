@@ -103,8 +103,7 @@ export default {
       '#ot-general',
       '#ot-enable-disabled',
       // right top side menu, display none in original page
-      '.plan-card__sections',
-      '.plan-card-i18nData',
+      '.plan-card',
       // '.position:has(.xfreference)',
       '#sidebar',
       '#internal-article-bar-container',
