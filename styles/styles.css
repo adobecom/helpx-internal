@@ -18,6 +18,16 @@
 :root {
   --static-color-white: #fff;
   --static-color-light-green: #0f996d;
+  --static-color-light-gray: #fafafa;
+  --static-color-dark-gray: #505050;
+
+  --table-color-border: #bdbdbd;
+  --table-header-color-background: #ededed;
+  --internal-banner-color-background: var(--static-color-light-green);
+  --internal-banner-color-font: var(--static-color-dark-gray);
+  --footer-color-background: var(--static-color-light-gray);
+  --footer-color-font: var(--static-color-dark-gray);
+  --on-this-page-background: #eaeaea;
 }
 
 body {
@@ -31,12 +41,12 @@ body table {
 
 table, th, td {
   padding: 9px 10px;
-  border: 1px solid #bdbdbd!important;
+  border: 1px solid var(--table-color-border)!important;
   border-collapse: collapse!important;
 }
 
 table th {
-  background-color: #ededed;
+  background-color: var(--table-header-color-background);
 }
 
 .columns {
@@ -62,7 +72,7 @@ table th {
   padding: 10px!important;
   font-size: 36px;
   font-weight: 500;
-  color: white!important;
+  color: var(--static-color-white)!important;
 }
 
 /*
@@ -74,7 +84,7 @@ main .internal-banner .banner {
   gap: 5px;
   align-items: center;
   justify-content: center;
-  background-color: var(--static-color-light-green);
+  background-color: var(--internal-banner-color-background);
   font-size: 14px;
   font-weight: 700;
   padding: 12px 0;
@@ -92,7 +102,7 @@ main .internal-banner .banner .icon {
 main .last-updated.content {
   font-weight: lighter;
   font-size: 16px;
-  color: #4b4b4b;
+  color: var(--internal-banner-color-font);
   padding-top: 32px;
   padding-bottom: 32px;
 }
@@ -102,8 +112,8 @@ main .last-updated.content {
  */
 
 footer {
-  background: #fafafa;
-  color: #505050;
+  background: var(--footer-color-background);
+  color: var(--footer-color-font);
   font-size: 11px;
   margin-top: 20px;
   padding-top: 20px;
@@ -138,7 +148,7 @@ footer {
   position: sticky;
   top: 20px;
   background: url('https://main--helpx-internal--adobecom.hlx.page/media_1b45f544d71effad595a85747635d01832a3c0149.png');
-  background-color: rgb(234, 234, 234);
+  background-color: var(--on-this-page-background);
   padding: 10px;
 }
 
