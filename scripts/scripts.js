@@ -32,6 +32,9 @@ const CONFIG = {
   },
 };
 
+const ICON_ROOT = '/icons';
+
+
 // Default to loading the first image as eager.
 (async function loadLCPImage() {
   const lcpImg = document.querySelector('img');
@@ -43,6 +46,23 @@ const CONFIG = {
  * Edit below at your own risk
  * ------------------------------------------------------------
  */
+
+export function initHlx() {
+  window.hlx = window.hlx || {};
+  window.hlx.lighthouse = new URLSearchParams(window.location.search).get('lighthouse') === 'on';
+  window.hlx.codeBasePath = '';
+
+  const scriptEl = document.querySelector('script[src$="/scripts/scripts.js"]');
+  if (scriptEl) {
+    try {
+      [window.hlx.codeBasePath] = new URL(scriptEl.src).pathname.split('/scripts/scripts.js');
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  }
+}
+initHlx();
 
 const miloLibs = setLibs(LIBS);
 
@@ -145,12 +165,13 @@ async function buildInternalBanner(block) {
     const banner = document.createElement('div');
     banner.classList.add('section', 'internal-banner');
     
-    const div = document.createElement('p');
-    div.innerHTML = 'INTERNAL';
+    const div = document.createElement('div');
+    div.innerHTML = '<span class="icon icon-info"></span>INTERNAL';
     div.classList.add("banner");
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
-    
+    decorateIcons(banner);
+
     const text = document.createElement('div');
     text.classList.add("content", "last-updated");
     text.innerHTML = '&nbsp;';
@@ -228,6 +249,31 @@ function buildOnThisPageSection(main) {
   });
 
   layout.append(container);
+}
+
+/**
+ * Replace icons with inline SVG and prefix with codeBasePath.
+ * @param {Element} element
+ */
+export function decorateIcons(element = document) {
+  element.querySelectorAll('span.icon').forEach(async (span) => {
+    if (span.classList.length < 2 || !span.classList[1].startsWith('icon-')) {
+      return;
+    }
+    const icon = span.classList[1].substring(5);
+    // eslint-disable-next-line no-use-before-define
+    const resp = await fetch(`${window.hlx.codeBasePath}${ICON_ROOT}/${icon}.svg`);
+    if (resp.ok) {
+      const iconHTML = await resp.text();
+      if (iconHTML.match(/<style/i)) {
+        const img = document.createElement('img');
+        img.src = `data:image/svg+xml,${encodeURIComponent(iconHTML)}`;
+        span.appendChild(img);
+      } else {
+        span.innerHTML = iconHTML;
+      }
+    }
+  });
 }
 
 
