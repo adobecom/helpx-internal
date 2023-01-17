@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { setLibs } from './utils.js';
+import { fetchPlaceholders, setLibs } from './utils.js';
 
 // Add project-wide styles here.
 const STYLES = '/styles/styles.css';
@@ -84,7 +84,7 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
 
   await loadArea();
 
-  buildAutoBlocks(document.body);
+  await buildAutoBlocks(document.body);
 
   /*
     extra features start
@@ -115,13 +115,13 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
-function buildAutoBlocks(main) {
+async function buildAutoBlocks(main) {
   try {
     buildLayout(main);
     buildInternalBanner(main);
     fixTableHeaders(main);
-    buildFooter(main);
-    buildOnThisPageSection(main);
+    await buildFooter(main);
+    await buildOnThisPageSection(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -180,8 +180,9 @@ async function buildInternalBanner(block) {
     const index = await fetchIndex('query-index');
     const found = index.data.find((entry) => entry.path.indexOf(window.location.pathname) > -1);
     if (found) {
+      const placeholders = await fetchPlaceholders();
       var dateFormat = new Date(parseInt(found.lastModified + '000', 10));
-      text.innerHTML = `Last updated on ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`; 
+      text.innerHTML = `${placeholders.lastUpdatedOn} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`; 
     }
   }
 }
@@ -216,19 +217,23 @@ function fixTableHeaders(main) {
 }
 
 // "on this page" section
-function buildOnThisPageSection(main) {
+async function buildOnThisPageSection(main) {
   const layout = document.querySelector('.layout-container');
   if (!layout) {
     return;
   }
 
   const headings = main.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  if (headings.length === 0) {
+    return;
+  }
 
   const container = document.createElement('div');
   container.classList.add('on-this-page');
-
+  
+  const placeholders = await fetchPlaceholders();
   const title = document.createElement('h5');
-  title.textContent = "On this page:";
+  title.textContent = `${placeholders.onThisPage}:`;
   container.append(title);
 
   headings.forEach((h, idx) => {
