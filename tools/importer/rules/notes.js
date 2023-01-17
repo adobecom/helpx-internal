@@ -42,8 +42,6 @@ function handleHelpxNote(el, document) {
 
 
 function handleAlertContainer(el, document) {
-  console.log("handleAlertContainer", el);
-
   const note = {};
 
   // find the text
