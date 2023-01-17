@@ -231,19 +231,17 @@ function buildOnThisPageSection(main) {
   title.textContent = "On this page:";
   container.append(title);
 
-  headings.forEach((h) => {
-    if (h.closest('.page-title') === null) {
-      console.log(h.textContent);
-      const src = h.textContent.toLowerCase().replaceAll(' ', '-');
-      const href = '#' + src;
+  headings.forEach((h, idx) => {
+    if (h.closest('.page-title') === null && h.textContent) {
+      const src = h.textContent === '' ? `${h.nodeName}-title-${idx+1}` : h.textContent.toLowerCase().replaceAll(' ', '-');
+
       const anchor = document.createElement('a');
-      anchor.setAttribute('href', href);
+      anchor.setAttribute('id', src);
       h.insertAdjacentElement('beforeBegin', anchor);
 
       const link = document.createElement('a');
-      link.setAttribute('href', href);
+      link.setAttribute('href', `#${src}`);
       link.textContent = h.textContent;
-
       container.append(link);
     }
   });
