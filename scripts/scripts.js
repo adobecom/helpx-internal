@@ -64,3 +64,20 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
   await loadArea();
   loadDelayed();
 }());
+
+
+
+/*
+ * utils
+ */
+
+/**
+ * Sanitizes a name for use as class name.
+ * @param {*} name The unsanitized name
+ * @returns {string} The class name
+ */
+export function toClassName(name) {
+  return name && typeof name === 'string'
+    ? name.toLowerCase().replace(/[^0-9a-z]/gi, '-')
+    : '';
+}
