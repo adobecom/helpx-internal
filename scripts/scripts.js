@@ -182,7 +182,7 @@ async function buildInternalBanner(block) {
     if (found) {
       const placeholders = await fetchPlaceholders();
       var dateFormat = new Date(parseInt(found.lastModified + '000', 10));
-      text.innerHTML = `${placeholders.lastUpdatedOn} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`; 
+      text.innerHTML = `${placeholders.lastUpdatedOn || 'Last updated on'} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`; 
     }
   }
 }
@@ -233,7 +233,7 @@ async function buildOnThisPageSection(main) {
   
   const placeholders = await fetchPlaceholders();
   const title = document.createElement('h5');
-  title.textContent = `${placeholders.onThisPage}:`;
+  title.textContent = `${placeholders.onThisPage || 'On this page'}:`;
   container.append(title);
 
   headings.forEach((h, idx) => {

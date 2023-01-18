@@ -42,32 +42,39 @@ export const [setLibs, getLibs] = (() => {
  * Gets placeholders object
  * @param {string} prefix
  */
-export async function fetchPlaceholders() {
-  const prefix = 'default';
+export async function fetchPlaceholders(prefix = 'default') {
   window.placeholders = window.placeholders || {};
   const loaded = window.placeholders[`${prefix}-loaded`];
   if (!loaded) {
     window.placeholders[`${prefix}-loaded`] = new Promise((resolve, reject) => {
-      try {
-        fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json`)
-          .then((resp) => resp.json())
-          .then((json) => {
-            const placeholders = {};
-            json.data.forEach((placeholder) => {
-              placeholders[toCamelCase(placeholder.Key)] = placeholder.Text;
-            });
-            window.placeholders[prefix] = placeholders;
-            resolve();
+      const url = `${prefix === 'default' ? '' : prefix}/placeholders.json`;
+      fetch(url)
+        .then((resp) => {
+          if (!resp.ok) {
+            reject(new Error(`fetch ${url}: ${resp.status} - ${resp.statusText}`));
+          }
+          return resp.json();
+        })
+        .then((json) => {
+          const placeholders = {};
+          json.data.forEach((placeholder) => {
+            placeholders[toCamelCase(placeholder.Key)] = placeholder.Text;
           });
-      } catch (e) {
-        // error loading placeholders
-        window.placeholders[prefix] = {};
-        reject();
-      }
+          window.placeholders[prefix] = placeholders;
+          resolve();
+        })
+        .catch((e) => {
+          reject(e);
+        });
     });
   }
-  await window.placeholders[`${prefix}-loaded`];
-  return (window.placeholders[prefix]);
+  try {
+    await window.placeholders[`${prefix}-loaded`];
+    return (window.placeholders[prefix]);
+  } catch(e) {
+    console.error(`get ${prefix} placeholders: ${e}`);
+    return {};
+  }
 }
 
 /**
