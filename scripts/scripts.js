@@ -338,6 +338,6 @@ export async function fetchIndex(indexFile, pageSize = 500) {
 
 function getMonthShortName(monthNo) {
   const date = new Date();
-  date.setMonth(monthNo - 1);
+  date.setMonth(monthNo);
   return date.toLocaleString('en-US', { month: 'short' });
 }
