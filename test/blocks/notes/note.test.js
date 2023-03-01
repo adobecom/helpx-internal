@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /*
  * Copyright 2022 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -16,7 +17,6 @@ import { expect } from '@esm-bundle/chai';
 const { default: decorate } = await import('../../../blocks/note/note.js');
 
 describe('note', () => {
-
   it('renders a simple note', async () => {
     document.body.innerHTML = await readFile({ path: './mocks/default.html' });
     decorate(document.querySelector('.note'));
@@ -43,5 +43,4 @@ describe('note', () => {
     expect(document.querySelector('.note.alert .content')).to.exist;
     expect(document.querySelector('.note.alert .icon')).to.exist;
   });
-
 });
