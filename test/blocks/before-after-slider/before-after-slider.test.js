@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import { readFile, sendMouse } from '@web/test-runner-commands';
+import { readFile } from '@web/test-runner-commands';
 import { expect } from '@esm-bundle/chai';
 
 const { default: decorate } = await import('../../../blocks/before-after-slider/before-after-slider.js');
