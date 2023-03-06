@@ -1,0 +1,125 @@
+:root {
+  --before-after-slider-color: white;
+  --slider-height: 200px;
+}
+
+.before-after-slider {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+}
+
+.before-after-slider > .image {
+  width:100%;
+  height: 100%;
+  grid-area: 1 / 1;
+}
+
+.before-after-slider > input.slider {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  opacity:0; /* hide both slider and thumb */
+  outline: none;
+  margin: 0;
+  z-index: 3;
+  /* */
+}
+
+.before-after-slider.vertical > input.slider {
+  writing-mode: bt-lr;
+  -webkit-appearance: slider-vertical;
+}
+
+/* to get the vertical slider to work on chrome */
+.before-after-slider.vertical > input.slider::-webkit-slider-container {
+  height: 100%;
+}
+
+.before-after-slider > div.slider-thumb-container {
+  z-index: 5;
+  grid-area: 1 / 1;
+  position: relative;
+  /* height: var(--slider-height); */
+  width: 40px;
+  pointer-events: none;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.before-after-slider.vertical > div.slider-thumb-container {
+  width: auto;
+  height: 40px;
+  top: 50%;
+  left: 0%;
+  flex-direction: row;
+}
+
+.before-after-slider > div.slider-thumb-container > div.after-thumb,
+.before-after-slider > div.slider-thumb-container > div.before-thumb {
+  width: 2px;
+  background-color: var(--before-after-slider-color);
+  flex-grow: 10;
+}
+
+.before-after-slider.vertical > div.slider-thumb-container > div.after-thumb,
+.before-after-slider.vertical > div.slider-thumb-container > div.before-thumb {
+  width: auto;
+  height: 2px;
+}
+
+.before-after-slider > div.slider-thumb-container > div.slider-thumb {
+  height: 40px;
+  width: 40px;
+  background-color: transparent;
+  border: 1px solid var(--before-after-slider-color);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 15px #000;
+  pointer-events: none;
+}
+
+.before-after-slider.vertical > div.slider-thumb-container > div.slider-thumb {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.before-after-slider > div.slider-thumb-container > div.slider-thumb > i.left-arrow,
+.before-after-slider > div.slider-thumb-container > div.slider-thumb > i.right-arrow {
+  width: 0;
+  height: 0;
+  border: 6px inset transparent;
+  position: absolute;
+  top: 40%;
+}
+
+.before-after-slider.vertical > div.slider-thumb-container > div.slider-thumb > i.left-arrow,
+.before-after-slider.vertical > div.slider-thumb-container > div.slider-thumb > i.right-arrow {
+  top: 35%;
+}
+
+.before-after-slider > div.slider-thumb-container > div.slider-thumb > i.right-arrow {
+  border-right: 6px solid var(--before-after-slider-color);
+  right: 64%;
+}
+
+.before-after-slider > div.slider-thumb-container > div.slider-thumb > i.left-arrow {
+  border-left: 6px solid var(--before-after-slider-color);
+  left: 64%;
+}
+
+.before-after-slider > .image.before {
+  z-index: 2;
+  clip-path: inset(0 0 0 50%);
+}
+
+.before-after-slider.vertical > .image.before {
+  clip-path: inset(0 0 50% 0);
+}
+
+.before-after-slider > .image.after {
+  z-index: 1;
+}
