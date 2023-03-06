@@ -41,7 +41,7 @@ export default (block) => {
       imgBefore.style.clipPath = `inset(0 0 ${e.target.value}% 0)`;
       sliderThumb.style.top = `${100 - e.target.value}%`;
     } else {
-      imgBefore.style.clipPath = `inset(0 0 0 ${e.target.value}%)`;
+      imgBefore.style.clipPath = `inset(0 ${100 - e.target.value}% 0 0)`;
       sliderThumb.style.left = `${e.target.value}%`;
     }
   });

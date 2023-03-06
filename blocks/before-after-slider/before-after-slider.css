@@ -113,7 +113,7 @@
 
 .before-after-slider > .image.before {
   z-index: 2;
-  clip-path: inset(0 0 0 50%);
+  clip-path: inset(0 50% 0 0);
 }
 
 .before-after-slider.vertical > .image.before {
