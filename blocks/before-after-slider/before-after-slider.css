@@ -1,6 +1,5 @@
 :root {
   --before-after-slider-color: white;
-  --slider-height: 200px;
 }
 
 .before-after-slider {
@@ -26,7 +25,6 @@
   outline: none;
   margin: 0;
   z-index: 3;
-  /* */
 }
 
 .before-after-slider.vertical > input.slider {

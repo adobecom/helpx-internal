@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   extends: 'airbnb-base',
-  env: { browser: true },
+  env: { browser: true, jest: true },
   parser: '@babel/eslint-parser',
   parserOptions: {
     allowImportExportEverywhere: true,
