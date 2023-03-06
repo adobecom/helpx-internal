@@ -43,7 +43,6 @@
   z-index: 5;
   grid-area: 1 / 1;
   position: relative;
-  /* height: var(--slider-height); */
   width: 40px;
   pointer-events: none;
   left: 50%;

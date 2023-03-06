@@ -19,22 +19,30 @@ const makeSliderThumb = () => {
   return thumbContainer;
 };
 
-export default (block) => {
-  [...block.children].map((child, index) => {
-    child.classList.add('image');
-    child.classList.add(index === 0 ? 'before' : 'after');
-    return null;
-  });
-  const isVertical = block.classList.contains('vertical');
+const makeSlider = (vertical) => {
   const slider = document.createElement('input');
-  if (isVertical) slider.setAttribute('orient', 'vertical');
-  const sliderThumb = makeSliderThumb();
+  if (vertical) slider.setAttribute('orient', 'vertical');
   slider.type = 'range';
   slider.min = 0;
   slider.max = 100;
   slider.value = 50;
   slider.step = 'any';
   slider.classList.add('slider');
+
+  return slider;
+};
+
+export default (block) => {
+  [...block.children].map((child, index) => {
+    child.classList.add('image');
+    child.classList.add(index === 0 ? 'before' : 'after');
+    return null;
+  });
+
+  const isVertical = block.classList.contains('vertical');
+  const slider = makeSlider(isVertical);
+  const sliderThumb = makeSliderThumb();
+
   slider.addEventListener('input', (e) => {
     const imgBefore = block.querySelector('.image.before');
     if (isVertical) {
@@ -45,14 +53,7 @@ export default (block) => {
       sliderThumb.style.left = `${e.target.value}%`;
     }
   });
+
   block.appendChild(slider);
   block.appendChild(sliderThumb);
-  const img = block.querySelector('.image.before');
-  const resizeSlider = () => {
-    block.style.setProperty(
-      '--slider-height',
-      `${img.offsetHeight - 2}px`,
-    );
-  };
-  new ResizeObserver(resizeSlider).observe(img);
 };
