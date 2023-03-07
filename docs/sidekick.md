@@ -9,8 +9,7 @@ https://user-images.githubusercontent.com/40354404/212114068-f222cb75-d1c8-403f-
 
 ### 1. Sidekick code configuration in project
 
-Added files
-* [`tools/sidekick/config.js`](../tools/sidekick/config.js)
+Added file
 * [`tools/sidekick/config.json`](../tools/sidekick/config.json)
 
 This will add the library button in the sidekick with all Milo blocks available by default
