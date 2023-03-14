@@ -16,19 +16,19 @@
   import rules
 */
 
-import transformNotes from "./rules/notes.js";
-import createMetadataBlock from "./rules/metadata.js";
-import createAccordionBlocks from "./rules/accordions.js";
-import createFeedbackBlock from "./rules/feedback.js";
-import createTitleBlock from "./rules/title.js";
-import createDescriptionBlock from "./rules/description.js";
-import createInternalBannerBlock from "./rules/internal-banner.js";
-import createTableBlocks from "./rules/tables.js";
-import createToCBlock from "./rules/toc.js";
-import createColumnsFromDexterFlexContainers from "./rules/dexter-flexcontainers.js";
-import createBeforeAfterSliders from "./rules/before-and-after.js";
-import createVideosEmbed from "./rules/videos.js";
-
+import transformNotes from './rules/notes.js';
+import createMetadataBlock from './rules/metadata.js';
+import createAccordionBlocks from './rules/accordions.js';
+import createFeedbackBlock from './rules/feedback.js';
+import createTitleBlock from './rules/title.js';
+import createDescriptionBlock from './rules/description.js';
+import createInternalBannerBlock from './rules/internal-banner.js';
+import createTableBlocks from './rules/tables.js';
+import createToCBlock from './rules/toc.js';
+import createColumnsFromDexterFlexContainers from './rules/dexter-flexcontainers.js';
+import createBeforeAfterSliders from './rules/before-and-after.js';
+import createVideosEmbed from './rules/videos.js';
+import importProcedure from './rules/procedure.js';
 
 export default {
   /**
@@ -50,29 +50,31 @@ export default {
       blocks
     */
 
-    createTableBlocks(main, document);
+    //    createTableBlocks(main, document);
 
-    createMetadataBlock(main, document);
+    //    createMetadataBlock(main, document);
 
-    createFeedbackBlock(main, document);
+    //    createFeedbackBlock(main, document);
 
-    createAccordionBlocks(main, document);
+    //    createAccordionBlocks(main, document);
 
-    createTitleBlock(main, document);
+    //    createTitleBlock(main, document);
 
-    createDescriptionBlock(main, document);
+    //    createDescriptionBlock(main, document);
 
-    createInternalBannerBlock(main, document);
+    //    createInternalBannerBlock(main, document);
 
-    transformNotes(main, document);
+    //    transformNotes(main, document);
 
-    createToCBlock(main, document);
+    //    createToCBlock(main, document);
 
-    createColumnsFromDexterFlexContainers(main, document);
-  
-    createBeforeAfterSliders(main, document);
+    //    createColumnsFromDexterFlexContainers(main, document);
 
-    createVideosEmbed(main, document);
+    //   createBeforeAfterSliders(main, document);
+
+    //   createVideosEmbed(main, document);
+
+    importProcedure(document);
 
     /*
       clean
