@@ -97,7 +97,6 @@ export default (block) => {
     window.Prism.manual = true;
     initPrism();
   }
-  block?.classList.add('line-numbers');
   const pre = block.querySelector('pre');
   pre?.classList.add(getLanguage(block.classList[1]));
   const code = block.querySelector('code');

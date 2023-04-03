@@ -21,7 +21,10 @@ code[class*=language-], pre[class*=language-] {
     -webkit-hyphens: none;
     -moz-hyphens: none;
     -ms-hyphens: none;
-    hyphens: none
+    hyphens: none;
+
+    /* MODIFIED: added the line below */
+    border-left: solid 4px #52ce52;
 }
 
 pre[class*=language-] {
@@ -345,7 +348,7 @@ pre[id].linkable-line-numbers span.line-numbers-rows>span:hover:before {
     background-color: rgba(128, 128, 128, .2)
 }
 
-/* MODIFIED: added the two rules below */
+/* MODIFIED: added the three rules below */
 div.line {
     padding-left: 3.8em;
     width: 100%;
@@ -357,3 +360,6 @@ div.line:hover {
     background-color: #ddf0dd;
 }
 
+code[class*=language-], pre[class*=language-].line-numbers {
+    border-left: none;
+}
