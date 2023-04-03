@@ -34,6 +34,9 @@ pre[class*=language-] {
 pre[class*=language-]>code {
     position: relative;
     z-index: 1;
+    /* MODIFIED: deleted border-left: 10px solid #358ccb */
+
+    /* MODIFIED: changed box-shadow: -1px  0 0 0 #358ccb... to the line below */
     box-shadow: -1px 0 0 0 #dfdfdf, 0 0 0 1px #dfdfdf;
     background-color: #fdfdfd;
     background-image: linear-gradient(transparent 50%, rgba(69, 142, 209, .04) 50%);
@@ -45,6 +48,8 @@ pre[class*=language-]>code {
 code[class*=language-] {
     max-height: inherit;
     height: inherit;
+
+    /* MODIFIED: changed padding: 0 1em to the line below */
     padding: 0;
     display: block;
     overflow: auto
@@ -160,11 +165,14 @@ pre[class*=language-].line-numbers.line-numbers {
     padding-left: 0
 }
 
-pre[class*=language-].line-numbers.line-numbers code {
-}
+/* MODIFIED: removed padding-left: 3.8em below
+/* pre[class*=language-].line-numbers.line-numbers code {
+} */
 
 pre[class*=language-].line-numbers.line-numbers .line-numbers-rows {
     left: 0;
+
+    /* MODIFIED: added the next two lines below */
     border-right: solid 4px #52ce52;
     background-color: #f9f8f8;
 }
@@ -337,6 +345,7 @@ pre[id].linkable-line-numbers span.line-numbers-rows>span:hover:before {
     background-color: rgba(128, 128, 128, .2)
 }
 
+/* MODIFIED: added the two rules below */
 div.line {
     padding-left: 3.8em;
     width: 100%;
