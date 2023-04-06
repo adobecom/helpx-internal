@@ -11,13 +11,11 @@ const createDownload = (document) => {
         container.querySelector('.download-description').textContent,
       ]);
     });
-    console.info(cells);
 
     const table = WebImporter.DOMUtils.createTable(cells, document);
     download.insertAdjacentElement('beforebegin', table);
     download.remove();
   });
-  console.info('poop');
 };
 
 export default createDownload;
