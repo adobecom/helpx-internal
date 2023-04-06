@@ -129,8 +129,6 @@ footer {
 .layout-container {
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  justify-content: center;
   gap: 60px;
 }
 
@@ -160,4 +158,26 @@ footer {
 
 .on-this-page a {
   margin-left: 15px;
+}
+
+
+/* phone */
+@media screen and (max-width: 37.4375rem) {
+  .hidden-mobile {
+    display: none !important;
+  }
+}
+
+/* tablet */ 
+@media screen and (min-width: 37.5rem) and (max-width: 74.9375rem) {
+  .hidden-tablet {
+    display: none !important;
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 75rem) { 
+  .hidden-desktop {
+    display: none !important;
+  }
 }

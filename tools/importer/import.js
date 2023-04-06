@@ -16,19 +16,19 @@
   import rules
 */
 
-import transformNotes from "./rules/notes.js";
-import createMetadataBlock from "./rules/metadata.js";
-import createAccordionBlocks from "./rules/accordions.js";
-import createFeedbackBlock from "./rules/feedback.js";
-import createTitleBlock from "./rules/title.js";
-import createDescriptionBlock from "./rules/description.js";
-import createInternalBannerBlock from "./rules/internal-banner.js";
-import createTableBlocks from "./rules/tables.js";
-import createToCBlock from "./rules/toc.js";
-import createColumnsFromDexterFlexContainers from "./rules/dexter-flexcontainers.js";
-import createBeforeAfterSliders from "./rules/before-and-after.js";
-import createVideosEmbed from "./rules/videos.js";
-
+import createAccordionBlocks from './rules/accordions.js';
+import createBeforeAfterSliders from './rules/before-and-after.js';
+import createDescriptionBlock from './rules/description.js';
+import createColumnsFromDexterFlexContainers from './rules/dexter-flexcontainers.js';
+import createFeedbackBlock from './rules/feedback.js';
+import createInternalBannerBlock from './rules/internal-banner.js';
+import createMetadataBlock from './rules/metadata.js';
+import transformNotes from './rules/notes.js';
+import createTableBlocks from './rules/tables.js';
+import createTitleBlock from './rules/title.js';
+import createToCBlock from './rules/toc.js';
+import createVideosEmbed from './rules/videos.js';
+import handleViewportSpecific from './rules/viewportSpecific.js';
 
 export default {
   /**
@@ -69,10 +69,22 @@ export default {
     createToCBlock(main, document);
 
     createColumnsFromDexterFlexContainers(main, document);
-  
+
     createBeforeAfterSliders(main, document);
 
     createVideosEmbed(main, document);
+
+    // NOTE: the import scripts for specific blocks need to check if they should be hidden
+    // by checking themselves and their parents for '.hidden-desktop',
+    // 'hidden-tablet', and '.hidden-mobile'
+    // TODO: create an abstraction that eliminates repeated code across import scripts,
+    // since there's a lot of it.
+
+    // This function must run at the very end because it might change something
+    // that should be a block to just text, so make sure all the blocks we
+    // need have already been created when we get to this function.
+    // It checks if something's a block by looking for a <tr> element
+    handleViewportSpecific(document);
 
     /*
       clean
