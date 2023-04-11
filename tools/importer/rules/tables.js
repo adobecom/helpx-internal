@@ -1,5 +1,4 @@
-
-import { addRow } from "../utils.js";
+import { addRow } from '../utils.js';
 
 export default function createTableBlocks(main, document) {
   const tables = document.querySelectorAll('table');
@@ -23,9 +22,9 @@ export default function createTableBlocks(main, document) {
 
     const tableRef = document.createElement('table');
     addRow(tableRef, clone);
-  
+
     tableEl.insertAdjacentElement('beforebegin', tableRef);
 
-    tableEl.remove();  
+    tableEl.remove();
   });
 }

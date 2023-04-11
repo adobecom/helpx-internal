@@ -16,19 +16,20 @@
   import rules
 */
 
-import createAccordionBlocks from './rules/accordions.js';
-import createBeforeAfterSliders from './rules/before-and-after.js';
 import createCodeBlock from './rules/code.js';
-import createDescriptionBlock from './rules/description.js';
-import createColumnsFromDexterFlexContainers from './rules/dexter-flexcontainers.js';
-import createFeedbackBlock from './rules/feedback.js';
-import createInternalBannerBlock from './rules/internal-banner.js';
-import createMetadataBlock from './rules/metadata.js';
 import transformNotes from './rules/notes.js';
-import createTableBlocks from './rules/tables.js';
+import createMetadataBlock from './rules/metadata.js';
+import createAccordionBlocks from './rules/accordions.js';
+import createFeedbackBlock from './rules/feedback.js';
 import createTitleBlock from './rules/title.js';
+import createDescriptionBlock from './rules/description.js';
+import createInternalBannerBlock from './rules/internal-banner.js';
+import createTableBlocks from './rules/tables.js';
 import createToCBlock from './rules/toc.js';
+import createColumnsFromDexterFlexContainers from './rules/dexter-flexcontainers.js';
+import createBeforeAfterSliders from './rules/before-and-after.js';
 import createVideosEmbed from './rules/videos.js';
+import importProcedure from './rules/procedure.js';
 
 export default {
   /**
@@ -66,13 +67,17 @@ export default {
 
     transformNotes(main, document);
 
-    createToCBlock(main, document);
+    //    createToCBlock(main, document);
 
     createColumnsFromDexterFlexContainers(main, document);
 
     createBeforeAfterSliders(main, document);
 
+    createBeforeAfterSliders(main, document);
+
     createVideosEmbed(main, document);
+
+    importProcedure(document);
 
     createCodeBlock(document);
     /*
