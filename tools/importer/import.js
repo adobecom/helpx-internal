@@ -70,7 +70,7 @@ export default {
 
     //    createColumnsFromDexterFlexContainers(main, document);
 
-    //   createBeforeAfterSliders(main, document);
+    createBeforeAfterSliders(main, document);
 
     //   createVideosEmbed(main, document);
 
