@@ -3,7 +3,7 @@
   max-height: calc(95% - 70px);
   min-height: 700px;
   width: 450px;
-  max-width: 450px;
+  max-width: 250px;
 }
 
 .toc li {

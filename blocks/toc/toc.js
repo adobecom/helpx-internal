@@ -27,7 +27,7 @@ const setGroup = (group, expanded) => {
 
 const initGroups = (li) => {
   setRole(li, 'group');
-  li.setAttribute('aria-expanded', false);
+  setGroup(li, 'false');
   li.addEventListener('click', (event) => {
     event.stopPropagation();
     setGroup(li, li.ariaExpanded === 'false' ? 'true' : 'false');
@@ -45,10 +45,31 @@ const initLinksInGroup = (li) => {
 
 const initListItems = (block) => {
   block.querySelectorAll(':scope li').forEach((li) => {
+    li.setAttribute('tabindex', -1);
     if (isCollapsible(li)) {
       initGroups(li);
       initLinksInGroup(li);
     } else setRole(li, 'treeitem');
+  });
+};
+
+const findCurrentNode = () => [...document.querySelectorAll('a')].find((a) => a.href === window.location.href);
+
+const openCurrentNode = () => {
+  const currentNode = findCurrentNode();
+  currentNode.parentElement.setAttribute('aria-selected', true);
+  currentNode.parentElement.setAttribute('tabindex', 0);
+  const openAllParents = (node) => {
+    const parent = node?.parentElement?.closest('li[role="group"]');
+    if (!(node && parent)) return;
+    setGroup(parent, 'true');
+    openAllParents(parent);
+  };
+  openAllParents(currentNode);
+  currentNode?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center',
+    inline: 'center',
   });
 };
 
@@ -57,6 +78,7 @@ export default (block) => {
   setRole(block, 'tree');
   window.addEventListener('main-elements-loaded', () => {
     block.style.height = `${getTocHeight()}px`;
+    openCurrentNode();
   }, { passive: true, once: true });
 
   initListItems(block);
