@@ -47,9 +47,12 @@ const initGroups = (li) => {
 const initLinksInGroup = (li) => {
   li.querySelectorAll(':scope a')
     .forEach(
-      (a) => a.addEventListener('click', (e) => {
-        e.stopPropagation();
-      }, { passive: true }),
+      (a) => {
+        setRole(a.parentElement, 'treeitem');
+        a.addEventListener('click', (e) => {
+          e.stopPropagation();
+        }, { passive: true });
+      },
     );
 };
 
