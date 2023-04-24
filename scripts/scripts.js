@@ -34,7 +34,6 @@ const CONFIG = {
 
 const ICON_ROOT = '/icons';
 
-
 // Default to loading the first image as eager.
 (async function loadLCPImage() {
   const lcpImg = document.querySelector('img');
@@ -86,6 +85,8 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
 
   await buildAutoBlocks(document.body);
 
+  const event = new Event('main-elements-loaded', { bubbles: false });
+  window.dispatchEvent(event);
   /*
     extra features start
   */
@@ -99,8 +100,6 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
   loadDelayed();
 }());
 
-
-
 /*
  * ------------------------------------------------------------
  * helpx-internal specifics
@@ -111,28 +110,18 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
  * global blocks
  */
 
-/**
- * Builds all synthetic blocks in a container element.
- * @param {Element} main The container element
- */
-async function buildAutoBlocks(main) {
-  try {
-    buildLayout(main);
-    buildInternalBanner(main);
-    fixTableHeaders(main);
-    await buildFooter(main);
-    await buildOnThisPageSection(main);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Auto Blocking failed', error);
-  }
-}
+const moveTOC = (layout) => {
+  const toc = document.querySelector('.toc');
+  layout.insertAdjacentElement('afterbegin', toc);
+};
 
 // layout
- function buildLayout(main) {
+function buildLayout(main) {
   const layout = document.createElement('div');
   layout.classList.add('layout-container');
   main.append(layout);
+
+  moveTOC(layout);
 
   const content = document.createElement('div');
   content.classList.add('content-container');
@@ -150,109 +139,11 @@ async function buildFooter(main) {
   const footer = document.createElement('footer');
   footer.classList.add('content');
 
-  const resp = await fetch(`/footer.plain.html`);
+  const resp = await fetch('/footer.plain.html');
   const html = await resp.text();
-  footer.innerHTML = html; 
+  footer.innerHTML = html;
 
   main.append(footer);
-}
-
-// internal banner
-async function buildInternalBanner(block) {
-  const title = block.querySelector('.page-title');
-  
-  if (title) {
-    const banner = document.createElement('div');
-    banner.classList.add('section', 'internal-banner');
-    
-    const div = document.createElement('div');
-    div.innerHTML = '<span class="icon icon-info"></span>INTERNAL';
-    div.classList.add("banner");
-    banner.append(div);
-    title.insertAdjacentElement('afterend', banner);
-    decorateIcons(banner);
-
-    const text = document.createElement('div');
-    text.classList.add("content", "last-updated");
-    text.innerHTML = '&nbsp;';
-    banner.append(text);
-    
-    const index = await fetchIndex('query-index');
-    const found = index.data.find((entry) => entry.path.indexOf(window.location.pathname) > -1);
-    if (found) {
-      const placeholders = await fetchPlaceholders();
-      var dateFormat = new Date(parseInt(found.lastModified + '000', 10));
-      text.innerHTML = `${placeholders.lastUpdatedOn || 'Last updated on'} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`; 
-    }
-  }
-}
-
-// tables
-function fixTableHeaders(main) {
-  var tables = main.querySelectorAll('table');
-  tables.forEach((t) => {
-    // remove empty lines
-    var lines = t.querySelectorAll('tbody tr');
-    lines.forEach((l) => {
-      const content = l.innerHTML.replaceAll('<td></td>', '').trim();
-      if (content === '') {
-          l.remove();
-      }
-    });
-
-    // fix header rowspan
-    const headerFirstRow = t.querySelector('thead tr:first-of-type');
-    if (!headerFirstRow) return;
-    const nHeaderTDs = headerFirstRow.querySelectorAll('th')?.length;
-    const bodyFirstRow = t.querySelector('tbody tr:first-of-type');
-    const nBodyTDs = bodyFirstRow.querySelectorAll('td')?.length;
-    if (nHeaderTDs === 2 && nBodyTDs === 3) {
-        const tHead = t.querySelector('thead');
-        if (tHead) {
-            tHead.appendChild(bodyFirstRow);
-            bodyFirstRow.querySelector('td:empty')?.remove();
-            tHead.querySelector('tr:first-of-type th:first-of-type')?.setAttribute('rowspan', 2);
-        }
-    }
-});
-}
-
-// "on this page" section
-async function buildOnThisPageSection(main) {
-  const layout = document.querySelector('.layout-container');
-  if (!layout) {
-    return;
-  }
-
-  const headings = main.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  if (headings.length === 0) {
-    return;
-  }
-
-  const container = document.createElement('div');
-  container.classList.add('on-this-page');
-  
-  const placeholders = await fetchPlaceholders();
-  const title = document.createElement('h5');
-  title.textContent = `${placeholders.onThisPage || 'On this page'}:`;
-  container.append(title);
-
-  headings.forEach((h, idx) => {
-    if (h.closest('.page-title') === null && h.textContent) {
-      const src = h.textContent === '' ? `${h.nodeName}-title-${idx+1}` : h.textContent.toLowerCase().replaceAll(' ', '-');
-
-      const anchor = document.createElement('a');
-      anchor.setAttribute('id', src);
-      h.insertAdjacentElement('beforeBegin', anchor);
-
-      const link = document.createElement('a');
-      link.setAttribute('href', `#${src}`);
-      link.textContent = h.textContent;
-      container.append(link);
-    }
-  });
-
-  layout.append(container);
 }
 
 /**
@@ -280,7 +171,120 @@ export function decorateIcons(element = document) {
   });
 }
 
+// internal banner
+async function buildInternalBanner(block) {
+  const title = block.querySelector('.page-title');
 
+  if (title) {
+    const banner = document.createElement('div');
+    banner.classList.add('section', 'internal-banner');
+
+    const div = document.createElement('div');
+    div.innerHTML = '<span class="icon icon-info"></span>INTERNAL';
+    div.classList.add('banner');
+    banner.append(div);
+    title.insertAdjacentElement('afterend', banner);
+    decorateIcons(banner);
+
+    const text = document.createElement('div');
+    text.classList.add('content', 'last-updated');
+    text.innerHTML = '&nbsp;';
+    banner.append(text);
+
+    const index = await fetchIndex('query-index');
+    const found = index.data.find((entry) => entry.path.indexOf(window.location.pathname) > -1);
+    if (found) {
+      const placeholders = await fetchPlaceholders();
+      const dateFormat = new Date(parseInt(`${found.lastModified}000`, 10));
+      text.innerHTML = `${placeholders.lastUpdatedOn || 'Last updated on'} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`;
+    }
+  }
+}
+
+// tables
+function fixTableHeaders(main) {
+  const tables = main.querySelectorAll('table');
+  tables.forEach((t) => {
+    // remove empty lines
+    const lines = t.querySelectorAll('tbody tr');
+    lines.forEach((l) => {
+      const content = l.innerHTML.replaceAll('<td></td>', '').trim();
+      if (content === '') {
+        l.remove();
+      }
+    });
+
+    // fix header rowspan
+    const headerFirstRow = t.querySelector('thead tr:first-of-type');
+    if (!headerFirstRow) return;
+    const nHeaderTDs = headerFirstRow.querySelectorAll('th')?.length;
+    const bodyFirstRow = t.querySelector('tbody tr:first-of-type');
+    const nBodyTDs = bodyFirstRow.querySelectorAll('td')?.length;
+    if (nHeaderTDs === 2 && nBodyTDs === 3) {
+      const tHead = t.querySelector('thead');
+      if (tHead) {
+        tHead.appendChild(bodyFirstRow);
+        bodyFirstRow.querySelector('td:empty')?.remove();
+        tHead.querySelector('tr:first-of-type th:first-of-type')?.setAttribute('rowspan', 2);
+      }
+    }
+  });
+}
+
+// "on this page" section
+async function buildOnThisPageSection(main) {
+  const layout = document.querySelector('.layout-container');
+  if (!layout) {
+    return;
+  }
+
+  const headings = main.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  if (headings.length === 0) {
+    return;
+  }
+
+  const container = document.createElement('div');
+  container.classList.add('on-this-page');
+
+  const placeholders = await fetchPlaceholders();
+  const title = document.createElement('h5');
+  title.textContent = `${placeholders.onThisPage || 'On this page'}:`;
+  container.append(title);
+
+  headings.forEach((h, idx) => {
+    if (h.closest('.page-title') === null && h.textContent) {
+      const src = h.textContent === '' ? `${h.nodeName}-title-${idx + 1}` : h.textContent.toLowerCase().replaceAll(' ', '-');
+
+      const anchor = document.createElement('a');
+      anchor.setAttribute('id', src);
+      h.insertAdjacentElement('beforeBegin', anchor);
+
+      const link = document.createElement('a');
+      link.setAttribute('href', `#${src}`);
+      link.textContent = h.textContent;
+      container.append(link);
+    }
+  });
+
+  layout.append(container);
+}
+
+/**
+ * Builds all synthetic blocks in a container element.
+ * @param {Element} main The container element
+ */
+async function buildAutoBlocks(main) {
+  try {
+    buildLayout(main);
+    buildInternalBanner(main);
+    fixTableHeaders(main);
+    await buildFooter(main);
+    await buildOnThisPageSection(main);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Auto Blocking failed', error);
+  }
+}
 
 /*
  * utils
