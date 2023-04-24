@@ -25,9 +25,19 @@ const setGroup = (group, expanded) => {
   group.setAttribute('aria-expanded', expanded);
 };
 
+const wrapLiTextInSpan = (li) => {
+  const text = li.firstChild;
+  if (text.nodeType === 3) {
+    const span = document.createElement('span');
+    text.after(span);
+    span.appendChild(text);
+  }
+};
+
 const initGroups = (li) => {
   setRole(li, 'group');
   setGroup(li, 'false');
+  wrapLiTextInSpan(li);
   li.addEventListener('click', (event) => {
     event.stopPropagation();
     setGroup(li, li.ariaExpanded === 'false' ? 'true' : 'false');
