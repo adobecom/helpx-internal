@@ -2,15 +2,29 @@
   overflow-y: scroll;
   max-height: calc(95% - 70px);
   min-height: 700px;
-  max-width: 350px;
+  max-width: 250px;
+}
+
+.toc > div > div > ul {
+  padding-right: 0.75rem;
 }
 
 .toc li {
   list-style-type: none;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 400;
   line-height: 1.5;
   margin: 10px 0;
+  /* There are some cases where there
+  *  are long strings that don't have
+  *  any spaces which means the below
+  *  break-word won't do a thing. I've kept
+  *  it as is since this is the current behavior
+  *  on helpx, but if we want it to break-word
+  *  even in the case of long strings with no spaces
+  *  we should use --  word-break: break-all;
+  */
   overflow-wrap: break-word;
   display: grid;
   grid-template-columns: 20px 1fr;
