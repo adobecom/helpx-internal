@@ -166,10 +166,18 @@ footer {
  */
 
 .layout-container {
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.layout-container .content-container {
+  width: 77%;
+  max-width:77%;
+}
+
+.layout-container .content-container .section {
+  padding-left: 265px;
 }
 
 /*

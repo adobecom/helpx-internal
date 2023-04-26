@@ -92,6 +92,7 @@ const openCurrentNode = () => {
 // TODO: Mobile toc
 // TODO: Highlight last clicked li
 // TODO: Make sure this works as a fragment
+// TODO: Add keyboard controls
 
 export default (block) => {
   convertOlsToUls(block);
@@ -102,4 +103,5 @@ export default (block) => {
   }, { passive: true, once: true });
 
   initListItems(block);
+  document.body.insertAdjacentElement('afterbegin', block);
 };

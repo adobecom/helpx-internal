@@ -110,18 +110,11 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
  * global blocks
  */
 
-const moveTOC = (layout) => {
-  const toc = document.querySelector('.toc');
-  layout.insertAdjacentElement('afterbegin', toc);
-};
-
 // layout
 function buildLayout(main) {
   const layout = document.createElement('div');
   layout.classList.add('layout-container');
   main.append(layout);
-
-  moveTOC(layout);
 
   const content = document.createElement('div');
   content.classList.add('content-container');
@@ -279,7 +272,7 @@ async function buildAutoBlocks(main) {
     buildInternalBanner(main);
     fixTableHeaders(main);
     await buildFooter(main);
-    await buildOnThisPageSection(main);
+    // await buildOnThisPageSection(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

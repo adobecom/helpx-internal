@@ -3,6 +3,7 @@
   max-height: calc(95% - 70px);
   min-height: 700px;
   max-width: 250px;
+  position: fixed;
 }
 
 .toc > div > div > ul {
