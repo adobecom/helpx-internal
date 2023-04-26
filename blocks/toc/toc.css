@@ -1,6 +1,6 @@
 .toc {
   overflow-y: scroll;
-  max-height: calc(95vh - 140px);
+  max-height: calc(95vh - 70px);
   min-height: 500px;
   max-width: 250px;
   position: fixed;
