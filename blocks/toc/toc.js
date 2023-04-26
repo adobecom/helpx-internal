@@ -91,6 +91,15 @@ const openCurrentNode = () => {
 // TODO: Mobile toc
 // TODO: Highlight last clicked li
 // TODO: Add keyboard controls
+//
+
+const preventScrollBelowContent = (block) => {
+  const content = document.querySelector('.content-container');
+  const bottom = window.scrollY + window.innerHeight
+    - content.getBoundingClientRect().bottom - window.pageYOffset;
+  console.info(bottom);
+  if (bottom > 0) block.style.top = `${100 - bottom}px`;
+};
 
 export default (block) => {
   convertOlsToUls(block);
@@ -99,6 +108,8 @@ export default (block) => {
     block.style.height = `${getTocHeight()}px`;
     openCurrentNode();
   }, { passive: true, once: true });
+
+  window.addEventListener('scroll', () => preventScrollBelowContent(block));
 
   initListItems(block);
   document.body.insertAdjacentElement('afterbegin', block);
