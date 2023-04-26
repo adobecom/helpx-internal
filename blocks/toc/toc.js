@@ -87,11 +87,9 @@ const openCurrentNode = () => {
 };
 
 // TODO: fix title sticky behavior
-// TODO: Remove 'On This Page' and fix layout
-// TODO: Tablet and movile styles for title and layout
+// TODO: Tablet and mobile styles for title and layout
 // TODO: Mobile toc
 // TODO: Highlight last clicked li
-// TODO: Make sure this works as a fragment
 // TODO: Add keyboard controls
 
 export default (block) => {
