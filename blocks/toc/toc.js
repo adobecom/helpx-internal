@@ -95,9 +95,52 @@ const preventScrollBelowContent = (block) => {
   block.style.top = bottom > 0 ? `${100 - bottom}px` : '100px';
 };
 
+const createMobileTOC = (block) => {
+  const tocButton = document.createElement('span');
+  tocButton.classList.add('toc-mobile-drawer');
+  tocButton.innerText = 'User Guide';
+
+  const modalContainer = document.createElement('div');
+  modalContainer.classList.add('modal-container');
+  const tocModal = document.createElement('div');
+  tocModal.classList.add('toc-modal');
+  modalContainer.appendChild(tocModal);
+  const closeModal = () => {
+    modalContainer.classList.remove('show');
+    document.body.insertAdjacentElement('afterbegin', block);
+  };
+  const header = document.createElement('div');
+  header.classList.add('toc-mobile-header');
+  const home = document.createElement('div');
+  const closeButton = document.createElement('button');
+  const cross = document.createElement('div');
+  home.classList.add('home');
+  home.innerText = ' ';
+  closeButton.classList.add('close');
+  cross.classList.add('cross');
+  closeButton.appendChild(cross);
+  closeButton.addEventListener('click', closeModal);
+  header.replaceChildren(home, closeButton);
+  tocModal.appendChild(header);
+
+  tocButton.addEventListener('click', () => {
+    modalContainer.classList.add('show');
+    tocModal.appendChild(block);
+  });
+
+  window.addEventListener('click', (event) => {
+    if (event.target === modalContainer) closeModal();
+  });
+
+  document.querySelector('.page-title')?.insertAdjacentElement('afterbegin', tocButton);
+  document.body.insertAdjacentElement('afterbegin', modalContainer);
+};
+
 export default (block) => {
   convertOlsToUls(block);
   setRole(block, 'tree');
+  createMobileTOC(block);
+
   window.addEventListener('main-elements-loaded', () => {
     block.style.height = `${getTocHeight()}px`;
     openCurrentNode();
@@ -106,5 +149,6 @@ export default (block) => {
   window.addEventListener('scroll', () => preventScrollBelowContent(block));
 
   initListItems(block);
+
   document.body.insertAdjacentElement('afterbegin', block);
 };

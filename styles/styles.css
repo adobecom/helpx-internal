@@ -21,6 +21,7 @@
   --static-color-light-gray: #fafafa;
   --static-color-dark-gray: #505050;
   --static-color-gray-700: #333333;
+  --static-color-gray-200: #f5f5f5;
 
   --static-color-heading-border: #dddddd;
 
@@ -93,7 +94,7 @@ body.helpxmain-article > .section {
 }
 
 body.helpxmain-article h1 {
-  padding: 4px 48px 6px 2.5rem;
+  padding: 4px 48px 6px 0;
   margin: 0;
   line-height: 1.15;
   font-size: 36px;
@@ -150,6 +151,8 @@ main .section.dark.xs-spacing.page-title {
   width: 100%;
   z-index: 20;
   position: fixed;
+  padding-left: 2.5rem !important;
+  padding-right: 2.5rem !important;
 }
 
 /*

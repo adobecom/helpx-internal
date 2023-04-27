@@ -178,9 +178,9 @@ async function buildInternalBanner(block) {
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
-    banner.style.paddingTop = `${title.offsetHeight}px`;
+    banner.style.paddingTop = `${title.offsetHeight - 2}px`;
     window.addEventListener('resize', () => {
-      banner.style.paddingTop = `${title.offsetHeight}px`;
+      banner.style.paddingTop = `${title.offsetHeight - 2}px`;
     });
 
     const text = document.createElement('div');
