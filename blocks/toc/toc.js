@@ -97,7 +97,6 @@ const preventScrollBelowContent = (block) => {
   const content = document.querySelector('.content-container');
   const bottom = window.scrollY + window.innerHeight
     - content.getBoundingClientRect().bottom - window.pageYOffset;
-  console.info(bottom);
   if (bottom > 0) block.style.top = `${100 - bottom}px`;
 };
 

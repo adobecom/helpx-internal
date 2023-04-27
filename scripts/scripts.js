@@ -168,6 +168,11 @@ export function decorateIcons(element = document) {
 async function buildInternalBanner(block) {
   const title = block.querySelector('.page-title');
 
+  // make internal banner sticky if the user scrolls down
+  window.addEventListener('scroll', () => {
+    title.style.top = `${window.scrollY}px`;
+  });
+
   if (title) {
     const banner = document.createElement('div');
     banner.classList.add('section', 'internal-banner');
