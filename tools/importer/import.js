@@ -50,29 +50,29 @@ export default {
       blocks
     */
 
-    //    createTableBlocks(main, document);
+    createTableBlocks(main, document);
 
-    //    createMetadataBlock(main, document);
+    createMetadataBlock(main, document);
 
-    //    createFeedbackBlock(main, document);
+    createFeedbackBlock(main, document);
 
-    //    createAccordionBlocks(main, document);
+    createAccordionBlocks(main, document);
 
-    //    createTitleBlock(main, document);
+    createTitleBlock(main, document);
 
-    //    createDescriptionBlock(main, document);
+    createDescriptionBlock(main, document);
 
-    //    createInternalBannerBlock(main, document);
+    createInternalBannerBlock(main, document);
 
-    //    transformNotes(main, document);
+    transformNotes(main, document);
 
-    //    createToCBlock(main, document);
+    createToCBlock(main, document);
 
     //    createColumnsFromDexterFlexContainers(main, document);
 
-    //   createBeforeAfterSliders(main, document);
+    createBeforeAfterSliders(main, document);
 
-    //   createVideosEmbed(main, document);
+    createVideosEmbed(main, document);
 
     importProcedure(document);
 
@@ -85,9 +85,7 @@ export default {
       '.modalContainer',
       '.globalNavHeader',
       '.tableOfContents-mobile-drawer',
-      '.TableOfContents',
       '.globalNavFooter',
-      '.toc',
       'locale-modal',
       'iframe',
       'img[style="display:none"]',

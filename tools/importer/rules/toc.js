@@ -1,21 +1,17 @@
+import { replaceNode } from '../utils.js';
 
-// FOR NOW ONLY REMOVE IT
-// TODO - render proper block/section for this content
 export default function createToCBlock(main, document) {
-  const el = document.querySelector('.xfreference');
-  if (el) {
-    const parent = el.closest('.position');
-    if (parent) {
-      parent.remove();
-    }
-  }
-
-  // const cells = [
-  //   ['Table of contents'],
-  //   ['Sign In Block'],
-  //   ['On this page'],
-  // ];
-  // const table = WebImporter.DOMUtils.createTable(cells, document);
-  // // append the block to the main element
-  // main.append(table);
+  const toc = document.querySelector('.toc');
+  toc.querySelectorAll('ol').forEach((ol) => {
+    replaceNode(ol, document.createElement('ul'));
+  });
+  toc.querySelectorAll('a').forEach((a) => {
+    if (a.href.slice(-5) === '.html') a.href = a.href.slice(0, -5);
+  });
+  const cells = [
+    ['toc'],
+  ];
+  cells.push([toc.innerHTML]);
+  main.append(WebImporter.DOMUtils.createTable(cells, document));
+  toc.remove();
 }
