@@ -84,7 +84,6 @@ const openCurrentNode = () => {
   });
 };
 
-// TODO: Mobile toc
 // TODO: Highlight last clicked li
 // TODO: Add keyboard controls
 

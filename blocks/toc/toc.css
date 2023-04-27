@@ -89,6 +89,9 @@
   .toc-modal.show {
     display: none;
   }
+  .modal-container {
+    display: none;
+  }
 }
 @media screen and (max-width: 63.9375rem) {
   .toc {
