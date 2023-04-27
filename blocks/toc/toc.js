@@ -23,6 +23,10 @@ const setGroup = (group, expanded) => {
   group.setAttribute('aria-expanded', expanded);
 };
 
+const toggleGroup = (group) => {
+  setGroup(group, group.ariaExpanded === 'false' ? 'true' : 'false');
+};
+
 const wrapLiTextInSpan = (li) => {
   const text = li.firstChild;
   if (text.nodeType === 3) {
@@ -38,7 +42,7 @@ const initGroups = (li) => {
   wrapLiTextInSpan(li);
   li.addEventListener('click', (event) => {
     event.stopPropagation();
-    setGroup(li, li.ariaExpanded === 'false' ? 'true' : 'false');
+    toggleGroup(li);
   }, { passive: true });
 };
 
@@ -83,9 +87,6 @@ const openCurrentNode = () => {
     inline: 'center',
   });
 };
-
-// TODO: Highlight last clicked li
-// TODO: Add keyboard controls
 
 const preventScrollBelowContent = (block) => {
   const content = document.querySelector('.content-container');
@@ -135,6 +136,33 @@ const createMobileTOC = (block) => {
   document.body.insertAdjacentElement('afterbegin', modalContainer);
 };
 
+const handleKeyDown = (event) => {
+  event.preventDefault();
+  const current = document.activeElement.closest('li[tabindex]');
+  if (current) {
+    switch (event.key) {
+      case 'ArrowDown':
+        if (current.ariaExpanded === 'true') {
+          current.querySelector(':scope li').focus();
+        } else if (current.nextElementSibling) current.nextElementSibling?.focus();
+        else current.parentElement?.parentElement.nextElementSibling?.focus();
+        break;
+      case 'ArrowUp':
+        if (current.previousElementSibling) current.previousElementSibling?.focus();
+        else current.parentElement?.parentElement.focus(); // always a ul inside an li
+        break;
+      case 'Enter':
+        if (current.role === 'group') toggleGroup(current);
+        else if (current.role === 'treeitem') {
+          current.querySelector(':scope > a')?.click();
+        }
+        break;
+      default:
+        break;
+    }
+  }
+};
+
 export default (block) => {
   convertOlsToUls(block);
   setRole(block, 'tree');
@@ -146,6 +174,7 @@ export default (block) => {
   }, { passive: true, once: true });
 
   window.addEventListener('scroll', () => preventScrollBelowContent(block));
+  window.addEventListener('keydown', handleKeyDown);
 
   initListItems(block);
 
