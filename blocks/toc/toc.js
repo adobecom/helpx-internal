@@ -1,5 +1,3 @@
-// NOTE: this affected by the moveTOC function in scripts.ts
-
 const replaceNode = (oldNode, newElement) => {
   oldNode.insertAdjacentElement('beforebegin', newElement);
   newElement.replaceChildren(...oldNode.children);
@@ -86,11 +84,9 @@ const openCurrentNode = () => {
   });
 };
 
-// TODO: Tablet and mobile styles for title and layout
 // TODO: Mobile toc
 // TODO: Highlight last clicked li
 // TODO: Add keyboard controls
-//
 
 const preventScrollBelowContent = (block) => {
   const content = document.querySelector('.content-container');
