@@ -1,15 +1,3 @@
-const replaceNode = (oldNode, newElement) => {
-  oldNode.insertAdjacentElement('beforebegin', newElement);
-  newElement.replaceChildren(...oldNode.children);
-  oldNode.remove();
-};
-
-const convertOlsToUls = (block) => {
-  block.querySelectorAll('ol').forEach((ol) => {
-    replaceNode(ol, document.createElement('ul'));
-  });
-};
-
 const setRole = (element, role) => {
   element.setAttribute('role', role);
 };
@@ -164,7 +152,6 @@ const handleKeyDown = (event) => {
 };
 
 export default (block) => {
-  convertOlsToUls(block);
   setRole(block, 'tree');
   createMobileTOC(block);
 
