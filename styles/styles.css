@@ -146,6 +146,12 @@ main .last-updated.content {
   padding-bottom: 32px;
 }
 
+main .section.dark.xs-spacing.page-title {
+  width: 100%;
+  z-index: 20;
+  position: fixed;
+}
+
 /*
  * footer
  */
@@ -205,4 +211,41 @@ footer {
 
 .on-this-page a {
   margin-left: 15px;
+}
+
+/* phone */
+@media screen and (max-width: 37.4375rem) {
+  .hidden-mobile {
+    display: none !important;
+  }
+  body.helpxmain-article h1 {
+    font-size: 1.5rem;
+    padding: 13px 0;
+    width: 90%;
+  }
+  .layout-container .content-container .section {
+    padding: 0;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 37.5rem) and (max-width: 63.9375rem) {
+  .hidden-tablet {
+    display: none !important;
+  }
+  body.helpxmain-article h1 {
+    font-size: 1.5rem;
+    padding: 13px 0;
+    width: 60%;
+  }
+  .layout-container .content-container .section {
+    padding: 0;
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 64rem) {
+  .hidden-desktop {
+    display: none !important;
+  }
 }

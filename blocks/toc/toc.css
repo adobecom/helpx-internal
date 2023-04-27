@@ -81,3 +81,9 @@
   text-decoration: none;
   color: var(--text-color);
 }
+
+@media screen and (max-width: 63.9375rem) {
+  .toc {
+    display: none;
+  }
+}

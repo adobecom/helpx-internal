@@ -86,7 +86,6 @@ const openCurrentNode = () => {
   });
 };
 
-// TODO: fix title sticky behavior
 // TODO: Tablet and mobile styles for title and layout
 // TODO: Mobile toc
 // TODO: Highlight last clicked li
@@ -97,7 +96,7 @@ const preventScrollBelowContent = (block) => {
   const content = document.querySelector('.content-container');
   const bottom = window.scrollY + window.innerHeight
     - content.getBoundingClientRect().bottom - window.pageYOffset;
-  if (bottom > 0) block.style.top = `${100 - bottom}px`;
+  block.style.top = bottom > 0 ? `${100 - bottom}px` : '100px';
 };
 
 export default (block) => {
