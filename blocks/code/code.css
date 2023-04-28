@@ -351,7 +351,6 @@ pre[id].linkable-line-numbers span.line-numbers-rows>span:hover:before {
 /* MODIFIED: added the three rules below */
 div.line {
     padding-left: 3.8em;
-    width: 100%;
     overflow:auto;
 }
 
