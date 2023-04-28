@@ -348,15 +348,18 @@ pre[id].linkable-line-numbers span.line-numbers-rows>span:hover:before {
     background-color: rgba(128, 128, 128, .2)
 }
 
-/* MODIFIED: added the three rules below */
+/* MODIFIED: added the four rules below */
 div.line {
     padding-left: 3.8em;
-    overflow:auto;
 }
 
 div.line:hover {
     pointer-events: all;
     background-color: #ddf0dd;
+}
+
+code[class*=language-] {
+  overflow: scroll;
 }
 
 code[class*=language-], pre[class*=language-].line-numbers {
