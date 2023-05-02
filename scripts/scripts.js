@@ -179,6 +179,9 @@ async function buildInternalBanner(block) {
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
     banner.style.paddingTop = `${title.offsetHeight - 2}px`;
+    // needed to make sticky behaviour correct, specifically,
+    // so that the internal banner is always below the sticky title
+    // when scrollHeight is 0.
     window.addEventListener('resize', () => {
       banner.style.paddingTop = `${title.offsetHeight - 2}px`;
     });
