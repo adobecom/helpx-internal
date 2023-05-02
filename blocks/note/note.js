@@ -15,6 +15,6 @@ export default function decorate(block) {
     block.firstElementChild.classList.add('content');
     const icon = document.createElement('div');
     icon.classList.add('icon');
-    block.append(icon);
+    block.firstElementChild.insertAdjacentElement('beforebegin', icon);
   }
 }
