@@ -3,7 +3,6 @@ import { readFile } from '@web/test-runner-commands';
 import { expect } from '@esm-bundle/chai';
 
 const { default: decorate } = await import('../../../blocks/before-after-slider/before-after-slider.js');
-const { getMiddleOfElement } = await import('../../test-utils/utils.js');
 
 document.body.innerHTML = await readFile({ path: './mocks/before-after-slider.html' });
 const beforeafter = document.querySelectorAll('.before-after-slider');
