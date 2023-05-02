@@ -27,11 +27,14 @@ import createInternalBannerBlock from './rules/internal-banner.js';
 import createTableBlocks from './rules/tables.js';
 // import createToCBlock from './rules/toc.js';
 import createColumnsFromDexterFlexContainers from './rules/dexter-flexcontainers.js';
+
+import createDownload from './rules/download.js';
 import createBeforeAfterSliders from './rules/before-and-after.js';
 import createVideosEmbed from './rules/videos.js';
 import importProcedure from './rules/procedure.js';
 import importLegalPrivacy from './rules/legal-privacy-notice.js';
 import handleViewportSpecific from './rules/viewportSpecific.js';
+
 
 export default {
   /**
@@ -75,7 +78,11 @@ export default {
 
     createBeforeAfterSliders(main, document);
 
-    createVideosEmbed(main, document);
+    createColumnsFromDexterFlexContainers(main, document);
+
+    createBeforeAfterSliders(main, document);
+
+    //   createVideosEmbed(main, document);
 
 
     // NOTE: the import scripts for specific blocks need to check if they should be hidden
@@ -92,7 +99,10 @@ export default {
 
     importProcedure(document);
 
+    createDownload(document);
+
     createCodeBlock(document);
+
 
     importLegalPrivacy(document);
 
