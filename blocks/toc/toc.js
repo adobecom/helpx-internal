@@ -120,6 +120,16 @@ const createMobileTOC = (block) => {
     if (event.target === modalContainer) closeModal();
   });
 
+  window.addEventListener('resize', () => {
+    const widthInRem = document.documentElement.clientWidth
+      / parseFloat(getComputedStyle(document.documentElement).fontSize);
+    // WARNING: if you change the media queries you MUST change
+    // the below if statement;
+    if (widthInRem <= 63.9375) {
+      tocModal.appendChild(block);
+    } else document.body.insertAdjacentElement('afterbegin', block);
+  });
+
   document.querySelector('.page-title')?.insertAdjacentElement('afterbegin', tocButton);
   document.body.insertAdjacentElement('afterbegin', modalContainer);
 };
