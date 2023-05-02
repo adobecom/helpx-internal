@@ -6,6 +6,7 @@
   position: relative;
   display: grid;
   overflow: hidden;
+  max-width: fit-content;
 }
 
 .before-after-slider > .image {
