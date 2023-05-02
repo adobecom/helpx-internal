@@ -24,13 +24,14 @@ import createTitleBlock from './rules/title.js';
 import createDescriptionBlock from './rules/description.js';
 import createInternalBannerBlock from './rules/internal-banner.js';
 import createTableBlocks from './rules/tables.js';
-import createToCBlock from './rules/toc.js';
+// import createToCBlock from './rules/toc.js';
 import createColumnsFromDexterFlexContainers from './rules/dexter-flexcontainers.js';
 
 import createDownload from './rules/download.js';
 import createBeforeAfterSliders from './rules/before-and-after.js';
 import createVideosEmbed from './rules/videos.js';
 import importProcedure from './rules/procedure.js';
+import importLegalPrivacy from './rules/legal-privacy-notice.js';
 
 
 export default {
@@ -53,28 +54,27 @@ export default {
       blocks
     */
 
-    //    createTableBlocks(main, document);
+    createTableBlocks(main, document);
 
-    //    createMetadataBlock(main, document);
+    createMetadataBlock(main, document);
 
-    //    createFeedbackBlock(main, document);
+    createFeedbackBlock(main, document);
 
-    //    createAccordionBlocks(main, document);
+    createAccordionBlocks(main, document);
 
-    //    createTitleBlock(main, document);
+    createTitleBlock(main, document);
 
-    //    createDescriptionBlock(main, document);
+    createDescriptionBlock(main, document);
 
-    //    createInternalBannerBlock(main, document);
+    createInternalBannerBlock(main, document);
 
-    //    transformNotes(main, document);
+    transformNotes(main, document);
 
-    //    createToCBlock(main, document);
+    //     createToCBlock(main, document);
 
-    //    createColumnsFromDexterFlexContainers(main, document);
+    createColumnsFromDexterFlexContainers(main, document);
 
-    //   createBeforeAfterSliders(main, document);
-
+    createBeforeAfterSliders(main, document);
 
     createColumnsFromDexterFlexContainers(main, document);
 
@@ -82,10 +82,11 @@ export default {
 
     //   createVideosEmbed(main, document);
 
-
     importProcedure(document);
 
     createDownload(document);
+
+    importLegalPrivacy(document);
 
     /*
       clean
