@@ -24,11 +24,12 @@ import createTitleBlock from './rules/title.js';
 import createDescriptionBlock from './rules/description.js';
 import createInternalBannerBlock from './rules/internal-banner.js';
 import createTableBlocks from './rules/tables.js';
-import createToCBlock from './rules/toc.js';
+// import createToCBlock from './rules/toc.js';
 import createColumnsFromDexterFlexContainers from './rules/dexter-flexcontainers.js';
 import createBeforeAfterSliders from './rules/before-and-after.js';
 import createVideosEmbed from './rules/videos.js';
 import importProcedure from './rules/procedure.js';
+import importLegalPrivacy from './rules/legal-privacy-notice.js';
 
 export default {
   /**
@@ -68,13 +69,15 @@ export default {
 
     createToCBlock(main, document);
 
-    //    createColumnsFromDexterFlexContainers(main, document);
+    createColumnsFromDexterFlexContainers(main, document);
 
     createBeforeAfterSliders(main, document);
 
     createVideosEmbed(main, document);
 
     importProcedure(document);
+
+    importLegalPrivacy(document);
 
     /*
       clean
