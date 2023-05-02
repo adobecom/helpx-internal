@@ -16,6 +16,7 @@
   import rules
 */
 
+import createCodeBlock from './rules/code.js';
 import transformNotes from './rules/notes.js';
 import createMetadataBlock from './rules/metadata.js';
 import createAccordionBlocks from './rules/accordions.js';
@@ -76,6 +77,8 @@ export default {
     createVideosEmbed(main, document);
 
     importProcedure(document);
+
+    createCodeBlock(document);
 
     importLegalPrivacy(document);
 
