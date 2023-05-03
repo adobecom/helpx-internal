@@ -123,8 +123,8 @@ const createMobileTOC = (block) => {
   window.addEventListener('resize', () => {
     const widthInRem = document.documentElement.clientWidth
       / parseFloat(getComputedStyle(document.documentElement).fontSize);
-    // WARNING: if you change the media queries you MUST change
-    // the below if statement;
+    // WARNING: if you change the media query breakpoints you MUST change
+    // the below if statement.
     if (widthInRem <= 63.9375) {
       tocModal.appendChild(block);
     } else document.body.insertAdjacentElement('afterbegin', block);
@@ -162,14 +162,13 @@ const handleKeyDown = (event) => {
 };
 
 export default (block) => {
-  setRole(block, 'tree');
   createMobileTOC(block);
+  setRole(block, 'tree');
 
   window.addEventListener('main-elements-loaded', () => {
     block.style.height = `${getTocHeight()}px`;
     openCurrentNode();
   }, { passive: true, once: true });
-
   window.addEventListener('scroll', () => preventScrollBelowContent(block));
   window.addEventListener('keydown', handleKeyDown);
 
