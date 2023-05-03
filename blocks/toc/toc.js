@@ -60,8 +60,8 @@ const findCurrentNode = () => [...document.querySelectorAll('a')].find((a) => a.
 
 const openCurrentNode = () => {
   const currentNode = findCurrentNode();
-  currentNode.parentElement.setAttribute('aria-selected', true);
-  currentNode.parentElement.setAttribute('tabindex', 0);
+  currentNode?.parentElement.setAttribute('aria-selected', true);
+  currentNode?.parentElement.setAttribute('tabindex', 0);
   const openAllParents = (node) => {
     const parent = node?.parentElement?.closest('li[role="group"]');
     if (!(node && parent)) return;
@@ -79,7 +79,7 @@ const openCurrentNode = () => {
 const preventScrollBelowContent = (block) => {
   const content = document.querySelector('.content-container');
   const bottom = window.scrollY + window.innerHeight
-    - content.getBoundingClientRect().bottom - window.pageYOffset;
+    - content?.getBoundingClientRect().bottom - window.pageYOffset;
   block.style.top = bottom > 0 ? `${100 - bottom}px` : '100px';
 };
 
@@ -143,11 +143,11 @@ const handleKeyDown = (event) => {
         if (current.ariaExpanded === 'true') {
           current.querySelector(':scope li').focus();
         } else if (current.nextElementSibling) current.nextElementSibling?.focus();
-        else current.parentElement?.parentElement.nextElementSibling?.focus();
+        else current.parentElement.parentElement.nextElementSibling.focus();
         break;
       case 'ArrowUp':
         if (current.previousElementSibling) current.previousElementSibling?.focus();
-        else current.parentElement?.parentElement.focus(); // always a ul inside an li
+        else current.parentElement?.parentElement.focus(); // always an li inside a ul
         break;
       case 'Enter':
         if (current.role === 'group') toggleGroup(current);
@@ -161,6 +161,11 @@ const handleKeyDown = (event) => {
   }
 };
 
+// NOTE: This block is slightly different from others;
+// A couple of things can only be done once the page is
+// fully loaded. This means there is some coupling between
+// this block and scripts.js. Specifically, the coupling is in
+// the event listener for the 'main-elements-loaded' event.
 export default (block) => {
   createMobileTOC(block);
   setRole(block, 'tree');

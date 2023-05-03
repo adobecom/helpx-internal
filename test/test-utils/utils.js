@@ -6,6 +6,4 @@ const getMiddleOfElement = (element) => {
   };
 };
 
-const f = () => { };
-
-export { getMiddleOfElement, f };
+export { getMiddleOfElement };
