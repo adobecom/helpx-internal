@@ -221,6 +221,7 @@ footer {
   .hidden-mobile {
     display: none !important;
   }
+
   body.helpxmain-article h1 {
     font-size: 1.5rem;
     padding: 13px 0;
@@ -248,6 +249,7 @@ footer {
 
 /* desktop */
 @media screen and (min-width: 64rem) {
+
   .hidden-desktop {
     display: none !important;
   }

@@ -1,0 +1,52 @@
+.download > div {
+  display: flex;
+  flex-direction: row;
+  margin: 15px 33px;
+  box-sizing: border-box;
+}
+
+.download a.download-button {
+  color: #8e8e8e;
+  font-size:15px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  padding: 2px 14px;
+  margin-right: 20px;
+  border: 2px solid #8e8e8e;
+  border-radius: 16px;
+  transition: all 125ms ease-in-out;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.download a.download-button:hover {
+  color: #fff;
+  background: #8e8e8e;
+  text-decoration: none;
+}
+
+.download > div > div {
+  display: inline-block;
+  align-self: baseline;
+  font-size:14px;
+}
+
+.download p.download-title {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.download .download-title:before {
+  background: url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22iso-8859-1%22%3F%3E%0A%3Csvg%20version%3D%221.1%22%20id%3D%22iOS_loadAndInstall_48_lt-ou%22%0A%09%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%20x%3D%220px%22%20y%3D%220px%22%20%20width%3D%2248%22%20height%3D%2248%22%0A%09%20viewBox%3D%220%200%2048%2048%22%0A%09%20enable-background%3D%22new%200%200%2046%2046%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cpolygon%20fill%3D%22%238e8e8e%22%20points%3D%227%2C5%207%2C35%209%2C33%209%2C7%2041%2C7%2041%2C39%2015%2C39%2013%2C41%2043%2C41%2043%2C5%20%22/%3E%0A%3Cpolygon%20fill%3D%22%238e8e8e%22%20points%3D%2213%2C21%2013%2C23%2023.7275%2C23%201.3638%2C45.3638%202.6362%2C46.6362%2025%2C24.2725%2025%2C35%2027%2C35%2027%2C21%20%22/%3E%0A%3C/svg%3E%0A)
+    left top no-repeat;
+  background-size: 25px;
+  float: left;
+  height: 25px;
+  width:25px;
+  margin: -2px 5px 0 0;
+  content: '';
+}

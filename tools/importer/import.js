@@ -16,6 +16,7 @@
   import rules
 */
 
+import createCodeBlock from './rules/code.js';
 import transformNotes from './rules/notes.js';
 import createMetadataBlock from './rules/metadata.js';
 import createAccordionBlocks from './rules/accordions.js';
@@ -26,10 +27,14 @@ import createInternalBannerBlock from './rules/internal-banner.js';
 import createTableBlocks from './rules/tables.js';
 // import createToCBlock from './rules/toc.js';
 import createColumnsFromDexterFlexContainers from './rules/dexter-flexcontainers.js';
+
+import createDownload from './rules/download.js';
 import createBeforeAfterSliders from './rules/before-and-after.js';
 import createVideosEmbed from './rules/videos.js';
 import importProcedure from './rules/procedure.js';
 import importLegalPrivacy from './rules/legal-privacy-notice.js';
+import handleViewportSpecific from './rules/viewportSpecific.js';
+
 
 export default {
   /**
@@ -73,9 +78,31 @@ export default {
 
     createBeforeAfterSliders(main, document);
 
-    createVideosEmbed(main, document);
+    createColumnsFromDexterFlexContainers(main, document);
+
+    createBeforeAfterSliders(main, document);
+
+    //   createVideosEmbed(main, document);
+
+
+    // NOTE: the import scripts for specific blocks need to check if they should be hidden
+    // by checking themselves and their parents for '.hidden-desktop',
+    // 'hidden-tablet', and '.hidden-mobile'
+    // TODO: create an abstraction that eliminates repeated code across import scripts,
+    // since there's a lot of it.
+
+    // This function must run at the very end because it might change something
+    // that should be a block to just text, so make sure all the blocks we
+    // need have already been created when we get to this function.
+    // It checks if something's a block by looking for a <tr> element
+    handleViewportSpecific(document);
 
     importProcedure(document);
+
+    createDownload(document);
+
+    createCodeBlock(document);
+
 
     importLegalPrivacy(document);
 
