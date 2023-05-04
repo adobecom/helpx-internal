@@ -275,8 +275,8 @@ async function buildOnThisPageSection(main) {
  */
 async function buildAutoBlocks(main) {
   try {
-    buildLayout(main);
     buildInternalBanner(main);
+    buildLayout(main);
     fixTableHeaders(main);
     await buildFooter(main);
     // await buildOnThisPageSection(main);

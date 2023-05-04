@@ -119,6 +119,10 @@ body.helpxmain-article h1 {
   internal banner
 */
 
+main {
+  min-height: 3rem; /* mitigate CLS */
+}
+
 main .internal-banner .banner {
   display: flex;
   gap: 5px;
@@ -153,6 +157,7 @@ main .section.dark.xs-spacing.page-title {
   position: fixed;
   padding-left: 2.5rem !important;
   padding-right: 2.5rem !important;
+  top: 0;
 }
 
 /*
@@ -230,6 +235,11 @@ footer {
   .layout-container .content-container .section {
     padding: 0;
   }
+  main > div[class='section'] {
+    padding-top: 234px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
 }
 
 /* tablet */
@@ -245,10 +255,20 @@ footer {
   .layout-container .content-container .section {
     padding: 0;
   }
+  main > div[class='section'] {
+    padding-top: 233px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
 }
 
 /* desktop */
 @media screen and (min-width: 64rem) {
+  /* mitigate CLS */
+  main > div[class='section'] {
+    padding-left: calc(265px + 2.5rem);
+    padding-top: 202px;
+  }
 
   .hidden-desktop {
     display: none !important;
