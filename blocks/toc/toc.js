@@ -42,6 +42,8 @@ const initLinksInGroup = (li) => {
         a.addEventListener('click', (e) => {
           e.stopPropagation();
         }, { passive: true });
+        // to overcome a limitation in the import script
+        a.href = a.pathname;
       },
     );
 };

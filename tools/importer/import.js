@@ -25,7 +25,7 @@ import createTitleBlock from './rules/title.js';
 import createDescriptionBlock from './rules/description.js';
 import createInternalBannerBlock from './rules/internal-banner.js';
 import createTableBlocks from './rules/tables.js';
-// import createToCBlock from './rules/toc.js';
+import createToCBlock from './rules/toc.js';
 import createColumnsFromDexterFlexContainers from './rules/dexter-flexcontainers.js';
 
 import createDownload from './rules/download.js';
@@ -34,7 +34,6 @@ import createVideosEmbed from './rules/videos.js';
 import importProcedure from './rules/procedure.js';
 import importLegalPrivacy from './rules/legal-privacy-notice.js';
 import handleViewportSpecific from './rules/viewportSpecific.js';
-
 
 export default {
   /**
@@ -84,7 +83,6 @@ export default {
 
     //   createVideosEmbed(main, document);
 
-
     // NOTE: the import scripts for specific blocks need to check if they should be hidden
     // by checking themselves and their parents for '.hidden-desktop',
     // 'hidden-tablet', and '.hidden-mobile'
@@ -102,7 +100,6 @@ export default {
     createDownload(document);
 
     createCodeBlock(document);
-
 
     importLegalPrivacy(document);
 

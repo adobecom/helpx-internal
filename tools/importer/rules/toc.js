@@ -6,7 +6,8 @@ export default function createToCBlock(main, document) {
     replaceNode(ol, document.createElement('ul'));
   });
   toc.querySelectorAll('a').forEach((a) => {
-    if (a.href.slice(-5) === '.html') a.href = a.href.slice(0, -5);
+    if (a.pathname.slice(-5) === '.html') a.href = a.pathname.slice(0, -5);
+    else a.href = a.pathname;
   });
   const cells = [
     ['toc'],
