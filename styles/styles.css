@@ -221,6 +221,10 @@ footer {
   margin-left: 15px;
 }
 
+main > div[class='section'] {
+  margin-right: 23%;
+}
+
 /* phone */
 @media screen and (max-width: 37.4375rem) {
   .hidden-mobile {
