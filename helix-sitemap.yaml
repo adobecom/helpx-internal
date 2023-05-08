@@ -1,0 +1,13 @@
+version: 1
+
+sitemaps:
+  website:
+    origin: https://helpx-internal.corp.adobe.com
+    lastmod: YYYY-MM-DD
+    default: en-US
+    languages:
+      us:
+        source: /query-index.json
+        alternate: /{path}.html
+        destination: /content/help/en/sitemap.xml
+        hreflang: en-US
