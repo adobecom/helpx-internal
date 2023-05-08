@@ -123,11 +123,10 @@ const createMobileTOC = (block) => {
   });
 
   window.addEventListener('resize', () => {
-    const widthInRem = document.documentElement.clientWidth
-      / parseFloat(getComputedStyle(document.documentElement).fontSize);
     // WARNING: if you change the media query breakpoints you MUST change
     // the below if statement.
-    if (widthInRem <= 63.9375) {
+    const mql = window.matchMedia('(max-width: 63.9375rem)');
+    if (mql.matches) {
       tocModal.appendChild(block);
     } else document.body.insertAdjacentElement('afterbegin', block);
   });
