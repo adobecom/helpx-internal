@@ -3,7 +3,7 @@ version: 1
 sitemaps:
   website:
     origin: https://helpx-internal.corp.adobe.com
-    lastmod: YYYY-MM-DD'T'HH:mm:ssZ
+    lastmod: YYYY-MM-DDTHH:mm:ssZ
     default: en-US
     languages:
       us:
