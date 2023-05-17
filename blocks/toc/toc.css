@@ -1,11 +1,11 @@
 .toc {
   overflow-y: scroll;
-  max-height: calc(95vh - 70px);
+  max-height: calc(95vh - 0px);
   min-height: 500px;
   max-width: 250px;
   position: fixed;
   z-index: 10;
-  top: 100px;
+  top: 170px;
 }
 
 .toc > div > div > ul {
@@ -103,6 +103,7 @@
     border: 1px solid #ccc;
     color: #fff;
     border-radius: 5px;
+    width: 6.6rem;
   }
   .page-title .toc-mobile-drawer:before {
     content: '';

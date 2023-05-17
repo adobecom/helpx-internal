@@ -88,11 +88,6 @@ body.helpxmain-article {
   font-family: adobe-clean,Source Sans Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 }
 
-body.helpxmain-article > .section {
-  display: block;
-  margin: 0 auto;
-}
-
 body.helpxmain-article h1 {
   padding: 4px 48px 6px 0;
   margin: 0;
@@ -137,6 +132,10 @@ main .internal-banner .banner {
   color: var(--static-color-white);
 }
 
+main .internal-banner {
+  position: absolute;
+  width: 100%;
+}
 /* info icon - added via global block function in scripts.js */
 main .internal-banner .banner .icon {
   height: 18px;
@@ -157,7 +156,13 @@ main .section.dark.xs-spacing.page-title {
   position: fixed;
   padding-left: 2.5rem !important;
   padding-right: 2.5rem !important;
-  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+main .section.dark.xs-spacing.page-title > .content {
+  margin: 0;
 }
 
 /*
@@ -173,24 +178,6 @@ footer {
   padding: 20px 0;
   position: relative;
   text-align: center;
-}
-
-/*
- * content layout
- */
-
-.layout-container {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-}
-
-.layout-container .content-container {
-  width: 77%;
-  max-width:77%;
-}
-
-.layout-container .content-container .section {
-  padding-left: 265px;
 }
 
 /*
@@ -240,9 +227,14 @@ main > div[class='section'] {
     padding: 0;
   }
   main > div[class='section'] {
-    padding-top: 234px;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+  }
+  .page-title + [class='section'], .internal-banner + [class='section'] {
+    padding-top: 234px;
+  }
+  .page-title {
+    top: 57px;
   }
 }
 
@@ -260,9 +252,14 @@ main > div[class='section'] {
     padding: 0;
   }
   main > div[class='section'] {
-    padding-top: 233px;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+  }
+  .page-title + [class='section'], .internal-banner + [class='section'] {
+    padding-top: 233px;
+  }
+  .page-title {
+    top: 57px;
   }
 }
 
@@ -271,10 +268,26 @@ main > div[class='section'] {
   /* mitigate CLS */
   main > div[class='section'] {
     padding-left: calc(265px + 2.5rem);
+  }
+  .page-title + [class='section'], .internal-banner + [class='section'] {
     padding-top: 202px;
+  }
+
+  main .last-updated {
+    padding-left: calc(265px + 2.5rem);
   }
 
   .hidden-desktop {
     display: none !important;
+  }
+  .page-title {
+    height: 62px;
+  }
+}
+
+/* accommodate global nav */
+@media (min-width: 900px) {
+  .page-title {
+    top: 64px;
   }
 }

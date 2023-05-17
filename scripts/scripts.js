@@ -276,9 +276,9 @@ async function buildOnThisPageSection(main) {
 async function buildAutoBlocks(main) {
   try {
     buildInternalBanner(main);
-    buildLayout(main);
+    // buildLayout(main);
     fixTableHeaders(main);
-    await buildFooter(main);
+    // await buildFooter(main);
     // await buildOnThisPageSection(main);
   } catch (error) {
     // eslint-disable-next-line no-console
