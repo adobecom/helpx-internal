@@ -8,7 +8,6 @@ const createDownload = (document) => {
     download.querySelectorAll('.download-link-container').forEach((container) => {
       const a = container.querySelector(':scope a');
       a.href = `https://helpx-internal.corp.adobe.com${a.href}`;
-      console.info('poo', a.href);
       cells.push([
         a,
         container.querySelector('.download-description').textContent,
