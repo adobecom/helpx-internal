@@ -6,6 +6,7 @@
   position: fixed;
   z-index: 10;
   top: 170px;
+  margin-left: 5%;
 }
 
 .toc > div > div > ul {
@@ -103,6 +104,8 @@
     border: 1px solid #ccc;
     color: #fff;
     border-radius: 5px;
+    margin-top: 12px;
+    margin-left: 12px;
     width: 6.6rem;
   }
   .page-title .toc-mobile-drawer:before {
