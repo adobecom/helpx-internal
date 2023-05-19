@@ -55,9 +55,19 @@ table th {
   background-color: var(--table-header-color-background);
 }
 
-p {
+body p {
   margin-block-start: 0;
   margin-block-end: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 10px 0;
+  overflow-wrap: break-word;
+}
+body div {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 10px 0;
+  overflow-wrap: break-word;
 }
 
 /* equivalent of section title in AEM */
@@ -65,14 +75,9 @@ p {
   font-size: 2rem;
   font-weight: 400;
   line-height: 1em;
-
-  /*
-* We may need to move the below to
-* template specific selectors
-* */
   border-top: 1px solid var(--static-color-heading-border);
-  margin: 2rem 0 1.5rem;
-  padding: 20px 0 0;
+  margin: 0;
+  padding: 20px  0;
 }
 
 .columns {
@@ -89,34 +94,40 @@ body.helpxmain-article {
 }
 
 body.helpxmain-article h1 {
-  padding: 4px 48px 6px 0;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 1050px;
   line-height: 1.15;
   font-size: 36px;
   font-weight: 500;
-  width: calc(100% - 480px);
   text-align: left;
   word-break: break-word;
+  padding: 0 2.5rem;
 }
 
 /*
 * title
 */
 
-.page-title {
-  padding: 10px!important;
+main .section.dark.xs-spacing.page-title {
+  padding: 0 2.5rem 10px 0 !important;
   font-size: 36px;
   font-weight: 500;
   color: var(--static-color-white)!important;
+  width: 100%;
+  z-index: 20;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+main .section.dark.xs-spacing.page-title > .content {
+  margin: 0;
 }
 
 /*
   internal banner
 */
-
-main {
-  min-height: 3rem; /* mitigate CLS */
-}
 
 main .internal-banner .banner {
   display: flex;
@@ -146,23 +157,26 @@ main .last-updated.content {
   font-weight: lighter;
   font-size: 16px;
   color: var(--internal-banner-color-font);
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding: 32px 2.5rem;
+  margin: 0 auto;
+  max-width: 1050px;
 }
 
-main .section.dark.xs-spacing.page-title {
-  width: 100%;
-  z-index: 20;
-  position: fixed;
-  padding-left: 2.5rem !important;
-  padding-right: 2.5rem !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+/*
+* sections
+*/
+
+main > div[class='section'] {
+  max-width: 1050px;
+  padding: 0 2.5rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 66% 1fr;
 }
 
-main .section.dark.xs-spacing.page-title > .content {
-  margin: 0;
+main > div[class='section'] > div {
+  grid-column-start: 1;
+  grid-column-end: 1;
 }
 
 /*
@@ -185,11 +199,26 @@ footer {
  */
 
 .on-this-page {
+  position: fixed;
+  height: 300px;
+  width: 20%;
+  top: 214px;
+  right: 40px;
   display: flex;
-  width: 30%;
+  flex-direction: column;
+}
+
+.on-this-page:before {
+  content: 'Internal';
+  color: #c00;
+  font-weight: 700;
+  padding-bottom: 12px;
+}
+
+.on-this-page > .content {
+  display: flex;
   flex-direction: column;
   gap: 20px;
-  position: sticky;
   top: 20px;
   background: url('https://main--helpx-internal--adobecom.hlx.page/media_1b45f544d71effad595a85747635d01832a3c0149.png');
   background-color: var(--on-this-page-background);
@@ -208,10 +237,6 @@ footer {
   margin-left: 15px;
 }
 
-main > div[class='section'] {
-  margin-right: 23%;
-}
-
 /* phone */
 @media screen and (max-width: 37.4375rem) {
   .hidden-mobile {
@@ -220,21 +245,23 @@ main > div[class='section'] {
 
   body.helpxmain-article h1 {
     font-size: 1.5rem;
-    padding: 13px 0;
-    width: 90%;
+    padding: 13px 2.5rem;
   }
   .layout-container .content-container .section {
     padding: 0;
   }
   main > div[class='section'] {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
   }
   .page-title + [class='section'], .internal-banner + [class='section'] {
     padding-top: 234px;
   }
   .page-title {
     top: 57px;
+  }
+  .last-updated {
+    padding-left: 2.5rem !important;
   }
 }
 
@@ -245,41 +272,42 @@ main > div[class='section'] {
   }
   body.helpxmain-article h1 {
     font-size: 1.5rem;
-    padding: 13px 0;
-    width: 60%;
+    padding: 13px 2.5rem;
   }
   .layout-container .content-container .section {
     padding: 0;
   }
   main > div[class='section'] {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
   }
   .page-title + [class='section'], .internal-banner + [class='section'] {
     padding-top: 233px;
   }
   .page-title {
     top: 57px;
+    height: auto;
+  }
+  .last-updated {
+    padding-left: 2.5rem !important;
+  }
+  .on-this-page {
+    top: 265px;
   }
 }
 
 /* desktop */
 @media screen and (min-width: 64rem) {
   /* mitigate CLS */
-  main > div[class='section'] {
-    padding-left: calc(265px + 2.5rem);
-  }
+
   .page-title + [class='section'], .internal-banner + [class='section'] {
     padding-top: 202px;
-  }
-
-  main .last-updated {
-    padding-left: calc(265px + 2.5rem);
   }
 
   .hidden-desktop {
     display: none !important;
   }
+
   .page-title {
     height: 62px;
   }
@@ -288,6 +316,15 @@ main > div[class='section'] {
 /* accommodate global nav */
 @media (min-width: 900px) {
   .page-title {
-    top: 64px;
+    top: 55px;
+  }
+}
+
+@media (max-width: 700px) {
+  .on-this-page {
+    display: none;
+  }
+  main > div[class='section'] {
+    grid-template-columns: 100%
   }
 }
