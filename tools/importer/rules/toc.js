@@ -17,10 +17,4 @@ export default function createToCBlock(main, document) {
     main.append(WebImporter.DOMUtils.createTable(cells, document));
     toc.remove();
   }
-  /* const toc = document.querySelector('.toc');
-  const a = document.createElement('a');
-  a.href = 'https://toc--helpx-internal--adobecom.hlx.page/content/help/en/fragments/illustratortoc';
-  a.textContent = a.href;
-  toc?.insertAdjacentElement('beforebegin', a);
-  toc?.remove(); */
 }
