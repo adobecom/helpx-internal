@@ -264,9 +264,6 @@ footer {
   .page-title + [class='section'], .internal-banner + [class='section'] {
     padding-top: 234px;
   }
-  .page-title {
-    top: 57px;
-  }
   .last-updated {
     padding-left: 2.5rem !important;
   }
@@ -290,10 +287,6 @@ footer {
   }
   .page-title + [class='section'], .internal-banner + [class='section'] {
     padding-top: 233px;
-  }
-  .page-title {
-    top: 57px;
-    height: auto;
   }
   .last-updated {
     padding-left: 2.5rem !important;
