@@ -138,11 +138,9 @@ const fixPageLayout = () => {
   const header = document.querySelector('header');
   const title = document.querySelector('.page-title');
 
-  const margin = () => parseFloat(window.getComputedStyle(header.querySelector('.gnav-wrapper'))?.marginTop ?? 0);
-
-  title.style.top = `${header.offsetHeight + margin()}px`;
+  title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
   window.addEventListener('resize', () => {
-    title.style.top = `${header.offsetHeight + margin()}px`;
+    title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
   });
 
   if (document.querySelector('.toc')) {
@@ -238,12 +236,12 @@ async function buildInternalBanner() {
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
-    banner.style.paddingTop = `${title.offsetHeight}px`;
+    banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
     // needed to make sticky behaviour correct, specifically,
     // so that the internal banner is always below the sticky title
     // when scrollHeight is 0.
     window.addEventListener('resize', () => {
-      banner.style.paddingTop = `${title.offsetHeight}px`;
+      banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
     });
 
     const text = document.createElement('div');
@@ -378,6 +376,8 @@ export async function fetchIndex(indexFile, pageSize = 500) {
 
   return newIndex;
 }
+
+const getHeaderMarginTop = () => parseFloat(window.getComputedStyle(document.querySelector('header .gnav-wrapper'))?.marginTop ?? 0);
 
 function getMonthShortName(monthNo) {
   const date = new Date();
