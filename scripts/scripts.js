@@ -138,7 +138,7 @@ const fixPageLayout = () => {
   const header = document.querySelector('header');
   const title = document.querySelector('.page-title');
 
-  const margin = () => parseFloat(window.getComputedStyle(header).marginTop);
+  const margin = () => parseFloat(window.getComputedStyle(header.querySelector('.gnav-wrapper'))?.marginTop ?? 0);
 
   title.style.top = `${header.offsetHeight + margin()}px`;
   window.addEventListener('resize', () => {
