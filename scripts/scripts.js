@@ -377,7 +377,13 @@ export async function fetchIndex(indexFile, pageSize = 500) {
   return newIndex;
 }
 
-const getHeaderMarginTop = () => parseFloat(window.getComputedStyle(document.querySelector('header .gnav-wrapper'))?.marginTop ?? 0);
+const getHeaderMarginTop = () => {
+  const header = document.querySelector('header .gnav-wrapper');
+  if (header) {
+    return parseFloat(window.getComputedStyle(header)?.marginTop ?? 0);
+  }
+  return 0;
+};
 
 function getMonthShortName(monthNo) {
   const date = new Date();
