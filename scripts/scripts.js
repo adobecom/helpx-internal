@@ -138,9 +138,11 @@ const fixPageLayout = () => {
   const header = document.querySelector('header');
   const title = document.querySelector('.page-title');
 
-  title.style.top = `${header.offsetHeight}px`;
+  const margin = () => parseFloat(window.getComputedStyle(header).marginTop);
+
+  title.style.top = `${header.offsetHeight + margin()}px`;
   window.addEventListener('resize', () => {
-    title.style.top = `${header.offsetHeight}px`;
+    title.style.top = `${header.offsetHeight + margin()}px`;
   });
 
   if (document.querySelector('.toc')) {
