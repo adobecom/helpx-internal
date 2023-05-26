@@ -76,14 +76,25 @@ const miloLibs = setLibs(LIBS);
   });
 }());
 
-const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/utils.js`);
+const { loadArea, loadDelayed, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils.js`);
 
 (async function loadPage() {
   setConfig({ ...CONFIG, miloLibs });
 
   await loadArea();
 
+  const sections = document.querySelectorAll('div[class="section"]');
+  if (document.querySelector('.toc')) {
+    sections.forEach((section) => {
+      section.style.paddingLeft = '335px';
+    });
+  }
+
   await buildAutoBlocks(document.body);
+
+  if (document.querySelector('.toc')) {
+    document.querySelector('.last-updated').style.paddingLeft = '335px';
+  }
 
   const event = new Event('main-elements-loaded', { bubbles: false });
   window.dispatchEvent(event);
@@ -92,6 +103,46 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
   */
 
   document.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
+
+  // Render blocks inside other blocks
+  const blockList = ['before-after-slider', 'code', 'download', 'generic', 'note', 'procedure']; // not toc
+  const loadBlock = (block, t) => {
+    if (block) {
+      const convertBlock = (tab) => {
+        const replaceNode = (oldNode, newElement) => {
+          oldNode.insertAdjacentElement('beforebegin', newElement);
+          newElement.replaceChildren(...oldNode.childNodes);
+          oldNode.remove();
+        };
+        const parent = document.createElement('div');
+        const thead = tab.querySelector(':scope thead');
+        parent.classList.add(thead?.textContent.split('(')[0].trim().toLowerCase());
+        thead.textContent.match(/\(([^\)]+)\)/)?.split?.(',').map((cls) => parent.classList.add(cls.trim().toLowerCase()));
+        thead.remove();
+        replaceNode(tab, parent);
+        parent.replaceChildren(...parent.querySelector(':scope tbody').children);
+        parent.querySelectorAll('tr, td').forEach((el) => replaceNode(el, document.createElement('div')));
+        return parent;
+      };
+
+      import(`/blocks/${block}/${block}.js`).then(({ default: init }) => {
+        const bl = convertBlock(t);
+        init(bl);
+      })
+        .then(() => {
+          loadStyle(`/blocks/${block}/${block}.css`, null);
+        }).catch((e) => {
+          console.log(`Failed loading ${block}`, e);
+        });
+    }
+  };
+  document.querySelectorAll('table').forEach((table) => {
+    // if table > thead textContent contains something from that blockList
+    blockList.map((b) => {
+      if (table?.querySelector(':scope > thead')?.textContent.trim().split(' ')[0].toLowerCase().includes(b)) loadBlock(b, table);
+      return null;
+    });
+  });
 
   /*
     extra features end
@@ -109,35 +160,6 @@ const { loadArea, loadDelayed, setConfig } = await import(`${miloLibs}/utils/uti
 /*
  * global blocks
  */
-
-// layout
-function buildLayout(main) {
-  const layout = document.createElement('div');
-  layout.classList.add('layout-container');
-  main.append(layout);
-
-  const content = document.createElement('div');
-  content.classList.add('content-container');
-  layout.append(content);
-
-  main.querySelectorAll('.section').forEach((s) => {
-    if (s.classList.length === 1) {
-      content.append(s);
-    }
-  });
-}
-
-// footer
-async function buildFooter(main) {
-  const footer = document.createElement('footer');
-  footer.classList.add('content');
-
-  const resp = await fetch('/footer.plain.html');
-  const html = await resp.text();
-  footer.innerHTML = html;
-
-  main.append(footer);
-}
 
 /**
  * Replace icons with inline SVG and prefix with codeBasePath.
@@ -178,12 +200,12 @@ async function buildInternalBanner(block) {
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
-    banner.style.paddingTop = `${title.offsetHeight - 2}px`;
+    banner.style.paddingTop = `${title.offsetHeight - 19}px`;
     // needed to make sticky behaviour correct, specifically,
     // so that the internal banner is always below the sticky title
     // when scrollHeight is 0.
     window.addEventListener('resize', () => {
-      banner.style.paddingTop = `${title.offsetHeight - 2}px`;
+      banner.style.paddingTop = `${title.offsetHeight - 19}px`;
     });
 
     const text = document.createElement('div');
@@ -231,43 +253,31 @@ function fixTableHeaders(main) {
   });
 }
 
-// "on this page" section
-async function buildOnThisPageSection(main) {
-  const layout = document.querySelector('.layout-container');
-  if (!layout) {
-    return;
-  }
-
-  const headings = main.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  if (headings.length === 0) {
-    return;
-  }
-
+const buildOnThisPageSection = () => {
   const container = document.createElement('div');
   container.classList.add('on-this-page');
-
-  const placeholders = await fetchPlaceholders();
-  const title = document.createElement('h5');
-  title.textContent = `${placeholders.onThisPage || 'On this page'}:`;
-  container.append(title);
-
-  headings.forEach((h, idx) => {
-    if (h.closest('.page-title') === null && h.textContent) {
-      const src = h.textContent === '' ? `${h.nodeName}-title-${idx + 1}` : h.textContent.toLowerCase().replaceAll(' ', '-');
-
-      const anchor = document.createElement('a');
-      anchor.setAttribute('id', src);
-      h.insertAdjacentElement('beforeBegin', anchor);
-
-      const link = document.createElement('a');
-      link.setAttribute('href', `#${src}`);
-      link.textContent = h.textContent;
-      container.append(link);
-    }
+  const content = document.createElement('div');
+  content.classList.add('content');
+  container.append(content);
+  document.querySelectorAll('h2').forEach((heading) => {
+    const a = document.createElement('a');
+    a.href = `#${heading.id}`;
+    a.textContent = heading.textContent;
+    a.addEventListener('click', (e) => {
+      const url = new URL(window.location.href);
+      url.hash = `#${heading.id}`;
+      window.history.replaceState(null, null, url);
+      e.preventDefault();
+      heading.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
+      });
+    });
+    content.append(a);
   });
-
-  layout.append(container);
-}
+  document.querySelector('main')?.append(container);
+};
 
 /**
  * Builds all synthetic blocks in a container element.
@@ -276,10 +286,10 @@ async function buildOnThisPageSection(main) {
 async function buildAutoBlocks(main) {
   try {
     buildInternalBanner(main);
-    buildLayout(main);
+    // buildLayout(main);
     fixTableHeaders(main);
-    await buildFooter(main);
-    // await buildOnThisPageSection(main);
+    // await buildFooter(main);
+    buildOnThisPageSection(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

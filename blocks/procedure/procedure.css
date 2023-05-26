@@ -6,7 +6,8 @@
   list-style-type: none;
   counter-increment: step-counter;
   display: flex;
-  margin-bottom: 1.5rem;
+  padding: 2px 0;
+  margin: 10px 0;
 }
 
 .procedure > ol.stepList > li.step:before {
@@ -27,6 +28,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin:0;
+  padding-top:0;
+}
+
+.procedure > ol.stepList > li.step p {
+  margin: 0;
 }
 
 .procedure > ol.stepList > li.step > div > ul {

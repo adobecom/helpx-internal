@@ -86,8 +86,6 @@ export default {
     // NOTE: the import scripts for specific blocks need to check if they should be hidden
     // by checking themselves and their parents for '.hidden-desktop',
     // 'hidden-tablet', and '.hidden-mobile'
-    // TODO: create an abstraction that eliminates repeated code across import scripts,
-    // since there's a lot of it.
 
     // This function must run at the very end because it might change something
     // that should be a block to just text, so make sure all the blocks we
@@ -115,6 +113,7 @@ export default {
       '.globalNavFooter',
       'locale-modal',
       'iframe',
+      '.internal-confidential',
       'img[style="display:none"]',
       'img[style="display:none;"]',
       'img[style="display:none;"]',
