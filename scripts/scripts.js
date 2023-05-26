@@ -76,7 +76,7 @@ const miloLibs = setLibs(LIBS);
   });
 }());
 
-const { loadArea, loadDelayed, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils.js`);
+const { loadArea, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils.js`);
 
 (async function loadPage() {
   setConfig({ ...CONFIG, miloLibs });
@@ -147,8 +147,6 @@ const { loadArea, loadDelayed, setConfig, loadStyle } = await import(`${miloLibs
   /*
     extra features end
   */
-
-  loadDelayed();
 }());
 
 /*
