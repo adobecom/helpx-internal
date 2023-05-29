@@ -150,7 +150,7 @@ const fixTitle = () => {
   const header = document.querySelector('header');
   const title = document.querySelector('.page-title');
 
-  title.style.top = `${header.offsetHeight + getHeaderMarginTop() + 10}px`;
+  title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
   window.addEventListener('resize', () => {
     title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
   });
@@ -248,7 +248,7 @@ async function buildInternalBanner() {
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
-    banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop() + 10}px`;
+    banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
     // needed to make sticky behaviour correct, specifically,
     // so that the internal banner is always below the sticky title
     // when scrollHeight is 0.
