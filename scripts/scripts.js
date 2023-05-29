@@ -89,13 +89,25 @@ const miloLibs = setLibs(LIBS);
   }
 }());
 
-const { loadArea, loadDelayed, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils.js`);
+// Prevent redirection to helpx url when pressing enter in search
+(function shenanigans() {
+  EventTarget.prototype.addEventListener = new Proxy(EventTarget.prototype.addEventListener, {
+    apply: (targetFn, targetElement, argumentsList) => {
+      const [event, fn] = argumentsList;
+      const doNothing = () => { };
+      const shouldDoNothing = targetElement?.classList?.[0] === 'gnav-search-input' && event === 'keydown';
+      const args = [event, shouldDoNothing ? doNothing : fn];
+      Reflect.apply(targetFn, targetElement, args);
+    },
+  });
+}());
+
+const { loadArea, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils.js`);
 
 (async function loadPage() {
   setConfig({ ...CONFIG, miloLibs });
   await loadArea();
   buildAutoBlocks();
-  loadDelayed();
 }());
 
 /*
@@ -110,8 +122,8 @@ const { loadArea, loadDelayed, setConfig, loadStyle } = await import(`${miloLibs
  */
 function buildAutoBlocks() {
   try {
+    fixTitle();
     buildInternalBanner();
-    fixPageLayout();
     fixTableHeaders();
     buildOnThisPageSection();
 
@@ -134,11 +146,11 @@ const removeEmptyDivs = () => {
   document.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
 };
 
-const fixPageLayout = () => {
+const fixTitle = () => {
   const header = document.querySelector('header');
   const title = document.querySelector('.page-title');
 
-  title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
+  title.style.top = `${header.offsetHeight + getHeaderMarginTop() + 10}px`;
   window.addEventListener('resize', () => {
     title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
   });
@@ -236,7 +248,7 @@ async function buildInternalBanner() {
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
-    banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
+    banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop() + 10}px`;
     // needed to make sticky behaviour correct, specifically,
     // so that the internal banner is always below the sticky title
     // when scrollHeight is 0.
