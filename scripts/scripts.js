@@ -129,7 +129,7 @@ function buildAutoBlocks() {
 
     dispatchMainEventsLoaded();
 
-    renderNestedHelpxBlocks();
+    renderNestedBlocks();
     removeEmptyDivs();
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -161,23 +161,26 @@ const fixTitle = () => {
   }
 };
 
-const renderNestedHelpxBlocks = () => {
+const renderNestedBlocks = () => {
   const blockList = ['before-after-slider', 'code', 'download', 'generic', 'note', 'procedure']; // not toc
+  const miloBlocks = ['accordion'];
 
   const replaceNode = (oldNode, newElement) => {
     oldNode.insertAdjacentElement('beforebegin', newElement);
     newElement.replaceChildren(...oldNode.childNodes);
     oldNode.remove();
   };
-  const getBlockName = (table) => table
-    ?.querySelector(':scope > thead')
-    ?.textContent
-    .trim().split(' ')[0]
-    .toLowerCase();
+  const getBlockName = (table) => {
+    const thead = table?.querySelector(':scope > thead');
+    if (thead) {
+      return thead?.textContent.trim().split(' ')[0].toLowerCase();
+    }
+    return table.querySelector('tr:first-of-type').textContent.trim().split(' ')[0].toLowerCase();
+  };
 
   const convertBlock = (table) => {
     const parent = document.createElement('div');
-    const thead = table.querySelector(':scope thead');
+    const thead = table.querySelector(':scope thead') || table.querySelector('tr:first-of-type');
     parent.classList.add(thead?.textContent.split('(')[0].trim().toLowerCase());
     thead.textContent
       .match(/\(([^\)]+)\)/)
@@ -185,26 +188,32 @@ const renderNestedHelpxBlocks = () => {
       .map((cls) => parent.classList.add(cls.trim().toLowerCase()));
     thead.remove();
     replaceNode(table, parent);
-    parent.replaceChildren(...parent.querySelector(':scope tbody').children);
-    parent.querySelectorAll('tr, td').forEach((el) => replaceNode(el, document.createElement('div')));
+    parent.replaceChildren(...parent.querySelector(':scope > tbody').children);
+    parent.querySelectorAll(':scope > tr, :scope > tr > td').forEach((el) => replaceNode(el, document.createElement('div')));
     return parent;
   };
 
-  const loadBlock = (block, t) => {
-    import(`/blocks/${block}/${block}.js`).then(({ default: init }) => {
+  const loadBlock = (block, t, milo = false) => {
+    const basePath = milo ? LIBS : '';
+    import(`${basePath}/blocks/${block}/${block}.js`).then(({ default: init }) => {
       const bl = convertBlock(t);
       init(bl);
     })
       .then(() => {
-        loadStyle(`/blocks/${block}/${block}.css`, null);
+        loadStyle(`${basePath}/blocks/${block}/${block}.css`, null);
       }).catch((e) => {
         console.log(`Failed loading ${block}`, e);
       });
   };
   document.querySelectorAll('table').forEach((table) => {
     // if table > thead textContent contains something from that blockList
+    const blockName = getBlockName(table);
     blockList.map((b) => {
-      if (getBlockName(table) === b) loadBlock(b, table);
+      if (blockName === b) loadBlock(b, table);
+      return null;
+    });
+    miloBlocks.map((b) => {
+      if (blockName === b) loadBlock(b, table, true);
       return null;
     });
   });
