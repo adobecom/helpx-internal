@@ -183,7 +183,7 @@ const renderNestedBlocks = () => {
     const thead = table.querySelector(':scope thead') || table.querySelector('tr:first-of-type');
     parent.classList.add(thead?.textContent.split('(')[0].trim().toLowerCase());
     thead.textContent
-      .match(/\(([^\)]+)\)/)
+      .match(/\(([^\)]+)\)/)[1]
       ?.split?.(',')
       .map((cls) => parent.classList.add(cls.trim().toLowerCase()));
     thead.remove();
