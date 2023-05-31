@@ -349,7 +349,7 @@ pre[id].linkable-line-numbers span.line-numbers-rows>span:hover:before {
 }
 
 /* MODIFIED: added the rules below */
-div.line {
+code div.line {
     padding-left: 3.8em;
   padding-top:0;
   margin: 0;
