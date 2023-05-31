@@ -1,12 +1,11 @@
 const importLegalPrivacy = (document) => {
   // even though we use querySelectorAll, there should be no more than one per page
-  const notices = document.querySelectorAll('div[daa-lh="HelpX in-article navigation|Legal & Privacy footer"]');
-  notices.forEach((notice) => {
-    const cells = [['legal-privacy-notice']];
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    notice.insertAdjacentElement('beforebegin', table);
-    notice.remove();
-  });
+  const notice = document.querySelector('div[daa-lh="HelpX in-article navigation|Legal & Privacy footer"]');
+  const a = document.createElement('a');
+  a.href = 'https://main--helpx-internal--adobecom.hlx.page/content/help/en/fragments/legal-privacy-notice';
+  a.textContent = 'https://main--helpx-internal--adobecom.hlx.page/content/help/en/fragments/legal-privacy-notice';
+  notice.insertAdjacentElement('beforebegin', a);
+  notice.remove();
 };
 
 export default importLegalPrivacy;
