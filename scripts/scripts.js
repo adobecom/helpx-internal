@@ -150,14 +150,16 @@ const fixTitle = () => {
   const header = document.querySelector('header');
   const title = document.querySelector('.page-title');
 
-  title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
-  window.addEventListener('resize', () => {
+  if (header && title) {
     title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
-  });
+    window.addEventListener('resize', () => {
+      title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
+    });
 
-  if (document.querySelector('.toc')) {
-    const h1 = title.querySelector(':scope h1');
-    h1.style.marginLeft = '6%';
+    if (document.querySelector('.toc')) {
+      const h1 = title.querySelector(':scope h1');
+      h1.style.marginLeft = '6%';
+    }
   }
 };
 
@@ -183,7 +185,7 @@ const renderNestedBlocks = () => {
     const thead = table.querySelector(':scope thead') || table.querySelector('tr:first-of-type');
     parent.classList.add(thead?.textContent.split('(')[0].trim().toLowerCase());
     thead.textContent
-      .match(/\(([^\)]+)\)/)[1]
+      .match(/\(([^\)]+)\)/)?.[1]
       ?.split?.(',')
       .map((cls) => parent.classList.add(cls.trim().toLowerCase()));
     thead.remove();
