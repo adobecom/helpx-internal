@@ -2,11 +2,12 @@
   overflow-y: scroll;
   max-height: calc(95vh - 0px);
   min-height: 500px;
-  max-width: 250px;
+  max-width: 275px;
   position: fixed;
   z-index: 10;
   top: 170px;
   margin-left: 5%;
+  padding-right: 25px
 }
 
 .toc > div > div > ul {
@@ -44,8 +45,11 @@
 .toc li span:hover {
   display: block;
   background-color: #fafafa;
-  text-decoration: underline;
   border-radius: 2px;
+}
+.toc li[role='treeitem'] a:hover,
+.toc li[role='treeitem'] span:hover {
+  text-decoration: underline;
 }
 
 .toc li[aria-selected="true"] {
