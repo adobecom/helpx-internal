@@ -221,6 +221,7 @@ const renderNestedBlocks = () => {
   });
 };
 
+
 /**
  * Replace icons with inline SVG and prefix with codeBasePath.
  * @param {Element} element
