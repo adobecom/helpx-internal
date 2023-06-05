@@ -77,7 +77,8 @@ const miloLibs = setLibs(LIBS);
 }());
 
 (function preventCLS() {
-  if (document.querySelector('.toc')) {
+  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('toc'));
+  if (document.querySelector('.toc') || hasTOCFragment) {
     const styles = document.createElement('style');
     const newRule = `
     body > main div[class="section"], body > main .content.last-updated {
@@ -220,7 +221,6 @@ const renderNestedBlocks = () => {
     });
   });
 };
-
 
 /**
  * Replace icons with inline SVG and prefix with codeBasePath.
