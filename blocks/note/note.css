@@ -24,15 +24,16 @@
   color: var(--static-color-gray-700);
   margin: 20px 0;
   padding: 20px;
-  font-size: 14px;
+  font-size: 16px;
   max-width: var(--grid-container-width);
   position: relative;
-  display: flex;
-  align-items: flex-start;
+}
+
+.note p {
+  margin: 0;
 }
 
 .note > div.content {
-  display: flex;
   font-size: 16px;
   margin: 0;
   padding: 0;
@@ -47,8 +48,9 @@
   font-weight: 700;
   white-space: pre;
   margin-right: 0.25rem;
-  content: 'Note: ';
+  content: 'Note:';
   float: left;
+  display: inline-block;
 }
 
 .note .icon {
@@ -57,7 +59,6 @@
   content: ' ';
   padding: 10px;
   margin-right: 3px;
-  margin-top: 0;
   float: left;
 }
 
@@ -66,7 +67,7 @@
   border: 2px solid var(--note--caution-color);
 }
 .note.caution > div.content:before {
-  content: 'Caution: ';
+  content: 'Caution:';
 }
 .note.caution .icon {
   background: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg id='caution' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath id='caution-2' d='m9.51,1.28L.07,18.17c-.15.27-.05.62.22.77.08.05.18.07.27.07h18.87c.31,0,.56-.25.56-.56,0-.1-.02-.19-.07-.27L10.49,1.28c-.15-.27-.5-.37-.77-.22-.09.05-.17.13-.22.22h0Zm1.62,15.19c0,.16-.13.28-.28.28h-1.69c-.16,0-.28-.13-.28-.28v-1.69c0-.16.13-.28.28-.28h1.69c.16,0,.28.13.28.28v1.69Zm0-3.38c0,.16-.13.28-.28.28h-1.69c-.16,0-.28-.13-.28-.28v-6.77c0-.16.13-.28.28-.28h1.69c.16,0,.28.13.28.28v6.77Z' style='fill:%23e68618;'/%3E%3C/svg%3E") no-repeat bottom;
@@ -78,7 +79,7 @@
   border: 2px solid var(--note--alert-color);
 }
 .note.alert > div.content:before {
-  content: 'Alert: ';
+  content: 'Alert:';
   left: 0px;
   top: 0px;
 }
@@ -93,7 +94,7 @@
 }
 
 .note.tip > div.content:before {
-  content: 'Tip: ';
+  content: 'Tip:';
   left: 0px;
   top: 0px;
 }

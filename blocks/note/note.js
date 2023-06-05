@@ -13,7 +13,7 @@
 export default function decorate(block) {
   if (block.firstElementChild) {
     block.firstElementChild.classList.add('content');
-    const icon = document.createElement('div');
+    const icon = document.createElement('span');
     icon.classList.add('icon');
     block.firstElementChild.insertAdjacentElement('beforebegin', icon);
   }
