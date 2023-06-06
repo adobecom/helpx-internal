@@ -178,7 +178,7 @@ main .last-updated.content {
   font-size: 16px;
   color: var(--internal-banner-color-font);
   padding: 32px 2.5rem;
-  margin: 0 auto;
+  margin: 0 auto !important;
   max-width: 1050px;
 }
 
