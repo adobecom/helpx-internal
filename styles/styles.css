@@ -199,6 +199,10 @@ main > div[class='section'] > div {
   grid-column-end: 1;
 }
 
+body > main > .section > .content {
+  margin:0;
+}
+
 
 /*
  * internal confidential
