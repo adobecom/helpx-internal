@@ -75,11 +75,20 @@ header.gnav > div {
 }
 
 /* equivalent of section title in AEM */
-.section > .content > h2 {
+.section > .content > h2:not(.first) {
   font-size: 2rem;
   font-weight: 400;
   line-height: 1em;
   border-top: 1px solid var(--static-color-heading-border);
+  margin-top: 3.5rem;
+  padding: 20px  0;
+
+}
+
+.section > .content > h2.first {
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1em;
   margin: 0;
   padding: 20px  0;
 }

@@ -124,6 +124,7 @@ const { loadArea, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils
 function buildAutoBlocks() {
   try {
     fixTitle();
+    decorateFirstH2();
     buildInternalBanner();
     fixTableHeaders();
     buildOnThisPageSection();
@@ -141,6 +142,10 @@ function buildAutoBlocks() {
 const dispatchMainEventsLoaded = () => {
   const event = new Event('main-elements-loaded', { bubbles: false });
   window.dispatchEvent(event);
+};
+
+const decorateFirstH2 = () => {
+  document.querySelector('h2').classList.add('first');
 };
 
 const removeEmptyDivs = () => {
