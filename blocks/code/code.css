@@ -361,9 +361,13 @@ div.line:hover {
 }
 
 code[class*=language-] {
-  overflow: scroll;
+  overflow: auto;
 }
 
 code[class*=language-], pre[class*=language-].line-numbers {
     border-left: none;
+}
+
+code div {
+  margin: 0;
 }
