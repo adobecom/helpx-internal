@@ -319,6 +319,9 @@ const buildOnThisPageSection = () => {
   const content = document.createElement('div');
   content.classList.add('content');
   container.append(content);
+  const onThisPageTitle = document.createElement('p');
+  onThisPageTitle.textContent = 'On this page';
+  content.append(onThisPageTitle);
   document.querySelectorAll('h2').forEach((heading) => {
     const a = document.createElement('a');
     a.href = `#${heading.id}`;

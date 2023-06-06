@@ -260,8 +260,11 @@ footer {
 
 }
 
-.on-this-page a {
-  margin-left: 15px;
+.on-this-page a, .on-this-page p {
+  margin: 0 0 0 6px;
+}
+.on-this-page p {
+
 }
 
 /* phone */
