@@ -1,5 +1,6 @@
 .procedure > ol.stepList {
   padding-inline-start: 0;
+  counter-reset: step-counter;
 }
 
 .procedure > ol.stepList > li.step {
