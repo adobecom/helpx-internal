@@ -44,7 +44,7 @@
 .toc li a:hover,
 .toc li span:hover {
   display: block;
-  background-color: #fafafa;
+  background-color: #fafafa !important;
   border-radius: 2px;
 }
 .toc li[role='treeitem'] a:hover,
@@ -52,7 +52,8 @@
   text-decoration: underline;
 }
 
-.toc li[aria-selected="true"] {
+.toc li[aria-selected="true"] a,
+.toc li[aria-selected="true"] span{
   background-color: #f0f0f0;
   border-radius: 2px;
 }
@@ -197,9 +198,4 @@
 
 
 @media screen and (max-width: 37.4375rem) {
-  .page-title .toc-mobile-drawer {
-    font-size: 14px;
-    padding: 5px 10px;
-    height: 35px;
-  }
-}
+  .page-title .toc-mobile-dra
