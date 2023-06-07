@@ -43,6 +43,8 @@ body {
 body table {
   font-size: 16px;
   border-spacing: 0;
+  table-layout: fixed;
+  width: 100%;
 }
 
 table, th, td {
