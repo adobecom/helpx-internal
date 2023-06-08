@@ -26,9 +26,6 @@
   transform: translateY(-0.2rem);
 }
 .procedure > ol.stepList > li.step > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   margin:0;
   padding-top:0;
   width:95%;
