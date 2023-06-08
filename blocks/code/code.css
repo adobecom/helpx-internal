@@ -371,3 +371,6 @@ code[class*=language-], pre[class*=language-].line-numbers {
 code div {
   margin: 0;
 }
+.code div {
+  margin:0;
+}
