@@ -1,5 +1,5 @@
 .toc {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: calc(95vh - 0px);
   min-height: 500px;
   max-width: 275px;
