@@ -71,6 +71,10 @@ body div {
   overflow-wrap: break-word;
 }
 
+.center {
+  text-align: center;
+}
+
 header.gnav > div {
   margin: 0;
 }
