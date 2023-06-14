@@ -14,7 +14,9 @@ export default function createToCBlock(main, document) {
       ['toc'],
     ];
     cells.push([toc.innerHTML]);
-    main.append(WebImporter.DOMUtils.createTable(cells, document));
+    if (toc.innerText?.trim()) {
+      main.append(WebImporter.DOMUtils.createTable(cells, document));
+    }
     toc.remove();
   }
 }

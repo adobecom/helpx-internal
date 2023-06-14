@@ -19,5 +19,9 @@ module.exports = {
       ImportDeclaration: { multiline: true, minProperties: 6 },
       ExportDeclaration: 'never',
     }],
+    'no-use-before-define': ['error', {
+      functions: false,
+      variables: false,
+    }],
   },
 };

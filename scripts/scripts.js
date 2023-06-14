@@ -76,77 +76,38 @@ const miloLibs = setLibs(LIBS);
   });
 }());
 
+(function preventCLS() {
+  if (document.querySelector('.toc')) {
+    const styles = document.createElement('style');
+    const newRule = `
+    body > main div[class="section"], body > main .content.last-updated {
+      padding-left: 335px;
+    }
+    `;
+    document.head.append(styles);
+    styles.sheet.insertRule(newRule);
+  }
+}());
+
+// Prevent redirection to helpx url when pressing enter in search
+(function shenanigans() {
+  EventTarget.prototype.addEventListener = new Proxy(EventTarget.prototype.addEventListener, {
+    apply: (targetFn, targetElement, argumentsList) => {
+      const [event, fn] = argumentsList;
+      const doNothing = () => { };
+      const shouldDoNothing = targetElement?.classList?.[0] === 'gnav-search-input' && event === 'keydown';
+      const args = [event, shouldDoNothing ? doNothing : fn];
+      Reflect.apply(targetFn, targetElement, args);
+    },
+  });
+}());
+
 const { loadArea, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils.js`);
 
 (async function loadPage() {
   setConfig({ ...CONFIG, miloLibs });
-
   await loadArea();
-
-  const sections = document.querySelectorAll('div[class="section"]');
-  if (document.querySelector('.toc')) {
-    sections.forEach((section) => {
-      section.style.paddingLeft = '335px';
-    });
-  }
-
-  await buildAutoBlocks(document.body);
-
-  if (document.querySelector('.toc')) {
-    document.querySelector('.last-updated').style.paddingLeft = '335px';
-  }
-
-  const event = new Event('main-elements-loaded', { bubbles: false });
-  window.dispatchEvent(event);
-  /*
-    extra features start
-  */
-
-  document.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
-
-  // Render blocks inside other blocks
-  const blockList = ['before-after-slider', 'code', 'download', 'generic', 'note', 'procedure']; // not toc
-  const loadBlock = (block, t) => {
-    if (block) {
-      const convertBlock = (tab) => {
-        const replaceNode = (oldNode, newElement) => {
-          oldNode.insertAdjacentElement('beforebegin', newElement);
-          newElement.replaceChildren(...oldNode.childNodes);
-          oldNode.remove();
-        };
-        const parent = document.createElement('div');
-        const thead = tab.querySelector(':scope thead');
-        parent.classList.add(thead?.textContent.split('(')[0].trim().toLowerCase());
-        thead.textContent.match(/\(([^\)]+)\)/)?.split?.(',').map((cls) => parent.classList.add(cls.trim().toLowerCase()));
-        thead.remove();
-        replaceNode(tab, parent);
-        parent.replaceChildren(...parent.querySelector(':scope tbody').children);
-        parent.querySelectorAll('tr, td').forEach((el) => replaceNode(el, document.createElement('div')));
-        return parent;
-      };
-
-      import(`/blocks/${block}/${block}.js`).then(({ default: init }) => {
-        const bl = convertBlock(t);
-        init(bl);
-      })
-        .then(() => {
-          loadStyle(`/blocks/${block}/${block}.css`, null);
-        }).catch((e) => {
-          console.log(`Failed loading ${block}`, e);
-        });
-    }
-  };
-  document.querySelectorAll('table').forEach((table) => {
-    // if table > thead textContent contains something from that blockList
-    blockList.map((b) => {
-      if (table?.querySelector(':scope > thead')?.textContent.trim().split(' ')[0].toLowerCase().includes(b)) loadBlock(b, table);
-      return null;
-    });
-  });
-
-  /*
-    extra features end
-  */
+  buildAutoBlocks();
 }());
 
 /*
@@ -155,9 +116,110 @@ const { loadArea, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils
  * ------------------------------------------------------------
  */
 
-/*
- * global blocks
+/**
+ * Builds all synthetic blocks in a container element.
+ * @param {Element} main The container element
  */
+function buildAutoBlocks() {
+  try {
+    fixTitle();
+    buildInternalBanner();
+    fixTableHeaders();
+    buildOnThisPageSection();
+
+    dispatchMainEventsLoaded();
+
+    renderNestedBlocks();
+    removeEmptyDivs();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Auto Blocking failed', error);
+  }
+}
+
+const dispatchMainEventsLoaded = () => {
+  const event = new Event('main-elements-loaded', { bubbles: false });
+  window.dispatchEvent(event);
+};
+
+const removeEmptyDivs = () => {
+  document.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
+};
+
+const fixTitle = () => {
+  const header = document.querySelector('header');
+  const title = document.querySelector('.page-title');
+
+  if (header && title) {
+    title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
+    window.addEventListener('resize', () => {
+      title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
+    });
+
+    if (document.querySelector('.toc')) {
+      const h1 = title.querySelector(':scope h1');
+      h1.style.marginLeft = '6%';
+    }
+  }
+};
+
+const renderNestedBlocks = () => {
+  const blockList = ['before-after-slider', 'code', 'download', 'generic', 'note', 'procedure']; // not toc
+  const miloBlocks = ['accordion'];
+
+  const replaceNode = (oldNode, newElement) => {
+    oldNode.insertAdjacentElement('beforebegin', newElement);
+    newElement.replaceChildren(...oldNode.childNodes);
+    oldNode.remove();
+  };
+  const getBlockName = (table) => {
+    const thead = table?.querySelector(':scope > thead');
+    if (thead) {
+      return thead?.textContent.trim().split(' ')[0].toLowerCase();
+    }
+    return table.querySelector('tr:first-of-type').textContent.trim().split(' ')[0].toLowerCase();
+  };
+
+  const convertBlock = (table) => {
+    const parent = document.createElement('div');
+    const thead = table.querySelector(':scope thead') || table.querySelector('tr:first-of-type');
+    parent.classList.add(thead?.textContent.split('(')[0].trim().toLowerCase());
+    thead.textContent
+      .match(/\(([^\)]+)\)/)?.[1]
+      ?.split?.(',')
+      .map((cls) => parent.classList.add(cls.trim().toLowerCase()));
+    thead.remove();
+    replaceNode(table, parent);
+    parent.replaceChildren(...parent.querySelector(':scope > tbody').children);
+    parent.querySelectorAll(':scope > tr, :scope > tr > td').forEach((el) => replaceNode(el, document.createElement('div')));
+    return parent;
+  };
+
+  const loadBlock = (block, t, milo = false) => {
+    const basePath = milo ? LIBS : '';
+    import(`${basePath}/blocks/${block}/${block}.js`).then(({ default: init }) => {
+      const bl = convertBlock(t);
+      init(bl);
+    })
+      .then(() => {
+        loadStyle(`${basePath}/blocks/${block}/${block}.css`, null);
+      }).catch((e) => {
+        console.log(`Failed loading ${block}`, e);
+      });
+  };
+  document.querySelectorAll('table').forEach((table) => {
+    // if table > thead textContent contains something from that blockList
+    const blockName = getBlockName(table);
+    blockList.map((b) => {
+      if (blockName === b) loadBlock(b, table);
+      return null;
+    });
+    miloBlocks.map((b) => {
+      if (blockName === b) loadBlock(b, table, true);
+      return null;
+    });
+  });
+};
 
 /**
  * Replace icons with inline SVG and prefix with codeBasePath.
@@ -169,7 +231,6 @@ export function decorateIcons(element = document) {
       return;
     }
     const icon = span.classList[1].substring(5);
-    // eslint-disable-next-line no-use-before-define
     const resp = await fetch(`${window.hlx.codeBasePath}${ICON_ROOT}/${icon}.svg`);
     if (resp.ok) {
       const iconHTML = await resp.text();
@@ -185,8 +246,8 @@ export function decorateIcons(element = document) {
 }
 
 // internal banner
-async function buildInternalBanner(block) {
-  const title = block.querySelector('.page-title');
+async function buildInternalBanner() {
+  const title = document.body.querySelector('.page-title');
 
   if (title) {
     const banner = document.createElement('div');
@@ -198,12 +259,12 @@ async function buildInternalBanner(block) {
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
-    banner.style.paddingTop = `${title.offsetHeight - 19}px`;
+    banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
     // needed to make sticky behaviour correct, specifically,
     // so that the internal banner is always below the sticky title
     // when scrollHeight is 0.
     window.addEventListener('resize', () => {
-      banner.style.paddingTop = `${title.offsetHeight - 19}px`;
+      banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
     });
 
     const text = document.createElement('div');
@@ -222,8 +283,8 @@ async function buildInternalBanner(block) {
 }
 
 // tables
-function fixTableHeaders(main) {
-  const tables = main.querySelectorAll('table');
+function fixTableHeaders() {
+  const tables = document.body.querySelectorAll('table');
   tables.forEach((t) => {
     // remove empty lines
     const lines = t.querySelectorAll('tbody tr');
@@ -274,25 +335,15 @@ const buildOnThisPageSection = () => {
     });
     content.append(a);
   });
+  const preventScrollBelowContent = (block) => {
+    const main = document.querySelector('main');
+    const bottom = window.scrollY + window.innerHeight
+      - main.getBoundingClientRect().bottom - window.pageYOffset;
+    block.style.top = bottom > 0 ? `${205 - bottom}px` : '205px';
+  };
+  window.addEventListener('scroll', () => preventScrollBelowContent(container));
   document.querySelector('main')?.append(container);
 };
-
-/**
- * Builds all synthetic blocks in a container element.
- * @param {Element} main The container element
- */
-async function buildAutoBlocks(main) {
-  try {
-    buildInternalBanner(main);
-    // buildLayout(main);
-    fixTableHeaders(main);
-    // await buildFooter(main);
-    buildOnThisPageSection(main);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Auto Blocking failed', error);
-  }
-}
 
 /*
  * utils
@@ -348,6 +399,14 @@ export async function fetchIndex(indexFile, pageSize = 500) {
 
   return newIndex;
 }
+
+const getHeaderMarginTop = () => {
+  const header = document.querySelector('header .gnav-wrapper');
+  if (header) {
+    return parseFloat(window.getComputedStyle(header)?.marginTop ?? 0);
+  }
+  return 0;
+};
 
 function getMonthShortName(monthNo) {
   const date = new Date();

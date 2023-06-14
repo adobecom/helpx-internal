@@ -70,6 +70,10 @@ body div {
   overflow-wrap: break-word;
 }
 
+header.gnav > div {
+  margin: 0;
+}
+
 /* equivalent of section title in AEM */
 .section > .content > h2 {
   font-size: 2rem;
@@ -114,6 +118,7 @@ body.helpxmain-article h1 {
 
 main .section.dark.xs-spacing.page-title {
   padding: 0 2.5rem 10px 0 !important;
+  margin: 0;
   font-size: 36px;
   font-weight: 500;
   color: var(--static-color-white)!important;
@@ -143,6 +148,7 @@ main .internal-banner .banner {
   font-weight: 700;
   padding: 12px 0;
   line-height: 24px;
+  margin: 0;
   text-transform: uppercase;
   color: var(--static-color-white);
 }
@@ -150,6 +156,7 @@ main .internal-banner .banner {
 main .internal-banner {
   position: absolute;
   width: 100%;
+  margin: 0;
 }
 /* info icon - added via global block function in scripts.js */
 main .internal-banner .banner .icon {
@@ -216,17 +223,17 @@ footer {
   content: 'Internal';
   color: #c00;
   font-weight: 700;
-  padding-bottom: 12px;
 }
 
 .on-this-page > .content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 2px;
   top: 20px;
   background: url('https://main--helpx-internal--adobecom.hlx.page/media_1b45f544d71effad595a85747635d01832a3c0149.png');
   background-color: var(--on-this-page-background);
   padding: 10px;
+  margin: 0;
 }
 
 .on-this-page h5 {
@@ -261,9 +268,6 @@ footer {
   .page-title + [class='section'], .internal-banner + [class='section'] {
     padding-top: 234px;
   }
-  .page-title {
-    top: 57px;
-  }
   .last-updated {
     padding-left: 2.5rem !important;
   }
@@ -288,10 +292,6 @@ footer {
   .page-title + [class='section'], .internal-banner + [class='section'] {
     padding-top: 233px;
   }
-  .page-title {
-    top: 57px;
-    height: auto;
-  }
   .last-updated {
     padding-left: 2.5rem !important;
   }
@@ -314,13 +314,6 @@ footer {
 
   .page-title {
     height: 62px;
-  }
-}
-
-/* accommodate global nav */
-@media (min-width: 900px) {
-  .page-title {
-    top: 55px;
   }
 }
 

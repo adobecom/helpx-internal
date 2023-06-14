@@ -136,7 +136,7 @@ const createMobileTOC = (block) => {
 };
 
 const handleKeyDown = (event) => {
-  event.preventDefault();
+  // event.preventDefault();
   const current = document.activeElement.closest('li[tabindex]');
   if (current) {
     switch (event.key) {
