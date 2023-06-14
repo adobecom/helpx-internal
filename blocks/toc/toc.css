@@ -1,5 +1,5 @@
 .toc {
-  overflow-y: auto;
+  overflow-y: scroll;
   max-height: calc(95vh - 0px);
   min-height: 500px;
   max-width: 275px;
@@ -198,4 +198,9 @@
 
 
 @media screen and (max-width: 37.4375rem) {
-  .page-title .toc-mobile-dra
+  .page-title .toc-mobile-drawer {
+    font-size: 14px;
+    padding: 5px 10px;
+    height: 35px;
+  }
+}
