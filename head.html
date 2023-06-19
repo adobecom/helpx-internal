@@ -1,4 +1,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then((reg) => console.info('service worker registered', reg))
+        .catch((err) => console.info('service worker failed to register', err));
+    }
+</script>
 <script src="/scripts/fallback.js" nomodule></script>
 <script src="/scripts/scripts.js" type="module"></script>
 <style>body { display: none; }</style>
