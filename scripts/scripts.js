@@ -77,7 +77,8 @@ const miloLibs = setLibs(LIBS);
 }());
 
 (function preventCLS() {
-  if (document.querySelector('.toc')) {
+  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('toc'));
+  if (document.querySelector('.toc') || hasTOCFragment) {
     const styles = document.createElement('style');
     const newRule = `
     body > main div[class="section"], body > main .content.last-updated {
@@ -123,6 +124,7 @@ const { loadArea, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils
 function buildAutoBlocks() {
   try {
     fixTitle();
+    decorateFirstH2();
     buildInternalBanner();
     fixTableHeaders();
     buildOnThisPageSection();
@@ -140,6 +142,10 @@ function buildAutoBlocks() {
 const dispatchMainEventsLoaded = () => {
   const event = new Event('main-elements-loaded', { bubbles: false });
   window.dispatchEvent(event);
+};
+
+const decorateFirstH2 = () => {
+  document.querySelector('h2').classList.add('first');
 };
 
 const removeEmptyDivs = () => {
@@ -318,6 +324,9 @@ const buildOnThisPageSection = () => {
   const content = document.createElement('div');
   content.classList.add('content');
   container.append(content);
+  const onThisPageTitle = document.createElement('p');
+  onThisPageTitle.textContent = 'On this page';
+  content.append(onThisPageTitle);
   document.querySelectorAll('h2').forEach((heading) => {
     const a = document.createElement('a');
     a.href = `#${heading.id}`;

@@ -11,10 +11,11 @@
  */
 
 export default function decorate(block) {
-  if (block.firstElementChild) {
-    block.firstElementChild.classList.add('content');
-    const icon = document.createElement('div');
-    icon.classList.add('icon');
-    block.firstElementChild.insertAdjacentElement('beforebegin', icon);
-  }
+  block?.firstElementChild?.classList.add('content');
+  const icon = document.createElement('span');
+  icon.classList.add('icon');
+  block?.firstElementChild?.insertAdjacentElement('beforebegin', icon);
+  const list = block.querySelector('ol, li');
+  const br = document.createElement('br');
+  list?.insertAdjacentElement('beforebegin', br);
 }

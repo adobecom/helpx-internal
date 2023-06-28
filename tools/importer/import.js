@@ -34,6 +34,7 @@ import createVideosEmbed from './rules/videos.js';
 import importProcedure from './rules/procedure.js';
 import importLegalPrivacy from './rules/legal-privacy-notice.js';
 import handleViewportSpecific from './rules/viewportSpecific.js';
+import handleInternalConfidential from './rules/internalConfidential.js';
 
 export default {
   /**
@@ -81,16 +82,6 @@ export default {
 
     createBeforeAfterSliders(main, document);
 
-    //   createVideosEmbed(main, document);
-
-    // NOTE: the import scripts for specific blocks need to check if they should be hidden
-    // by checking themselves and their parents for '.hidden-desktop',
-    // 'hidden-tablet', and '.hidden-mobile'
-
-    // This function must run at the very end because it might change something
-    // that should be a block to just text, so make sure all the blocks we
-    // need have already been created when we get to this function.
-    // It checks if something's a block by looking for a <tr> element
     handleViewportSpecific(document);
 
     importProcedure(document);
@@ -100,6 +91,8 @@ export default {
     createCodeBlock(document);
 
     importLegalPrivacy(document);
+
+    handleInternalConfidential(document);
 
     /*
       clean
@@ -113,7 +106,6 @@ export default {
       '.globalNavFooter',
       'locale-modal',
       'iframe',
-      '.internal-confidential',
       'img[style="display:none"]',
       'img[style="display:none;"]',
       'img[style="display:none;"]',
