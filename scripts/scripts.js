@@ -167,11 +167,6 @@ const fixTitle = () => {
     window.addEventListener('resize', () => {
       title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
     });
-
-    if (document.querySelector('.toc')) {
-      const h1 = title.querySelector(':scope h1');
-      h1.style.marginLeft = '6%';
-    }
   }
 };
 
