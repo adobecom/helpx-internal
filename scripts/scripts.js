@@ -76,7 +76,7 @@ const miloLibs = setLibs(LIBS);
   });
 }());
 
-(function prreventCLS() {
+(function preventCLS() {
   const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('toc'));
   if (document.querySelector('.toc') || hasTOCFragment) {
     const styles = document.createElement('style');
