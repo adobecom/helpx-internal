@@ -34,6 +34,26 @@ const CONFIG = {
 
 const ICON_ROOT = '/icons';
 
+(function preventCLS() {
+  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('toc'));
+  if (document.querySelector('.toc') || hasTOCFragment) {
+    const styles = document.createElement('style');
+    const newRule = `
+    body > main div[class="section"], body > main .content.last-updated {
+      padding-left: 335px;
+    }
+    `;
+    const titleRule = `
+      body > main .page-title h1 {
+        margin-left: 6%;
+      }
+    `;
+    document.head.append(styles);
+    styles.sheet.insertRule(newRule);
+    styles.sheet.insertRule(titleRule);
+  }
+}());
+
 // Default to loading the first image as eager.
 (async function loadLCPImage() {
   const lcpImg = document.querySelector('img');
@@ -74,20 +94,6 @@ const miloLibs = setLibs(LIBS);
     link.setAttribute('href', path);
     document.head.appendChild(link);
   });
-}());
-
-(function preventCLS() {
-  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('toc'));
-  if (document.querySelector('.toc') || hasTOCFragment) {
-    const styles = document.createElement('style');
-    const newRule = `
-    body > main div[class="section"], body > main .content.last-updated {
-      padding-left: 335px;
-    }
-    `;
-    document.head.append(styles);
-    styles.sheet.insertRule(newRule);
-  }
 }());
 
 // Prevent redirection to helpx url when pressing enter in search
