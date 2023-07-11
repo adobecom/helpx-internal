@@ -4,7 +4,7 @@ const setRole = (element, role) => {
 
 const isCollapsible = (li) => !!li.querySelector(':scope > ul');
 
-const getTocHeight = () => [...document.querySelectorAll('.content-container > .section')]
+const getTocHeight = () => [...document.querySelectorAll('main div[class="section"]')]
   .reduce((acc, section) => acc + section.offsetHeight, 0);
 
 const setGroup = (group, expanded) => {
@@ -79,10 +79,10 @@ const openCurrentNode = () => {
 };
 
 const preventScrollBelowContent = (block) => {
-  const content = document.querySelector('.content-container');
+  const content = document.querySelector('main');
   const bottom = window.scrollY + window.innerHeight
     - content?.getBoundingClientRect().bottom - window.pageYOffset;
-  block.style.top = bottom > 0 ? `${100 - bottom}px` : '100px';
+  block.style.top = bottom > 0 ? `${164 - bottom}px` : '164px'; // 100px + height of header = 64px
 };
 
 const createMobileTOC = (block) => {
@@ -136,7 +136,6 @@ const createMobileTOC = (block) => {
 };
 
 const handleKeyDown = (event) => {
-  event.preventDefault();
   const current = document.activeElement.closest('li[tabindex]');
   if (current) {
     switch (event.key) {

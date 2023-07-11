@@ -1,8 +1,11 @@
+// This file needs to be refactored, but since its only purpose is
+// to import helpx-internal, I deem it not worth doing so long as it works.
+// If you're trying to reuse this for some other import. make sure you refactor it correctly.
 export default function transformNotes(main, document) {
-  const helpxNotes = document.querySelectorAll('.helpx-note, .helpx-caution, .helpx-tip');
+  const helpxNotes = document.querySelectorAll('.helpx-note:not(.helpx-alert), .helpx-caution:not(.helpx-alert), .helpx-tip:not(.helpx-alert)');
   helpxNotes.forEach((el) => { handleHelpxNote(el, document); });
 
-  const alertContainers = document.querySelectorAll('.alert-container');
+  const alertContainers = document.querySelectorAll('.helpx-alert');
   alertContainers.forEach((el) => { handleAlertContainer(el, document); });
 }
 

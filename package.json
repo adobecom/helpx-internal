@@ -1,5 +1,5 @@
 {
-  "name": "@adobecom/college",
+  "name": "@adobecom/helpx-internal",
   "private": true,
   "version": "1.0.0",
   "description": "Website foundation technology.",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adobecom/college.git"
+    "url": "git+https://github.com/adobecom/helpx-internal.git"
   },
   "author": "Adobe",
   "license": "Apache License 2.0",
   "bugs": {
-    "url": "https://github.com/adobecom/college/issues"
+    "url": "https://github.com/adobecom/helpx-internal/issues"
   },
-  "homepage": "https://github.com/adobecom/college#readme",
+  "homepage": "https://github.com/adobecom/helpx-internal#readme",
   "devDependencies": {
     "@babel/core": "7.17.7",
     "@babel/eslint-parser": "7.17.0",
