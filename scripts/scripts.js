@@ -85,8 +85,14 @@ const miloLibs = setLibs(LIBS);
       padding-left: 335px;
     }
     `;
+    const titleRule = `
+      body > main .page-title h1 {
+        margin-left: 6%;
+      }
+    `;
     document.head.append(styles);
     styles.sheet.insertRule(newRule);
+    styles.sheet.insertRule(titleRule);
   }
 }());
 
@@ -161,11 +167,6 @@ const fixTitle = () => {
     window.addEventListener('resize', () => {
       title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
     });
-
-    if (document.querySelector('.toc')) {
-      const h1 = title.querySelector(':scope h1');
-      h1.style.marginLeft = '6%';
-    }
   }
 };
 
