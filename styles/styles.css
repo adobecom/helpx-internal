@@ -57,6 +57,10 @@ table th {
   background-color: var(--table-header-color-background);
 }
 
+li {
+  margin: 6px 0;
+}
+
 body p {
   margin-block-start: 0;
   margin-block-end: 0;
