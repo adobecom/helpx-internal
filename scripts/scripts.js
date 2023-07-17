@@ -77,7 +77,7 @@ const miloLibs = setLibs(LIBS);
 }());
 
 (function preventCLS() {
-  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('toc'));
+  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('fragments/toc/'));
   if (document.querySelector('.toc') || hasTOCFragment) {
     const styles = document.createElement('style');
     const newRule = `
