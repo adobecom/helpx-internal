@@ -286,7 +286,7 @@ async function buildInternalBanner() {
       const dateFormat = new Date(parseInt(`${found.lastModified}000`, 10));
       const productNames = document.querySelector('meta[name="productnames"]')?.content.split(',');
       const primary = document.querySelector('meta[name="primaryproductname"]')?.content;
-      const alsoAppliesTo = productNames.length ? ` | Also Applies to ${productNames.filter(x => x !== primary).join(', ')} ` : '';
+      const alsoAppliesTo = productNames?.length ? ` | Also Applies to ${productNames.filter(x => x !== primary).join(', ')} ` : '';
       text.innerHTML = 
         `${placeholders.lastUpdatedOn || 'Last updated on'} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}${alsoAppliesTo}`;
     }
