@@ -249,7 +249,8 @@ footer {
 
 .on-this-page {
   position: fixed;
-  height: 300px;
+  max-height: 700px;
+  overflow: auto;
   width: 20%;
   top: 214px;
   right: 40px;
