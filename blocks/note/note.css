@@ -37,6 +37,10 @@
   padding-left: 1.5rem;
 }
 
+.note ul {
+  margin: 0;
+}
+
 .note > div.content {
   font-size: 16px;
   margin: 0;
