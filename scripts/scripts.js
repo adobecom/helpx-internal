@@ -139,10 +139,17 @@ function buildAutoBlocks() {
 
     renderNestedBlocks();
     removeEmptyDivs();
+    giveImgTitles();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
+}
+
+const giveImgTitles = () => {
+  document.querySelectorAll('img').forEach(img => {
+    img.title = img?.alt;
+  })
 }
 
 const dispatchMainEventsLoaded = () => {
