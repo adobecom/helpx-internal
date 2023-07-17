@@ -150,6 +150,7 @@ main .section.dark.xs-spacing.page-title {
 
 main .section.dark.xs-spacing.page-title > .content {
   margin: 0;
+  max-height: 72px;
 }
 
 /*
