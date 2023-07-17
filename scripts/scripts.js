@@ -151,7 +151,7 @@ const dispatchMainEventsLoaded = () => {
 };
 
 const decorateFirstH2 = () => {
-  document.querySelector('h2').classList.add('first');
+  document.querySelector('h2')?.classList.add('first');
 };
 
 const removeEmptyDivs = () => {
