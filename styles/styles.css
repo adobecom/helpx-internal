@@ -57,8 +57,21 @@ table th {
   background-color: var(--table-header-color-background);
 }
 
+/*
+ *  WARNING: This is a temporary fix. It would be better to turn it into a page-description block 
+ *  Look for the .page-description selector on 
+ *  https://helpx-internal.corp.adobe.com/content/help/en/internal/individual/policy-process/vat-rates-direct-store-emea.html
+ */
+h3:first-of-type {
+  color: #666;
+  margin 10px 0 16px;
+  line-height: 1.4;
+  font-size: 18px;
+  font-weight: 500;
+}
+
 li {
-  margin: 6px 0;
+  margin: 6px 0; 
 }
 
 body p {
