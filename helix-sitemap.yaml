@@ -2,12 +2,12 @@ version: 1
 
 sitemaps:
   website:
-    origin: https://helpx-internal.corp.adobe.com
-    lastmod: YYYY-MM-DD'T'HH:mm:ssZ
+    origin: https://helpx-internal.stage.adobe.com
+    lastmod: YYYY-MM-DDTHH:mm:ssZ
     default: en-US
     languages:
       us:
         source: /query-index.json
         alternate: /{path}.html
-        destination: /content/help/en/sitemap.xml
+        destination: /content/help/en/sitemap-internal.xml
         hreflang: en-US
