@@ -77,7 +77,7 @@ const miloLibs = setLibs(LIBS);
 }());
 
 (function preventCLS() {
-  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('toc'));
+  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('fragments/toc/'));
   if (document.querySelector('.toc') || hasTOCFragment) {
     const styles = document.createElement('style');
     const newRule = `
@@ -139,10 +139,17 @@ function buildAutoBlocks() {
 
     renderNestedBlocks();
     removeEmptyDivs();
+    giveImgTitles();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
+}
+
+const giveImgTitles = () => {
+  document.querySelectorAll('img').forEach(img => {
+    img.title = img?.alt;
+  })
 }
 
 const dispatchMainEventsLoaded = () => {
@@ -151,7 +158,7 @@ const dispatchMainEventsLoaded = () => {
 };
 
 const decorateFirstH2 = () => {
-  document.querySelector('h2').classList.add('first');
+  document.querySelector('h2')?.classList.add('first');
 };
 
 const removeEmptyDivs = () => {
@@ -284,7 +291,11 @@ async function buildInternalBanner() {
     if (found) {
       const placeholders = await fetchPlaceholders();
       const dateFormat = new Date(parseInt(`${found.lastModified}000`, 10));
-      text.innerHTML = `${placeholders.lastUpdatedOn || 'Last updated on'} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`;
+      const productNames = document.querySelector('meta[name="productnames"]')?.content.split(',');
+      const primary = document.querySelector('meta[name="primaryproductname"]')?.content;
+      const alsoAppliesTo = productNames?.length ? ` | Also Applies to ${productNames.filter(x => x !== primary).join(', ')} ` : '';
+      text.innerHTML = 
+        `${placeholders.lastUpdatedOn || 'Last updated on'} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}${alsoAppliesTo}`;
     }
   }
 }
