@@ -13,7 +13,7 @@
 export default function decorate(block) {
   block?.firstElementChild?.classList.add('content');
   const icon = document.createElement('span');
-  icon.classList.add('icon');
+  icon.classList.add('note-icon');
   block?.firstElementChild?.insertAdjacentElement('beforebegin', icon);
   const list = block.querySelector('ol, li');
   const br = document.createElement('br');
