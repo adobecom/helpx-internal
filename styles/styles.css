@@ -125,6 +125,10 @@ header.gnav > div {
   padding-top: 10px;
 }
 
+.accordion ul, .accordion ol {
+  padding-left: 24px;
+}
+
 body.helpxmain-article {
   font-family: adobe-clean,Source Sans Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 }
