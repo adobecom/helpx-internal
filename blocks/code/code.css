@@ -374,3 +374,6 @@ code div {
 .code div {
   margin:0;
 }
+div.code-toolbar>.toolbar {
+  top: 0.001em !important;
+}
