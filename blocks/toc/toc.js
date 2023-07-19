@@ -82,7 +82,7 @@ const preventScrollBelowContent = (block) => {
   const content = document.querySelector('main');
   const bottom = window.scrollY + window.innerHeight
     - content?.getBoundingClientRect().bottom - window.pageYOffset;
-  block.style.top = bottom > 0 ? `${164 - bottom}px` : '164px'; // 100px + height of header = 64px
+  block.style.top = bottom > 0 ? `${194 - bottom}px` : '194px'; // 130px + height of header = 64px
 };
 
 const createMobileTOC = (block) => {
