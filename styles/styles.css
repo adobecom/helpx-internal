@@ -64,8 +64,6 @@ table th {
 .table-banded-rows tr:nth-child(odd) {
   background: #f7f8f7;
 }
-
-
 /*
  *  WARNING: This is a temporary fix. It would be better to turn it into a page-description block 
  *  Look for the .page-description selector on 
