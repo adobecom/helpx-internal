@@ -44,6 +44,8 @@ const initLinksInGroup = (li) => {
         }, { passive: true });
         // to overcome a limitation in the import script
         a.href = a.pathname;
+        // Links should open in a new tab
+        a.setAttribute('target', '_blank');
       },
     );
 };
@@ -51,9 +53,9 @@ const initLinksInGroup = (li) => {
 const initListItems = (block) => {
   block.querySelectorAll(':scope li').forEach((li) => {
     li.setAttribute('tabindex', -1);
+    initLinksInGroup(li);
     if (isCollapsible(li)) {
       initGroups(li);
-      initLinksInGroup(li);
     } else setRole(li, 'treeitem');
   });
 };
