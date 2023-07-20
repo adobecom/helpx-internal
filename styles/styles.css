@@ -57,6 +57,13 @@ table th {
   background-color: var(--table-header-color-background);
 }
 
+.table-grey table {
+  background: #f7f8f7;
+}
+
+.table-banded-rows tr:nth-child(odd) {
+  background: #f7f8f7;
+}
 /*
  *  WARNING: This is a temporary fix. It would be better to turn it into a page-description block 
  *  Look for the .page-description selector on 
@@ -214,7 +221,7 @@ main .last-updated.content {
 * sections
 */
 
-main > div[class='section'] {
+main > div.section:not(.internal-banner, .page-title) {
   max-width: 1050px;
   padding: 0 2.5rem;
   margin: 0 auto;
@@ -222,7 +229,7 @@ main > div[class='section'] {
   grid-template-columns: 66% 1fr;
 }
 
-main > div[class='section'] > div {
+main > div.section:not(.internal-banner, .page-title) > div {
   grid-column-start: 1;
   grid-column-end: 1;
 }
@@ -322,11 +329,12 @@ footer {
   .layout-container .content-container .section {
     padding: 0;
   }
-  main > div[class='section'] {
+  main > div.section:not(.internal-banner, .page-title) {
     padding-left: 2.5rem !important;
     padding-right: 2.5rem !important;
   }
-  .page-title + [class='section'], .internal-banner + [class='section'] {
+  .page-title + div.section:not(.internal-banner, .page-title), 
+  .internal-banner + div.section:not(.internal-banner, .page-title) {
     padding-top: 234px;
   }
   .last-updated {
@@ -346,11 +354,12 @@ footer {
   .layout-container .content-container .section {
     padding: 0;
   }
-  main > div[class='section'] {
+  main > div.section:not(.internal-banner, .page-title) {
     padding-left: 2.5rem !important;
     padding-right: 2.5rem !important;
   }
-  .page-title + [class='section'], .internal-banner + [class='section'] {
+  .page-title + div.section:not(.internal-banner, .page-title), 
+  .internal-banner + div.section:not(.internal-banner, .page-title) {
     padding-top: 233px;
   }
   .last-updated {
@@ -365,7 +374,8 @@ footer {
 @media screen and (min-width: 64rem) {
   /* mitigate CLS */
 
-  .page-title + [class='section'], .internal-banner + [class='section'] {
+  .page-title + div.section:not(.internal-banner, .page-title), 
+  .internal-banner + div.section:not(.internal-banner, .page-title) {
     padding-top: 202px;
   }
 
@@ -382,7 +392,7 @@ footer {
   .on-this-page {
     display: none;
   }
-  main > div[class='section'] {
+  main > div.section:not(.internal-banner, .page-title) {
     grid-template-columns: 100%
   }
 }
