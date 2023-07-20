@@ -57,6 +57,15 @@ table th {
   background-color: var(--table-header-color-background);
 }
 
+.table-grey table {
+  background: #f7f8f7;
+}
+
+.table-banded-rows tr:nth-child(odd) {
+  background: #f7f8f7;
+}
+
+
 /*
  *  WARNING: This is a temporary fix. It would be better to turn it into a page-description block 
  *  Look for the .page-description selector on 
@@ -127,10 +136,6 @@ header.gnav > div {
 
 .accordion ul, .accordion ol {
   padding-left: 24px;
-}
-
-.table-banded-rows tr:nth-child(odd) {
-  background: #f7f8f7;
 }
 
 body.helpxmain-article {
