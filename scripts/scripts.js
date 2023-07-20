@@ -178,7 +178,7 @@ const fixTitle = () => {
 };
 
 const renderNestedBlocks = () => {
-  const blockList = ['before-after-slider', 'code', 'download', 'generic', 'note', 'procedure']; // not toc
+  const blockList = ['before-after-slider', 'code', 'download', 'generic', 'note', 'procedure', 'go-to-top']; // not toc
   const miloBlocks = ['accordion'];
 
   const replaceNode = (oldNode, newElement) => {
