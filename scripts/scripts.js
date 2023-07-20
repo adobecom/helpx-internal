@@ -81,7 +81,7 @@ const miloLibs = setLibs(LIBS);
   if (document.querySelector('.toc') || hasTOCFragment) {
     const styles = document.createElement('style');
     const newRule = `
-    body > main > div[class="section"], body > main .content.last-updated {
+    body > main > div.section:not(.internal-banner, .page-title), body > main .content.last-updated {
       padding-left: 335px;
     }
     `;
