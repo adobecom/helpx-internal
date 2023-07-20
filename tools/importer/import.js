@@ -35,6 +35,7 @@ import importProcedure from './rules/procedure.js';
 import importLegalPrivacy from './rules/legal-privacy-notice.js';
 import handleViewportSpecific from './rules/viewportSpecific.js';
 import handleInternalConfidential from './rules/internalConfidential.js';
+import handleGoToTop from './rules/go-to-top.js';
 
 export default {
   /**
@@ -93,6 +94,8 @@ export default {
     importLegalPrivacy(document);
 
     handleInternalConfidential(document);
+
+    handleGoToTop(document);
 
     /*
       clean
