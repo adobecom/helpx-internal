@@ -323,7 +323,7 @@ footer {
   }
 
   body.helpxmain-article h1 {
-    font-size: 1.5rem;
+    font-size: 5vw;
     padding: 13px 2.5rem;
   }
   .layout-container .content-container .section {
@@ -385,6 +385,12 @@ footer {
 
   .page-title {
     height: 62px;
+  }
+}
+/* above 1500px */
+@media screen and (min-width: 93.75rem) {
+  body.helpxmain-article h1 {
+    font-size: 2rem;
   }
 }
 
