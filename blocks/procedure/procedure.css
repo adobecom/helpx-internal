@@ -28,7 +28,7 @@
 .procedure > ol.stepList > li.step > div {
   margin:0;
   padding-top:0;
-  width:93%;
+  min-width:93%;
 }
 
 .procedure > ol.stepList > li.step p {
