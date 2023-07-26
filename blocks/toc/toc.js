@@ -44,6 +44,8 @@ const initLinksInGroup = (li) => {
         }, { passive: true });
         // to overcome a limitation in the import script
         a.href = a.pathname;
+        // Links should open in a new tab
+        a.setAttribute('target', '_blank');
       },
     );
 };
@@ -51,9 +53,9 @@ const initLinksInGroup = (li) => {
 const initListItems = (block) => {
   block.querySelectorAll(':scope li').forEach((li) => {
     li.setAttribute('tabindex', -1);
+    initLinksInGroup(li);
     if (isCollapsible(li)) {
       initGroups(li);
-      initLinksInGroup(li);
     } else setRole(li, 'treeitem');
   });
 };
@@ -82,7 +84,7 @@ const preventScrollBelowContent = (block) => {
   const content = document.querySelector('main');
   const bottom = window.scrollY + window.innerHeight
     - content?.getBoundingClientRect().bottom - window.pageYOffset;
-  block.style.top = bottom > 0 ? `${164 - bottom}px` : '164px'; // 100px + height of header = 64px
+  block.style.top = bottom > 0 ? `${194 - bottom}px` : '194px'; // 130px + height of header = 64px
 };
 
 const createMobileTOC = (block) => {

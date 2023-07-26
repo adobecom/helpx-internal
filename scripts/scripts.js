@@ -77,16 +77,22 @@ const miloLibs = setLibs(LIBS);
 }());
 
 (function preventCLS() {
-  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('toc'));
+  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('fragments/toc/'));
   if (document.querySelector('.toc') || hasTOCFragment) {
     const styles = document.createElement('style');
     const newRule = `
-    body > main div[class="section"], body > main .content.last-updated {
+    body > main > div.section:not(.internal-banner, .page-title), body > main .content.last-updated {
       padding-left: 335px;
     }
     `;
+    const titleRule = `
+      body > main .page-title h1 {
+        margin-left: 6%;
+      }
+    `;
     document.head.append(styles);
     styles.sheet.insertRule(newRule);
+    styles.sheet.insertRule(titleRule);
   }
 }());
 
@@ -133,10 +139,17 @@ function buildAutoBlocks() {
 
     renderNestedBlocks();
     removeEmptyDivs();
+    giveImgTitles();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
+}
+
+const giveImgTitles = () => {
+  document.querySelectorAll('img').forEach(img => {
+    img.title = img?.alt;
+  })
 }
 
 const dispatchMainEventsLoaded = () => {
@@ -145,7 +158,7 @@ const dispatchMainEventsLoaded = () => {
 };
 
 const decorateFirstH2 = () => {
-  document.querySelector('h2').classList.add('first');
+  document.querySelector('h2')?.classList.add('first');
 };
 
 const removeEmptyDivs = () => {
@@ -161,16 +174,11 @@ const fixTitle = () => {
     window.addEventListener('resize', () => {
       title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
     });
-
-    if (document.querySelector('.toc')) {
-      const h1 = title.querySelector(':scope h1');
-      h1.style.marginLeft = '6%';
-    }
   }
 };
 
 const renderNestedBlocks = () => {
-  const blockList = ['before-after-slider', 'code', 'download', 'generic', 'note', 'procedure']; // not toc
+  const blockList = ['before-after-slider', 'code', 'download', 'generic', 'note', 'procedure', 'go-to-top']; // not toc
   const miloBlocks = ['accordion'];
 
   const replaceNode = (oldNode, newElement) => {
@@ -278,13 +286,23 @@ async function buildInternalBanner() {
     text.innerHTML = '&nbsp;';
     banner.append(text);
 
-    const index = await fetchIndex('query-index');
-    const found = index.data.find((entry) => entry.path.indexOf(window.location.pathname) > -1);
-    if (found) {
-      const placeholders = await fetchPlaceholders();
-      const dateFormat = new Date(parseInt(`${found.lastModified}000`, 10));
-      text.innerHTML = `${placeholders.lastUpdatedOn || 'Last updated on'} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`;
+    // get last updated date from the http header
+    let dateFormat
+    try {
+      const resp = await fetch(document.location, {
+        method: 'HEAD',
+      });
+      dateFormat = new Date(resp.headers.get('last-modified'));
+    } catch (e) {
+      dateFormat = new Date(0);
+      console.error(e);
     }
+
+    const productNames = document.querySelector('meta[name="productnames"]')?.content.split(',');
+    const primary = document.querySelector('meta[name="primaryproductname"]')?.content;
+    const alsoAppliesTo = productNames?.length ? ` | Also Applies to ${productNames.filter(x => x !== primary).join(', ')} ` : '';
+    text.innerHTML = 
+      `Last updated on ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}${alsoAppliesTo}`;
   }
 }
 

@@ -18,8 +18,6 @@ export default function createAccordionBlocks(main, document) {
       const content = item.querySelector('.spectrum-Accordion-itemContent');
 
       if (content && text) {
-        // remove br as they wrongly add a "/" character in the output
-        WebImporter.DOMUtils.remove(content, ['br']);
         cells.push([text]);
         cells.push([content]);
       }

@@ -2,7 +2,7 @@ version: 1
 
 sitemaps:
   website:
-    origin: https://helpx-internal.adobe.com
+    origin: https://helpx-internal.stage.adobe.com
     lastmod: YYYY-MM-DDTHH:mm:ssZ
     default: en-US
     languages:
