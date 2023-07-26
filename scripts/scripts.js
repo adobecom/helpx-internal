@@ -287,11 +287,17 @@ async function buildInternalBanner() {
     banner.append(text);
 
     // get last updated date from the http header
-    const req = new XMLHttpRequest();
-    req.open('HEAD', document.location, false);
-    req.send(null);
+    let dateFormat
+    try {
+      const resp = await fetch(document.location, {
+        method: 'HEAD',
+      });
+      dateFormat = new Date(resp.headers.get('last-modified'));
+    } catch (e) {
+      dateFormat = new Date(0);
+      console.error(e);
+    }
 
-    const dateFormat = new Date(req.getResponseHeader('last-modified'));
     const productNames = document.querySelector('meta[name="productnames"]')?.content.split(',');
     const primary = document.querySelector('meta[name="primaryproductname"]')?.content;
     const alsoAppliesTo = productNames?.length ? ` | Also Applies to ${productNames.filter(x => x !== primary).join(', ')} ` : '';
