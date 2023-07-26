@@ -287,7 +287,6 @@ async function buildInternalBanner() {
     banner.append(text);
 
     // get last updated date from the http header
-    const index = await fetchIndex('query-index');
     const req = new XMLHttpRequest();
     req.open('HEAD', document.location, false);
     req.send(null);
