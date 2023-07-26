@@ -286,17 +286,23 @@ async function buildInternalBanner() {
     text.innerHTML = '&nbsp;';
     banner.append(text);
 
-    const index = await fetchIndex('query-index');
-    const found = index.data.find((entry) => entry.path.indexOf(window.location.pathname) > -1);
-    if (found) {
-      const placeholders = await fetchPlaceholders();
-      const dateFormat = new Date(parseInt(`${found.lastModified}000`, 10));
-      const productNames = document.querySelector('meta[name="productnames"]')?.content.split(',');
-      const primary = document.querySelector('meta[name="primaryproductname"]')?.content;
-      const alsoAppliesTo = productNames?.length ? ` | Also Applies to ${productNames.filter(x => x !== primary).join(', ')} ` : '';
-      text.innerHTML = 
-        `${placeholders.lastUpdatedOn || 'Last updated on'} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}${alsoAppliesTo}`;
+    // get last updated date from the http header
+    let dateFormat
+    try {
+      const resp = await fetch(document.location, {
+        method: 'HEAD',
+      });
+      dateFormat = new Date(resp.headers.get('last-modified'));
+    } catch (e) {
+      dateFormat = new Date(0);
+      console.error(e);
     }
+
+    const productNames = document.querySelector('meta[name="productnames"]')?.content.split(',');
+    const primary = document.querySelector('meta[name="primaryproductname"]')?.content;
+    const alsoAppliesTo = productNames?.length ? ` | Also Applies to ${productNames.filter(x => x !== primary).join(', ')} ` : '';
+    text.innerHTML = 
+      `Last updated on ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}${alsoAppliesTo}`;
   }
 }
 
