@@ -47,6 +47,10 @@ body table {
   width: 100%;
 }
 
+body ul li {
+  list-style-type: disc;
+}
+
 table, th, td {
   padding: 9px 10px;
   border: 1px solid var(--table-color-border)!important;
