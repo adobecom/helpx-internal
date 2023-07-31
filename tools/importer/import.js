@@ -79,10 +79,6 @@ export default {
 
     createBeforeAfterSliders(main, document);
 
-    createColumnsFromDexterFlexContainers(main, document);
-
-    createBeforeAfterSliders(main, document);
-
     handleViewportSpecific(document);
 
     importProcedure(document);
