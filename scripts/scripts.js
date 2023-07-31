@@ -174,6 +174,13 @@ const fixTitle = () => {
     window.addEventListener('resize', () => {
       title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
     });
+    const firstSection = document.querySelector('.page-title + div.section:not(.internal-banner, .page-title');
+    if (!firstSection) return;
+    const setPaddingTop = () => {
+      firstSection.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop() + 100}px`;
+    };
+    setPaddingTop();
+    new ResizeObserver(setPaddingTop).observe(title);
   }
 };
 
@@ -277,9 +284,7 @@ async function buildInternalBanner() {
     // needed to make sticky behaviour correct, specifically,
     // so that the internal banner is always below the sticky title
     // when scrollHeight is 0.
-    window.addEventListener('resize', () => {
-      banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
-    });
+    new ResizeObserver(setPaddingTop).observe(title);
 
     const text = document.createElement('div');
     text.classList.add('content', 'last-updated');
@@ -362,12 +367,18 @@ const buildOnThisPageSection = () => {
     });
     content.append(a);
   });
+ 
+  const topOffset = 150;
   const preventScrollBelowContent = (block) => {
     const main = document.querySelector('main');
     const bottom = window.scrollY + window.innerHeight
       - main.getBoundingClientRect().bottom - window.pageYOffset;
-    block.style.top = bottom > 0 ? `${205 - bottom}px` : '205px';
+    const offset = bottom > 0 ? topOffset - bottom : topOffset;
+    setTop(block, offset);
   };
+  setTop(container, topOffset);
+  const title = document.querySelector('.page-title');
+  new ResizeObserver(() => setTop(container, topOffset)).observe(title);
   window.addEventListener('scroll', () => preventScrollBelowContent(container));
   document.querySelector('main')?.append(container);
 };
@@ -433,6 +444,11 @@ const getHeaderMarginTop = () => {
     return parseFloat(window.getComputedStyle(header)?.marginTop ?? 0);
   }
   return 0;
+};
+
+export const setTop = (block, extra=0) => { 
+  const title = document.querySelector('.page-title');
+  block.style.top = `${(title?.offsetHeight ?? 0) + getHeaderMarginTop() + extra}px`;
 };
 
 function getMonthShortName(monthNo) {

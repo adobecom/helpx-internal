@@ -143,12 +143,16 @@ body.helpxmain-article {
 body h1 {
   max-width: 1050px;
   line-height: 1.15;
-  font-size: 2vw;
+  font-size: 36px;
   font-weight: 500;
   text-align: left;
   word-break: break-word;
   margin: 0 auto;
   padding: 0 2.5rem;
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .draft {
@@ -166,6 +170,7 @@ main .section.dark.xs-spacing.page-title {
   font-weight: 500;
   color: var(--static-color-white)!important;
   width: 100%;
+  height:auto;
   z-index: 20;
   position: fixed;
   display: flex;
@@ -175,7 +180,6 @@ main .section.dark.xs-spacing.page-title {
 
 main .section.dark.xs-spacing.page-title > .content {
   margin: 0;
-  max-height: 72px;
 }
 
 /*
@@ -323,7 +327,7 @@ footer {
   }
 
   body.helpxmain-article h1 {
-    font-size: 5vw;
+    font-size: 1.5rem;
     padding: 13px 2.5rem;
   }
   .layout-container .content-container .section {
