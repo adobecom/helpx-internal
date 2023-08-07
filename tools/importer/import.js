@@ -96,7 +96,6 @@ export default {
     handleInternalConfidential(document);
 
     handleGoToTop(document);
-
     /*
       clean
     */
