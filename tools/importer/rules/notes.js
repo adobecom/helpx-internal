@@ -7,6 +7,27 @@ export default function transformNotes(main, document) {
 
   const alertContainers = document.querySelectorAll('.helpx-alert');
   alertContainers.forEach((el) => { handleAlertContainer(el, document); });
+
+  const helpNotes = document.querySelectorAll('.help-note:not(caution-note), .caution-note, .alert-container');
+  helpNotes.forEach((el) => {
+    let style = 'note'
+    if (el.classList.contains('caution-note')) style = 'caution';
+
+    if (el.classList.contains('alert-container')) style = 'alert';
+
+    const title = el.querySelector(':scope .help-note-title');
+    if (title) title.parentElement.remove();
+
+    const cells = [
+      [`Note (${style})`],
+      [el.innerHTML]
+    ];
+
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+
+    el.insertAdjacentElement('beforebegin', table);
+    el.remove();
+  })
 }
 
 function handleHelpxNote(el, document) {
