@@ -130,6 +130,7 @@ const { loadArea, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils
 function buildAutoBlocks() {
   try {
     fixTitle();
+    decorateButtons();
     decorateFirstH2();
     buildInternalBanner();
     fixTableHeaders();
@@ -174,6 +175,13 @@ const fixTitle = () => {
     window.addEventListener('resize', () => {
       title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
     });
+    const firstSection = document.querySelector('.page-title + div.section:not(.internal-banner, .page-title');
+    if (!firstSection) return;
+    const setPaddingTop = () => {
+      firstSection.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop() + 100}px`;
+    };
+    setPaddingTop();
+    new ResizeObserver(setPaddingTop).observe(title);
   }
 };
 
@@ -273,13 +281,14 @@ async function buildInternalBanner() {
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
+    const setPaddingTop = () => { 
+      banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
+    };
     banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
     // needed to make sticky behaviour correct, specifically,
     // so that the internal banner is always below the sticky title
     // when scrollHeight is 0.
-    window.addEventListener('resize', () => {
-      banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
-    });
+    new ResizeObserver(setPaddingTop).observe(title);
 
     const text = document.createElement('div');
     text.classList.add('content', 'last-updated');
@@ -300,7 +309,8 @@ async function buildInternalBanner() {
 
     const productNames = document.querySelector('meta[name="productnames"]')?.content.split(',');
     const primary = document.querySelector('meta[name="primaryproductname"]')?.content;
-    const alsoAppliesTo = productNames?.length ? ` | Also Applies to ${productNames.filter(x => x !== primary).join(', ')} ` : '';
+    const productList = productNames?.length ? productNames.filter(x => x !== primary) : []
+    const alsoAppliesTo = productList.length ? ` | Also Applies to ${productList.join(', ')} ` : '';
     text.innerHTML = 
       `Last updated on ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}${alsoAppliesTo}`;
   }
@@ -362,12 +372,18 @@ const buildOnThisPageSection = () => {
     });
     content.append(a);
   });
+ 
+  const topOffset = 150;
   const preventScrollBelowContent = (block) => {
     const main = document.querySelector('main');
     const bottom = window.scrollY + window.innerHeight
       - main.getBoundingClientRect().bottom - window.pageYOffset;
-    block.style.top = bottom > 0 ? `${205 - bottom}px` : '205px';
+    const offset = bottom > 0 ? topOffset - bottom : topOffset;
+    setTop(block, offset);
   };
+  setTop(container, topOffset);
+  const title = document.querySelector('.page-title');
+  new ResizeObserver(() => setTop(container, topOffset)).observe(title);
   window.addEventListener('scroll', () => preventScrollBelowContent(container));
   document.querySelector('main')?.append(container);
 };
@@ -435,8 +451,44 @@ const getHeaderMarginTop = () => {
   return 0;
 };
 
+export const setTop = (block, extra=0) => { 
+  const title = document.querySelector('.page-title');
+  block.style.top = `${(title?.offsetHeight ?? 0) + getHeaderMarginTop() + extra}px`;
+};
+
 function getMonthShortName(monthNo) {
   const date = new Date();
   date.setMonth(monthNo);
   return date.toLocaleString('en-US', { month: 'short' });
+}
+
+/**
+ * decorates paragraphs containing a single link as buttons.
+ * @param {Element} element container element
+ */
+
+function decorateButtons(element=document.body) {
+  element.querySelectorAll('a').forEach((a) => {
+    a.title = a.title || a.textContent;
+    if (a.href !== a.textContent) {
+      const up = a.parentElement;
+      const twoup = a.parentElement.parentElement;
+      if (!a.querySelector('img')) {
+        if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV' || up.tagName === 'TD')) {
+          a.className = 'button primary'; // default
+          up.classList.add('button-container');
+        }
+        if (up.childNodes.length === 1 && up.tagName === 'STRONG'
+            && twoup.childNodes.length === 1 && (twoup.tagName === 'P' || twoup.tagName === 'TD')) {
+          a.className = 'button primary';
+          twoup.classList.add('button-container');
+        }
+        if (up.childNodes.length === 1 && up.tagName === 'EM'
+            && twoup.childNodes.length === 1 && (twoup.tagName === 'P'||twoup.tagName === 'TD')) {
+          a.className = 'button secondary';
+          twoup.classList.add('button-container');
+        }
+      }
+    }
+  });
 }

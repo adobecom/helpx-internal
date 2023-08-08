@@ -288,9 +288,9 @@ div.code-toolbar>.toolbar>.toolbar-item>a, div.code-toolbar>.toolbar>.toolbar-it
 
 div.code-toolbar>.toolbar>.toolbar-item>a:focus, div.code-toolbar>.toolbar>.toolbar-item>a:hover, div.code-toolbar>.toolbar>.toolbar-item>button:focus, div.code-toolbar>.toolbar>.toolbar-item>button:hover, div.code-toolbar>.toolbar>.toolbar-item>span:focus, div.code-toolbar>.toolbar>.toolbar-item>span:hover {
     color: inherit;
-    text-decoration: none
+    text-decoration: none;
+    background: #f5f2f0;
 }
-text-decoration: none;
 
 pre[data-line] {
     position: relative;
@@ -350,7 +350,7 @@ pre[id].linkable-line-numbers span.line-numbers-rows>span:hover:before {
 
 /* MODIFIED: added the rules below */
 code div.line {
-    padding-left: 3.8em;
+  padding-left: 3.8em;
   padding-top:0;
   margin: 0;
 }
@@ -376,4 +376,12 @@ code div {
 }
 div.code-toolbar>.toolbar {
   top: 0.001em !important;
+}
+
+div.code .toolbar-item > button {
+  margin:0;
+}
+
+div.code:not(.line-numbers) div.line {
+  padding-left: 0.5em;
 }

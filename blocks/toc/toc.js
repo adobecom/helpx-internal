@@ -1,3 +1,7 @@
+import { setTop } from '/scripts/scripts.js';
+
+const topOffset = 150;
+
 const setRole = (element, role) => {
   element.setAttribute('role', role);
 };
@@ -84,7 +88,8 @@ const preventScrollBelowContent = (block) => {
   const content = document.querySelector('main');
   const bottom = window.scrollY + window.innerHeight
     - content?.getBoundingClientRect().bottom - window.pageYOffset;
-  block.style.top = bottom > 0 ? `${194 - bottom}px` : '194px'; // 130px + height of header = 64px
+  const offset = bottom > 0 ? topOffset - bottom : topOffset;
+  setTop(block, offset);
 };
 
 const createMobileTOC = (block) => {
@@ -176,8 +181,11 @@ export default (block) => {
     block.style.height = `${getTocHeight()}px`;
     openCurrentNode();
   }, { passive: true, once: true });
+  setTop(block, topOffset);
+  new ResizeObserver(() => setTop(block, topOffset)).observe(document.querySelector('.page-title'));
   window.addEventListener('scroll', () => preventScrollBelowContent(block));
   window.addEventListener('keydown', handleKeyDown);
+
 
   initListItems(block);
 
