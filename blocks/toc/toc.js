@@ -1,3 +1,7 @@
+import { setTop } from '/scripts/scripts.js';
+
+const topOffset = 150;
+
 const setRole = (element, role) => {
   element.setAttribute('role', role);
 };
@@ -44,6 +48,8 @@ const initLinksInGroup = (li) => {
         }, { passive: true });
         // to overcome a limitation in the import script
         a.href = a.pathname;
+        // Links should open in a new tab
+        a.setAttribute('target', '_blank');
       },
     );
 };
@@ -51,9 +57,9 @@ const initLinksInGroup = (li) => {
 const initListItems = (block) => {
   block.querySelectorAll(':scope li').forEach((li) => {
     li.setAttribute('tabindex', -1);
+    initLinksInGroup(li);
     if (isCollapsible(li)) {
       initGroups(li);
-      initLinksInGroup(li);
     } else setRole(li, 'treeitem');
   });
 };
@@ -82,7 +88,8 @@ const preventScrollBelowContent = (block) => {
   const content = document.querySelector('main');
   const bottom = window.scrollY + window.innerHeight
     - content?.getBoundingClientRect().bottom - window.pageYOffset;
-  block.style.top = bottom > 0 ? `${164 - bottom}px` : '164px'; // 100px + height of header = 64px
+  const offset = bottom > 0 ? topOffset - bottom : topOffset;
+  setTop(block, offset);
 };
 
 const createMobileTOC = (block) => {
@@ -174,8 +181,11 @@ export default (block) => {
     block.style.height = `${getTocHeight()}px`;
     openCurrentNode();
   }, { passive: true, once: true });
+  setTop(block, topOffset);
+  new ResizeObserver(() => setTop(block, topOffset)).observe(document.querySelector('.page-title'));
   window.addEventListener('scroll', () => preventScrollBelowContent(block));
   window.addEventListener('keydown', handleKeyDown);
+
 
   initListItems(block);
 

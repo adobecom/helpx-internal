@@ -24,7 +24,6 @@ export default function createTitleBlock(main, document) {
 
   const div = document.createElement('h1');
   div.innerHTML = title;
-  el.insertAdjacentElement('beforebegin', div);
     
   const cells = [
     ['Section Metadata'],
@@ -32,9 +31,9 @@ export default function createTitleBlock(main, document) {
   ];
   const table = WebImporter.DOMUtils.createTable(cells, document);
 
-  el.insertAdjacentElement('beforebegin', table);
-
-  el.insertAdjacentElement('beforebegin', document.createElement('hr'));
+  document.body.insertAdjacentElement('afterbegin', document.createElement('hr'));
+  document.body.insertAdjacentElement('afterbegin', div);
+  document.body.insertAdjacentElement('afterbegin', table);
 
   el.remove();
 }

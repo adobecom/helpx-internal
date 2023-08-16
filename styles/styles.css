@@ -47,6 +47,10 @@ body table {
   width: 100%;
 }
 
+body ul li {
+  list-style-type: disc;
+}
+
 table, th, td {
   padding: 9px 10px;
   border: 1px solid var(--table-color-border)!important;
@@ -55,6 +59,30 @@ table, th, td {
 
 table th {
   background-color: var(--table-header-color-background);
+}
+
+.table-grey table {
+  background: #f7f8f7;
+}
+
+.table-banded-rows tr:nth-child(odd) {
+  background: #f7f8f7;
+}
+/*
+ *  WARNING: This is a temporary fix. It would be better to turn it into a page-description block 
+ *  Look for the .page-description selector on 
+ *  https://helpx-internal.corp.adobe.com/content/help/en/internal/individual/policy-process/vat-rates-direct-store-emea.html
+ */
+h3:first-of-type {
+  color: #666;
+  margin 10px 0 16px;
+  line-height: 1.4;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+li {
+  margin: 6px 0; 
 }
 
 body p {
@@ -86,6 +114,7 @@ header.gnav > div {
   line-height: 1em;
   border-top: 1px solid var(--static-color-heading-border);
   margin-top: 3.5rem;
+  margin-bottom: 0;
   padding: 20px  0;
 
 }
@@ -107,19 +136,27 @@ header.gnav > div {
   padding-top: 10px;
 }
 
+.accordion ul, .accordion ol {
+  padding-left: 24px;
+}
+
 body.helpxmain-article {
   font-family: adobe-clean,Source Sans Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 }
 
-body.helpxmain-article h1 {
-  margin: 0 auto;
+body h1 {
   max-width: 1050px;
   line-height: 1.15;
   font-size: 36px;
   font-weight: 500;
   text-align: left;
   word-break: break-word;
+  margin: 0 auto;
   padding: 0 2.5rem;
+  min-height: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .draft {
@@ -137,6 +174,7 @@ main .section.dark.xs-spacing.page-title {
   font-weight: 500;
   color: var(--static-color-white)!important;
   width: 100%;
+  height:auto;
   z-index: 20;
   position: fixed;
   display: flex;
@@ -191,7 +229,7 @@ main .last-updated.content {
 * sections
 */
 
-main > div[class='section'] {
+main > div.section:not(.internal-banner, .page-title) {
   max-width: 1050px;
   padding: 0 2.5rem;
   margin: 0 auto;
@@ -199,7 +237,7 @@ main > div[class='section'] {
   grid-template-columns: 66% 1fr;
 }
 
-main > div[class='section'] > div {
+main > div.section:not(.internal-banner, .page-title) > div {
   grid-column-start: 1;
   grid-column-end: 1;
 }
@@ -245,7 +283,8 @@ footer {
 
 .on-this-page {
   position: fixed;
-  height: 300px;
+  max-height: 700px;
+  overflow: auto;
   width: 20%;
   top: 214px;
   right: 40px;
@@ -281,8 +320,21 @@ footer {
 .on-this-page a, .on-this-page p {
   margin: 0 0 0 6px;
 }
-.on-this-page p {
 
+a.button:hover, a.button:focus, button:hover, button:focus  {
+  background-color: var(--link-hover-color);
+  cursor: pointer;
+}
+
+button:disabled, button:disabled:hover {
+  background-color: var(--overlay-background-color);
+  cursor: unset;
+}
+
+a.button.secondary, button.secondary {
+  background-color: unset;
+  border: 2px solid currentcolor;
+  color: var(--text-color)
 }
 
 /* phone */
@@ -298,11 +350,12 @@ footer {
   .layout-container .content-container .section {
     padding: 0;
   }
-  main > div[class='section'] {
+  main > div.section:not(.internal-banner, .page-title) {
     padding-left: 2.5rem !important;
     padding-right: 2.5rem !important;
   }
-  .page-title + [class='section'], .internal-banner + [class='section'] {
+  .page-title + div.section:not(.internal-banner, .page-title), 
+  .internal-banner + div.section:not(.internal-banner, .page-title) {
     padding-top: 234px;
   }
   .last-updated {
@@ -322,11 +375,12 @@ footer {
   .layout-container .content-container .section {
     padding: 0;
   }
-  main > div[class='section'] {
+  main > div.section:not(.internal-banner, .page-title) {
     padding-left: 2.5rem !important;
     padding-right: 2.5rem !important;
   }
-  .page-title + [class='section'], .internal-banner + [class='section'] {
+  .page-title + div.section:not(.internal-banner, .page-title), 
+  .internal-banner + div.section:not(.internal-banner, .page-title) {
     padding-top: 233px;
   }
   .last-updated {
@@ -341,7 +395,8 @@ footer {
 @media screen and (min-width: 64rem) {
   /* mitigate CLS */
 
-  .page-title + [class='section'], .internal-banner + [class='section'] {
+  .page-title + div.section:not(.internal-banner, .page-title), 
+  .internal-banner + div.section:not(.internal-banner, .page-title) {
     padding-top: 202px;
   }
 
@@ -353,12 +408,18 @@ footer {
     height: 62px;
   }
 }
+/* above 1500px */
+@media screen and (min-width: 93.75rem) {
+  body.helpxmain-article h1 {
+    font-size: 2rem;
+  }
+}
 
 @media (max-width: 700px) {
   .on-this-page {
     display: none;
   }
-  main > div[class='section'] {
+  main > div.section:not(.internal-banner, .page-title) {
     grid-template-columns: 100%
   }
 }
