@@ -77,16 +77,22 @@ const miloLibs = setLibs(LIBS);
 }());
 
 (function preventCLS() {
-  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('toc'));
+  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('fragments/toc/'));
   if (document.querySelector('.toc') || hasTOCFragment) {
     const styles = document.createElement('style');
     const newRule = `
-    body > main div[class="section"], body > main .content.last-updated {
+    body > main > div.section:not(.internal-banner, .page-title), body > main .content.last-updated {
       padding-left: 335px;
     }
     `;
+    const titleRule = `
+      body > main .page-title h1 {
+        margin-left: 6%;
+      }
+    `;
     document.head.append(styles);
     styles.sheet.insertRule(newRule);
+    styles.sheet.insertRule(titleRule);
   }
 }());
 
@@ -133,10 +139,17 @@ function buildAutoBlocks() {
 
     renderNestedBlocks();
     removeEmptyDivs();
+    giveImgTitles();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
+}
+
+const giveImgTitles = () => {
+  document.querySelectorAll('img').forEach(img => {
+    img.title = img?.alt;
+  })
 }
 
 const dispatchMainEventsLoaded = () => {
@@ -145,7 +158,7 @@ const dispatchMainEventsLoaded = () => {
 };
 
 const decorateFirstH2 = () => {
-  document.querySelector('h2').classList.add('first');
+  document.querySelector('h2')?.classList.add('first');
 };
 
 const removeEmptyDivs = () => {
@@ -161,16 +174,18 @@ const fixTitle = () => {
     window.addEventListener('resize', () => {
       title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
     });
-
-    if (document.querySelector('.toc')) {
-      const h1 = title.querySelector(':scope h1');
-      h1.style.marginLeft = '6%';
-    }
+    const firstSection = document.querySelector('.page-title + div.section:not(.internal-banner, .page-title');
+    if (!firstSection) return;
+    const setPaddingTop = () => {
+      firstSection.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop() + 100}px`;
+    };
+    setPaddingTop();
+    new ResizeObserver(setPaddingTop).observe(title);
   }
 };
 
 const renderNestedBlocks = () => {
-  const blockList = ['before-after-slider', 'code', 'download', 'generic', 'note', 'procedure']; // not toc
+  const blockList = ['before-after-slider', 'code', 'download', 'generic', 'note', 'procedure', 'go-to-top']; // not toc
   const miloBlocks = ['accordion'];
 
   const replaceNode = (oldNode, newElement) => {
@@ -265,26 +280,38 @@ async function buildInternalBanner() {
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
+    const setPaddingTop = () => { 
+      banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
+    };
     banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
     // needed to make sticky behaviour correct, specifically,
     // so that the internal banner is always below the sticky title
     // when scrollHeight is 0.
-    window.addEventListener('resize', () => {
-      banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
-    });
+    new ResizeObserver(setPaddingTop).observe(title);
 
     const text = document.createElement('div');
     text.classList.add('content', 'last-updated');
     text.innerHTML = '&nbsp;';
     banner.append(text);
 
-    const index = await fetchIndex('query-index');
-    const found = index.data.find((entry) => entry.path.indexOf(window.location.pathname) > -1);
-    if (found) {
-      const placeholders = await fetchPlaceholders();
-      const dateFormat = new Date(parseInt(`${found.lastModified}000`, 10));
-      text.innerHTML = `${placeholders.lastUpdatedOn || 'Last updated on'} ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}`;
+    // get last updated date from the http header
+    let dateFormat
+    try {
+      const resp = await fetch(document.location, {
+        method: 'HEAD',
+      });
+      dateFormat = new Date(resp.headers.get('last-modified'));
+    } catch (e) {
+      dateFormat = new Date(0);
+      console.error(e);
     }
+
+    const productNames = document.querySelector('meta[name="productnames"]')?.content.split(',');
+    const primary = document.querySelector('meta[name="primaryproductname"]')?.content;
+    const productList = productNames?.length ? productNames.filter(x => x !== primary) : []
+    const alsoAppliesTo = productList.length ? ` | Also Applies to ${productList.join(', ')} ` : '';
+    text.innerHTML = 
+      `Last updated on ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}${alsoAppliesTo}`;
   }
 }
 
@@ -344,12 +371,18 @@ const buildOnThisPageSection = () => {
     });
     content.append(a);
   });
+ 
+  const topOffset = 150;
   const preventScrollBelowContent = (block) => {
     const main = document.querySelector('main');
     const bottom = window.scrollY + window.innerHeight
       - main.getBoundingClientRect().bottom - window.pageYOffset;
-    block.style.top = bottom > 0 ? `${205 - bottom}px` : '205px';
+    const offset = bottom > 0 ? topOffset - bottom : topOffset;
+    setTop(block, offset);
   };
+  setTop(container, topOffset);
+  const title = document.querySelector('.page-title');
+  new ResizeObserver(() => setTop(container, topOffset)).observe(title);
   window.addEventListener('scroll', () => preventScrollBelowContent(container));
   document.querySelector('main')?.append(container);
 };
@@ -417,8 +450,14 @@ const getHeaderMarginTop = () => {
   return 0;
 };
 
+export const setTop = (block, extra=0) => { 
+  const title = document.querySelector('.page-title');
+  block.style.top = `${(title?.offsetHeight ?? 0) + getHeaderMarginTop() + extra}px`;
+};
+
 function getMonthShortName(monthNo) {
   const date = new Date();
   date.setMonth(monthNo);
   return date.toLocaleString('en-US', { month: 'short' });
 }
+

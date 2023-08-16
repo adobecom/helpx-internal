@@ -18,6 +18,16 @@ export default function createMetadataBlock(main, document) {
     'template',
     'creationDate',
     'lastModifiedDate',
+    'helpx-milo-cq:tags',
+    'helpx-milo-primaryProductTag',
+    'helpx-milo-moreHelpPaths',
+    'helpx-milo-navTitle',
+    'helpx-milo-publishExternalDate',
+    'helpx-milo-lastPublishQADate',
+    'helpx-milo-lastPublishExternalDate',
+    'helpx-milo-publishInternalDate',
+    'helpx-milo-firstPublishQADate',
+    'helpx-milo-jcr:uuid',
   ];
 
   const meta = {};

@@ -13,13 +13,13 @@ const createCodeBlock = (document) => {
   const codeblocks = document.querySelectorAll('.codeblock');
   codeblocks.forEach((codeblock) => {
     const pre = codeblock.querySelector('pre');
-    const content = pre.textContent;
+    const content = pre?.textContent ?? '';
     const newPre = document.createElement('pre');
     const newCode = document.createElement('code');
     newPre.appendChild(newCode);
     newCode.textContent = content;
     const cells = [
-      [`code (language-${getLanguage(pre.dataset.enlighterLanguage)}${pre.dataset.gutter
+      [`code (language-${getLanguage(pre?.dataset?.enlighterLanguage ?? '')}${pre?.dataset?.gutter
         ? ', line-numbers'
         : ''})`],
       [newPre],

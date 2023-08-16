@@ -8,6 +8,7 @@ export default function createToCBlock(main, document) {
   });
   toc?.querySelectorAll('a').forEach((a) => {
     if (a.href.slice(-5) === '.html') a.href = a.href.slice(0, -5);
+    a.href = a.href.toLowerCase();
   });
   if (toc) {
     const cells = [
