@@ -30,6 +30,7 @@
     },
     {
       "containerId": "library",
+      "id": "milo-library",
       "title": "Milo",
       "environments": [
         "edit"
