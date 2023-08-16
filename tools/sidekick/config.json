@@ -20,6 +20,17 @@
     {
       "id": "library",
       "title": "Library",
+      "isContainer": true,
+      "environments": [
+        "edit"
+      ],
+      "includePaths": [
+        "**.docx**"
+      ]
+    },
+    {
+      "containerId": "library",
+      "title": "Milo",
       "environments": [
         "edit"
       ],
@@ -27,6 +38,21 @@
       "passConfig": true,
       "paletteRect": "top: auto; bottom: 20px; left: 20px; height: 398px; width: 360px;",
       "url": "https://milo.adobe.com/tools/library",
+      "includePaths": [
+        "**.docx**"
+      ]
+    },
+    {
+      "id": "helpx-library",
+      "containerId": "library",
+      "title": "Helpx",
+      "environments": [
+        "edit"
+      ],
+      "isPalette": true,
+      "passConfig": true,
+      "paletteRect": "top: auto; bottom: 20px; left: 20px; height: 398px; width: 360px;",
+      "url": "https://main--helpx-internal--adobecom.hlx.page/tools/library",
       "includePaths": [
         "**.docx**"
       ]
