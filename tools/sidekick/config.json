@@ -24,6 +24,9 @@
       "environments": [
         "edit"
       ],
+      "includePaths": [
+        "**.docx**"
+      ]
     },
     {
       "containerId": "library",
