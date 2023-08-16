@@ -20,7 +20,10 @@
     {
       "id": "library",
       "title": "Library",
-      "isContainer": true
+      "isContainer": true,
+      "environments": [
+        "edit"
+      ],
     },
     {
       "containerId": "library",
