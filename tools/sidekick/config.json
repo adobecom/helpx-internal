@@ -1,6 +1,6 @@
 {
   "project": "HelpX Internal",
-  "host": "helpx-internal.adobe.com",
+  "host": "helpx-internal.stage.adobe.com",
   "plugins": [
     {
       "id": "localize",
