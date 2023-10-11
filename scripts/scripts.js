@@ -1,22 +1,8 @@
-/*
- * Copyright 2022 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
- */
 
-import { fetchPlaceholders, setLibs } from './utils.js';
+import { setLibs } from './utils.js';
 
-// Add project-wide styles here.
-const STYLES = '/styles/styles.css';
-
-// Use '/libs' if your live site maps '/libs' to milo's origin.
-const LIBS = 'https://milo.adobe.com/libs';
+const LIBS = '/libs';
+const STYLES = ['/styles/styles.css'];
 
 // Add any config options.
 const CONFIG = {
@@ -110,7 +96,6 @@ const miloLibs = setLibs(LIBS);
  */
 function buildAutoBlocks() {
   try {
-    fixTitle();
     decorateFirstH2();
     buildInternalBanner();
     fixTableHeaders();
@@ -144,25 +129,6 @@ const decorateFirstH2 = () => {
 
 const removeEmptyDivs = () => {
   document.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
-};
-
-const fixTitle = () => {
-  const header = document.querySelector('header');
-  const title = document.querySelector('.page-title');
-
-  if (header && title) {
-    title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
-    window.addEventListener('resize', () => {
-      title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
-    });
-    const firstSection = document.querySelector('.page-title + div.section:not(.internal-banner, .page-title');
-    if (!firstSection) return;
-    const setPaddingTop = () => {
-      firstSection.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop() + 100}px`;
-    };
-    setPaddingTop();
-    new ResizeObserver(setPaddingTop).observe(title);
-  }
 };
 
 const renderNestedBlocks = () => {
@@ -233,7 +199,7 @@ export function decorateIcons(element = document) {
       return;
     }
     const icon = span.classList[1].substring(5);
-    const resp = await fetch(`${window.hlx.codeBasePath}${ICON_ROOT}/${icon}.svg`);
+    const resp = await fetch(`${ICON_ROOT}/${icon}.svg`);
     if (resp.ok) {
       const iconHTML = await resp.text();
       if (iconHTML.match(/<style/i)) {
@@ -261,14 +227,6 @@ async function buildInternalBanner() {
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
-    const setPaddingTop = () => { 
-      banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
-    };
-    banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
-    // needed to make sticky behaviour correct, specifically,
-    // so that the internal banner is always below the sticky title
-    // when scrollHeight is 0.
-    new ResizeObserver(setPaddingTop).observe(title);
 
     const text = document.createElement('div');
     text.classList.add('content', 'last-updated');

@@ -7,14 +7,6 @@
  *
  */
 
-/* main > div {
-  width: 100%!important;
-  margin: 0 auto;
-  max-width: 1260px;
-  padding-left: 70px!important;
-  padding-right: 70px!important;
-} */
-
 :root {
   --static-color-white: #fff;
   --static-color-light-blue: #1f68b6;
@@ -28,13 +20,16 @@
 
   --table-color-border: #bdbdbd;
   --table-header-color-background: #ededed;
-  --internal-banner-color-background: var(--static-color-light-blue);
+  --internal-banner-color-background: var(--static-color-light-green);
   --internal-banner-color-font: var(--static-color-dark-gray);
   --footer-color-background: var(--static-color-light-gray);
   --footer-color-font: var(--static-color-dark-gray);
   --on-this-page-background: #eaeaea;
 
   --grid-container-width: 100%;
+
+  --title-header-height: 74px;
+  --internal-banner-height: 136px;
 }
 
 body {
@@ -69,6 +64,7 @@ table th {
 .table-banded-rows tr:nth-child(odd) {
   background: #f7f8f7;
 }
+
 /*
  *  WARNING: This is a temporary fix. It would be better to turn it into a page-description block 
  *  Look for the .page-description selector on 
@@ -76,7 +72,7 @@ table th {
  */
 h3:first-of-type {
   color: #666;
-  margin 10px 0 16px;
+  /* margin 10px 0 16px; */
   line-height: 1.4;
   font-size: 18px;
   font-weight: 500;
@@ -106,26 +102,6 @@ body div {
 
 header.gnav > div {
   margin: 0;
-}
-
-/* equivalent of section title in AEM */
-.section > .content > h2:not(.first) {
-  font-size: 2rem;
-  font-weight: 400;
-  line-height: 1em;
-  border-top: 1px solid var(--static-color-heading-border);
-  margin-top: 3.5rem;
-  margin-bottom: 0;
-  padding: 20px  0;
-
-}
-
-.section > .content > h2.first {
-  font-size: 2rem;
-  font-weight: 400;
-  line-height: 1em;
-  margin: 0;
-  padding: 20px  0;
 }
 
 .columns {
@@ -168,23 +144,14 @@ body h1 {
 * title
 */
 
-main .section.dark.xs-spacing.page-title {
-  padding: 0 2.5rem 10px 0 !important;
-  margin: 0;
+main .page-title {
   font-size: 36px;
   font-weight: 500;
   color: var(--static-color-white)!important;
   width: 100%;
-  height: 64px;
+  height: var(--title-header-height);
   z-index: 20;
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-main .section.dark.xs-spacing.page-title > .content {
-  margin: 0;
 }
 
 /*
@@ -202,11 +169,13 @@ main .internal-banner .banner {
   padding: 12px 0;
   line-height: 24px;
   margin: 0;
+  /* position: absolute; */
   text-transform: uppercase;
   color: var(--static-color-white);
 }
 
 main .internal-banner {
+  padding-top: calc(var(--title-header-height) + 32px);
   position: absolute;
   width: 100%;
   margin: 0;
@@ -357,7 +326,7 @@ a.button.secondary, button.secondary {
   }
   .page-title + div.section:not(.internal-banner, .page-title), 
   .internal-banner + div.section:not(.internal-banner, .page-title) {
-    padding-top: 234px;
+    padding-top: calc(var(--internal-banner-height) + var(--title-header-height)) !important;
   }
   .last-updated {
     padding-left: 2.5rem !important;
@@ -382,7 +351,7 @@ a.button.secondary, button.secondary {
   }
   .page-title + div.section:not(.internal-banner, .page-title), 
   .internal-banner + div.section:not(.internal-banner, .page-title) {
-    padding-top: 233px;
+    padding-top: calc(var(--internal-banner-height) + var(--title-header-height)) !important;
   }
   .last-updated {
     padding-left: 2.5rem !important;
@@ -395,18 +364,13 @@ a.button.secondary, button.secondary {
 /* desktop */
 @media screen and (min-width: 64rem) {
   /* mitigate CLS */
-
   .page-title + div.section:not(.internal-banner, .page-title), 
   .internal-banner + div.section:not(.internal-banner, .page-title) {
-    padding-top: 202px;
+    padding-top: calc(var(--internal-banner-height) + var(--title-header-height)) !important;
   }
 
   .hidden-desktop {
     display: none !important;
-  }
-
-  .page-title {
-    height: 62px;
   }
 }
 /* above 1500px */
