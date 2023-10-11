@@ -175,7 +175,7 @@ main .section.dark.xs-spacing.page-title {
   font-weight: 500;
   color: var(--static-color-white)!important;
   width: 100%;
-  height:auto;
+  height: 64px;
   z-index: 20;
   position: fixed;
   display: flex;
