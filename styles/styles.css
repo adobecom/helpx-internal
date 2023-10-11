@@ -17,6 +17,7 @@
 
 :root {
   --static-color-white: #fff;
+  --static-color-light-blue: #1f68b6;
   --static-color-light-green: #0f996d;
   --static-color-light-gray: #fafafa;
   --static-color-dark-gray: #505050;
@@ -27,7 +28,7 @@
 
   --table-color-border: #bdbdbd;
   --table-header-color-background: #ededed;
-  --internal-banner-color-background: var(--static-color-light-green);
+  --internal-banner-color-background: var(--static-color-light-blue);
   --internal-banner-color-font: var(--static-color-dark-gray);
   --footer-color-background: var(--static-color-light-gray);
   --footer-color-font: var(--static-color-dark-gray);
