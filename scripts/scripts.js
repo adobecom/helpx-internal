@@ -34,10 +34,18 @@ const CONFIG = {
 
 const ICON_ROOT = '/icons';
 
-// Default to loading the first image as eager.
+const eagerLoad = (img) => {
+  img?.setAttribute('loading', 'eager');
+  img?.setAttribute('fetchpriority', 'high');
+};
+
 (async function loadLCPImage() {
-  const lcpImg = document.querySelector('img');
-  lcpImg?.setAttribute('loading', 'eager');
+  const marquee = document.querySelector('.marquee');
+  if (marquee) {
+    marquee.querySelectorAll('img').forEach(eagerLoad);
+  } else {
+    eagerLoad(document.querySelector('img'));
+  }
 }());
 
 /*
@@ -46,55 +54,7 @@ const ICON_ROOT = '/icons';
  * ------------------------------------------------------------
  */
 
-export function initHlx() {
-  window.hlx = window.hlx || {};
-  window.hlx.lighthouse = new URLSearchParams(window.location.search).get('lighthouse') === 'on';
-  window.hlx.codeBasePath = '';
-
-  const scriptEl = document.querySelector('script[src$="/scripts/scripts.js"]');
-  if (scriptEl) {
-    try {
-      [window.hlx.codeBasePath] = new URL(scriptEl.src).pathname.split('/scripts/scripts.js');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  }
-}
-initHlx();
-
 const miloLibs = setLibs(LIBS);
-
-(function loadStyles() {
-  const paths = [`${miloLibs}/styles/styles.css`];
-  if (STYLES) { paths.push(STYLES); }
-  paths.forEach((path) => {
-    const link = document.createElement('link');
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('href', path);
-    document.head.appendChild(link);
-  });
-}());
-
-(function preventCLS() {
-  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('fragments/toc/'));
-  if (document.querySelector('.toc') || hasTOCFragment) {
-    const styles = document.createElement('style');
-    const newRule = `
-    body > main > div.section:not(.internal-banner, .page-title), body > main .content.last-updated {
-      padding-left: 335px;
-    }
-    `;
-    const titleRule = `
-      body > main .page-title h1 {
-        margin-left: 6%;
-      }
-    `;
-    document.head.append(styles);
-    styles.sheet.insertRule(newRule);
-    styles.sheet.insertRule(titleRule);
-  }
-}());
 
 // Prevent redirection to helpx url when pressing enter in search
 (function shenanigans() {
@@ -109,9 +69,30 @@ const miloLibs = setLibs(LIBS);
   });
 }());
 
-const { loadArea, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils.js`);
+(function loadStyles() {
+  const paths = [`${miloLibs}/styles/styles.css`];
+  if (STYLES) {
+    paths.push(...(Array.isArray(STYLES) ? STYLES : [STYLES]));
+  }
+  paths.forEach((path) => {
+    const link = document.createElement('link');
+    link.setAttribute('rel', 'stylesheet');
+    link.setAttribute('href', path);
+    document.head.appendChild(link);
+  });
+}());
 
 (async function loadPage() {
+  const { loadArea, setConfig, createTag } = await import(`${miloLibs}/utils/utils.js`);
+  const metaCta = document.querySelector('meta[name="chat-cta"]');
+  if (metaCta && !document.querySelector('.chat-cta')) {
+    const isMetaCtaDisabled = metaCta?.content === 'off';
+    if (!isMetaCtaDisabled) {
+      const chatDiv = createTag('div', { class: 'chat-cta meta-cta', 'data-content': metaCta.content });
+      const lastSection = document.body.querySelector('main > div:last-of-type');
+      if (lastSection) lastSection.insertAdjacentElement('beforeend', chatDiv);
+    }
+  }
   setConfig({ ...CONFIG, miloLibs });
   await loadArea();
   buildAutoBlocks();
