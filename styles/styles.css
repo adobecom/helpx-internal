@@ -313,16 +313,11 @@ a.button.secondary, button.secondary {
     display: none !important;
   }
 
-  body.helpxmain-article h1 {
+  body h1 {
     font-size: 1.5rem;
-    padding: 13px 2.5rem;
   }
   .layout-container .content-container .section {
     padding: 0;
-  }
-  main > div.section:not(.internal-banner, .page-title) {
-    padding-left: 2.5rem !important;
-    padding-right: 2.5rem !important;
   }
   .page-title + div.section:not(.internal-banner, .page-title), 
   .internal-banner + div.section:not(.internal-banner, .page-title) {
