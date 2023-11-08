@@ -18,6 +18,16 @@
       ]
     },
     {
+      "containerId": "tools",
+      "id": "localize-2",
+      "title": "Localize (V2)",
+      "environments": [ "edit" ],
+      "url": "https://main--helpx-internal--adobecom.hlx.page/tools/loc?milolibs=locui",
+      "passReferrer": true,
+      "passConfig": true,
+      "includePaths": [ "**.xlsx**" ]
+    },
+    {
       "id": "library",
       "title": "Library",
       "isContainer": true,
