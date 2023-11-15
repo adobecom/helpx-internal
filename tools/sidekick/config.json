@@ -3,21 +3,6 @@
   "host": "helpx-internal.adobe.com",
   "plugins": [
     {
-      "id": "localize",
-      "title": "Localize",
-      "environments": [
-        "edit"
-      ],
-      "url": "https://milo.adobe.com/tools/loc/index.html?project=milo--adobecom",
-      "passReferrer": true,
-      "excludePaths": [
-        "/**"
-      ],
-      "includePaths": [
-        "**/:x**"
-      ]
-    },
-    {
       "containerId": "tools",
       "id": "localize-2",
       "title": "Localize (V2)",
