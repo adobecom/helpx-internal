@@ -1,22 +1,8 @@
-/*
- * Copyright 2022 Adobe. All rights reserved.
- * This file is licensed to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License. You may obtain a copy
- * of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
- * OF ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
- */
 
-import { fetchPlaceholders, setLibs } from './utils.js';
+import { setLibs } from './utils.js';
 
-// Add project-wide styles here.
-const STYLES = '/styles/styles.css';
-
-// Use '/libs' if your live site maps '/libs' to milo's origin.
-const LIBS = 'https://milo.adobe.com/libs';
+const LIBS = '/libs';
+const STYLES = ['/styles/styles.css'];
 
 // Add any config options.
 const CONFIG = {
@@ -34,10 +20,18 @@ const CONFIG = {
 
 const ICON_ROOT = '/icons';
 
-// Default to loading the first image as eager.
+const eagerLoad = (img) => {
+  img?.setAttribute('loading', 'eager');
+  img?.setAttribute('fetchpriority', 'high');
+};
+
 (async function loadLCPImage() {
-  const lcpImg = document.querySelector('img');
-  lcpImg?.setAttribute('loading', 'eager');
+  const marquee = document.querySelector('.marquee');
+  if (marquee) {
+    marquee.querySelectorAll('img').forEach(eagerLoad);
+  } else {
+    eagerLoad(document.querySelector('img'));
+  }
 }());
 
 /*
@@ -46,55 +40,7 @@ const ICON_ROOT = '/icons';
  * ------------------------------------------------------------
  */
 
-export function initHlx() {
-  window.hlx = window.hlx || {};
-  window.hlx.lighthouse = new URLSearchParams(window.location.search).get('lighthouse') === 'on';
-  window.hlx.codeBasePath = '';
-
-  const scriptEl = document.querySelector('script[src$="/scripts/scripts.js"]');
-  if (scriptEl) {
-    try {
-      [window.hlx.codeBasePath] = new URL(scriptEl.src).pathname.split('/scripts/scripts.js');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  }
-}
-initHlx();
-
 const miloLibs = setLibs(LIBS);
-
-(function loadStyles() {
-  const paths = [`${miloLibs}/styles/styles.css`];
-  if (STYLES) { paths.push(STYLES); }
-  paths.forEach((path) => {
-    const link = document.createElement('link');
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('href', path);
-    document.head.appendChild(link);
-  });
-}());
-
-(function preventCLS() {
-  const hasTOCFragment = [...document.querySelectorAll('a')].find((a) => a.href.includes('fragments/toc/'));
-  if (document.querySelector('.toc') || hasTOCFragment) {
-    const styles = document.createElement('style');
-    const newRule = `
-    body > main > div.section:not(.internal-banner, .page-title), body > main .content.last-updated {
-      padding-left: 335px;
-    }
-    `;
-    const titleRule = `
-      body > main .page-title h1 {
-        margin-left: 6%;
-      }
-    `;
-    document.head.append(styles);
-    styles.sheet.insertRule(newRule);
-    styles.sheet.insertRule(titleRule);
-  }
-}());
 
 // Prevent redirection to helpx url when pressing enter in search
 (function shenanigans() {
@@ -109,9 +55,30 @@ const miloLibs = setLibs(LIBS);
   });
 }());
 
-const { loadArea, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils.js`);
+(function loadStyles() {
+  const paths = [`${miloLibs}/styles/styles.css`];
+  if (STYLES) {
+    paths.push(...(Array.isArray(STYLES) ? STYLES : [STYLES]));
+  }
+  paths.forEach((path) => {
+    const link = document.createElement('link');
+    link.setAttribute('rel', 'stylesheet');
+    link.setAttribute('href', path);
+    document.head.appendChild(link);
+  });
+}());
 
 (async function loadPage() {
+  const { loadArea, setConfig, createTag } = await import(`${miloLibs}/utils/utils.js`);
+  const metaCta = document.querySelector('meta[name="chat-cta"]');
+  if (metaCta && !document.querySelector('.chat-cta')) {
+    const isMetaCtaDisabled = metaCta?.content === 'off';
+    if (!isMetaCtaDisabled) {
+      const chatDiv = createTag('div', { class: 'chat-cta meta-cta', 'data-content': metaCta.content });
+      const lastSection = document.body.querySelector('main > div:last-of-type');
+      if (lastSection) lastSection.insertAdjacentElement('beforeend', chatDiv);
+    }
+  }
   setConfig({ ...CONFIG, miloLibs });
   await loadArea();
   buildAutoBlocks();
@@ -129,7 +96,6 @@ const { loadArea, setConfig, loadStyle } = await import(`${miloLibs}/utils/utils
  */
 function buildAutoBlocks() {
   try {
-    fixTitle();
     decorateFirstH2();
     buildInternalBanner();
     fixTableHeaders();
@@ -163,25 +129,6 @@ const decorateFirstH2 = () => {
 
 const removeEmptyDivs = () => {
   document.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
-};
-
-const fixTitle = () => {
-  const header = document.querySelector('header');
-  const title = document.querySelector('.page-title');
-
-  if (header && title) {
-    title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
-    window.addEventListener('resize', () => {
-      title.style.top = `${header.offsetHeight + getHeaderMarginTop()}px`;
-    });
-    const firstSection = document.querySelector('.page-title + div.section:not(.internal-banner, .page-title');
-    if (!firstSection) return;
-    const setPaddingTop = () => {
-      firstSection.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop() + 100}px`;
-    };
-    setPaddingTop();
-    new ResizeObserver(setPaddingTop).observe(title);
-  }
 };
 
 const renderNestedBlocks = () => {
@@ -252,7 +199,7 @@ export function decorateIcons(element = document) {
       return;
     }
     const icon = span.classList[1].substring(5);
-    const resp = await fetch(`${window.hlx.codeBasePath}${ICON_ROOT}/${icon}.svg`);
+    const resp = await fetch(`${ICON_ROOT}/${icon}.svg`);
     if (resp.ok) {
       const iconHTML = await resp.text();
       if (iconHTML.match(/<style/i)) {
@@ -280,14 +227,6 @@ async function buildInternalBanner() {
     banner.append(div);
     title.insertAdjacentElement('afterend', banner);
     decorateIcons(banner);
-    const setPaddingTop = () => { 
-      banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
-    };
-    banner.style.paddingTop = `${title.offsetHeight + getHeaderMarginTop()}px`;
-    // needed to make sticky behaviour correct, specifically,
-    // so that the internal banner is always below the sticky title
-    // when scrollHeight is 0.
-    new ResizeObserver(setPaddingTop).observe(title);
 
     const text = document.createElement('div');
     text.classList.add('content', 'last-updated');
