@@ -3,18 +3,8 @@
   "host": "helpx-internal.adobe.com",
   "plugins": [
     {
-      "containerId": "tools",
-      "id": "localize-2",
-      "title": "Localize (V2)",
-      "environments": [ "edit" ],
-      "url": "https://main--helpx-internal--adobecom.hlx.live/tools/loc?milolibs=locui",
-      "passReferrer": true,
-      "passConfig": true,
-      "includePaths": [ "**.xlsx**" ]
-    },
-    {
-      "id": "library",
-      "title": "Library",
+      "id": "tools",
+      "title": "Tools",
       "isContainer": true,
       "environments": [
         "edit"
@@ -24,9 +14,23 @@
       ]
     },
     {
-      "containerId": "library",
+      "containerId": "tools",
+      "id": "localize-2",
+      "title": "Localize (V2)",
+      "environments": [
+        "edit"
+      ],
+      "url": "https://main--helpx-internal--adobecom.hlx.live/tools/loc?milolibs=locui",
+      "passReferrer": true,
+      "passConfig": true,
+      "includePaths": [
+        "**.xlsx**"
+      ]
+    },
+    {
+      "containerId": "tools",
       "id": "milo-library",
-      "title": "Milo",
+      "title": "Milo Library",
       "environments": [
         "edit"
       ],
@@ -40,8 +44,8 @@
     },
     {
       "id": "helpx-library",
-      "containerId": "library",
-      "title": "Helpx",
+      "containerId": "tools",
+      "title": "Helpx Library",
       "environments": [
         "edit"
       ],
