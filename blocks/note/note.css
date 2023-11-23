@@ -25,7 +25,7 @@
   margin: 20px 0;
   padding: 20px;
   font-size: 16px;
-  max-width: var(--grid-container-width);
+  max-width: var(--grid-container-width-helpx);
   position: relative;
 }
 
