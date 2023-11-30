@@ -20,7 +20,7 @@
       "environments": [
         "edit"
       ],
-      "url": "https://main--helpx-internal--adobecom.hlx.live/tools/loc?milolibs=locui",
+      "url": "https://main--helpx-internal--adobecom.hlx.page/tools/loc?milolibs=locui",
       "passReferrer": true,
       "passConfig": true,
       "includePaths": [
