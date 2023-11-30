@@ -8,7 +8,7 @@ indices:
       - '**/drafts/**'
       - '**/fragments/**'
     include:
-      - /content/help/en/**
+      - /en/**
     target: /query-index.xlsx
     properties:
       title:
