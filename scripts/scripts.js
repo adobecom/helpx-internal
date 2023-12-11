@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { fetchPlaceholders, setLibs } from './utils.js';
+import { setLibs } from './utils.js';
 
 // Add project-wide styles here.
 const STYLES = '/styles/styles.css';
@@ -96,6 +96,19 @@ const { loadArea, setConfig } = await import(`${miloLibs}/utils/utils.js`);
   await loadArea();
   decorateIcons();
 }());
+
+export const setTop = (block, extra = 0) => {
+  const title = document.querySelector('.page-title');
+  block.style.top = `${(title?.offsetHeight ?? 0) + getHeaderMarginTop() + extra}px`;
+};
+
+export const getHeaderMarginTop = () => {
+  const header = document.querySelector('header .gnav-wrapper');
+  if (header) {
+    return parseFloat(window.getComputedStyle(header)?.marginTop ?? 0);
+  }
+  return 0;
+};
 
 /* Replace icons with inline SVG and prefix with codeBasePath.
   /**
