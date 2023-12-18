@@ -1,4 +1,4 @@
-import { decorateIcons } from '../../scripts/scripts.js';
+import { decorateIcons, setTop } from '../../scripts/scripts.js';
 import { setLibs } from '../../scripts/utils.js';
 
 (function preventCLS() {
@@ -49,6 +49,14 @@ const decorateFirstH2 = () => {
 
 const removeEmptyDivs = () => {
   document.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
+};
+
+const getHeaderMarginTop = () => {
+  const header = document.querySelector('header .gnav-wrapper');
+  if (header) {
+    return parseFloat(window.getComputedStyle(header)?.marginTop ?? 0);
+  }
+  return 0;
 };
 
 const fixTitle = () => {
@@ -300,19 +308,6 @@ export async function fetchIndex(indexFile, pageSize = 500) {
 
   return newIndex;
 }
-
-const getHeaderMarginTop = () => {
-  const header = document.querySelector('header .gnav-wrapper');
-  if (header) {
-    return parseFloat(window.getComputedStyle(header)?.marginTop ?? 0);
-  }
-  return 0;
-};
-
-export const setTop = (block, extra = 0) => {
-  const title = document.querySelector('.page-title');
-  block.style.top = `${(title?.offsetHeight ?? 0) + getHeaderMarginTop() + extra}px`;
-};
 
 function getMonthShortName(monthNo) {
   const date = new Date();
