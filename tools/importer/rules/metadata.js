@@ -1,4 +1,3 @@
-
 export default function createMetadataBlock(main, document) {
   // list of <meta name="..." content="..." /> tags to parse
   const metaTagNames = [
@@ -41,7 +40,7 @@ export default function createMetadataBlock(main, document) {
       }
     }
   });
-
+  meta.template = 'helpxmain-article'; // make sure that's there
   // helper to create the metadata block
   const block = WebImporter.Blocks.getMetadataBlock(document, meta);
 
