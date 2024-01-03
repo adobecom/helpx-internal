@@ -1,16 +1,16 @@
 
-body {
+body main {
   line-height: 21px;
 }
 
-body table {
+body main table {
   font-size: 16px;
   border-spacing: 0;
   table-layout: fixed;
   width: 100%;
 }
 
-body ul li {
+body main ul li {
   list-style-type: disc;
 }
 
@@ -44,11 +44,11 @@ h3:first-of-type {
   font-weight: 500;
 }
 
-li {
+body.helpxmainarticle main li {
   margin: 6px 0; 
 }
 
-body p {
+body main p {
   margin-block-start: 0;
   margin-block-end: 0;
   font-size: 16px;
@@ -56,7 +56,7 @@ body p {
   margin: 10px 0;
   overflow-wrap: break-word;
 }
-body div {
+body main div {
   font-size: 16px;
   line-height: 1.5;
   overflow-wrap: break-word;
@@ -107,7 +107,7 @@ body.helpxmain-article {
   font-family: adobe-clean,Source Sans Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
 }
 
-body h1 {
+body main h1 {
   max-width: 1050px;
   line-height: 1.15;
   font-size: 36px;
@@ -148,6 +148,14 @@ main .section.dark.xs-spacing.page-title {
 main .section.dark.xs-spacing.page-title > .content {
   margin: 0;
   max-width: 100%;
+}
+
+/*
+ * Footer
+ */
+
+body.helpxmain-article .footer-nav-item-link a {
+  padding: 0;
 }
 
 /*
@@ -224,21 +232,6 @@ body > main > .section > .content {
   margin: 4px 0 20px 0;
   padding: 6px 2px;
   background: url('https://main--helpx-internal--adobecom.hlx.page/media_1b45f544d71effad595a85747635d01832a3c0149.png') 20px -20px #eaeaea;
-}
-
-/*
- * footer
- */
-
-footer {
-  background: var(--footer-color-background);
-  color: var(--footer-color-font);
-  font-size: 11px;
-  margin-top: 20px;
-  padding-top: 20px;
-  padding: 20px 0;
-  position: relative;
-  text-align: center;
 }
 
 /*
