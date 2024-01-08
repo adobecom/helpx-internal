@@ -9,5 +9,5 @@ sitemaps:
       us:
         source: /query-index.json
         alternate: /{path}.html
-        destination: /sitemap-internal.xml
+        destination: /content/help/en/sitemap-internal.xml
         hreflang: en-US

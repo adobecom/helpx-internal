@@ -1,10 +1,11 @@
+
 export default function createTitleBlock(main, document) {
   /*
     search
   */
 
   // TODO - render proper search section/block
-  let sEl = document.querySelector('#search-container');
+  var sEl = document.querySelector('#search-container');
   if (sEl) sEl.remove();
 
   sEl = document.querySelector('.back-to-search');
@@ -16,14 +17,14 @@ export default function createTitleBlock(main, document) {
 
   let title = '';
 
-  const el = document.querySelector('.titlebar h1');
+  const el = document.querySelector('.titleBar h1');
   if (el) {
     title = el.textContent;
   }
 
   const div = document.createElement('h1');
   div.innerHTML = title;
-
+    
   const cells = [
     ['Section Metadata'],
     ['style', 'dark, xs spacing, page-title'],

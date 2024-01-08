@@ -12,7 +12,7 @@ export default (document, currentPage) => {
     let url;
     if (canParse(a)) { url = new URL(a); } else { url = new URL(a, 'https://helpx-internal.corp.adobe.com'); }
 
-    if (!isInternalUrl(url)) return;
+    if (!url.pathname.includes('/content/help/')) return;
 
     const before = a.href;
     const after = url.pathname.replaceAll(findExtraHyphens, '-').replace('/content/help', '');
@@ -21,9 +21,6 @@ export default (document, currentPage) => {
     console.info('LINK TRANSFORMATION: Replaced the link ', before, ' on the page ', transformCurrentPage(currentPage), ' with ', a.href);
   });
 };
-
-const isInternalUrl = (url) => url.pathname.includes('/content/help/')
-  && url.hostname === 'localhost';
 
 const canParse = (a) => {
   try {

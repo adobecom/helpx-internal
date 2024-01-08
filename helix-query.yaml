@@ -1,17 +1,14 @@
 version: 1
 
 indices:
-  def:
+  def: &def
     exclude:
       - '**/gnav**'
       - '**/footer**'
       - '**/drafts/**'
       - '**/fragments/**'
-      - '**/cn/**'
-      - '**/jp/**'
-      - '**/kr/**'
     include:
-      - /**
+      - /en/**
     target: /query-index.xlsx
     properties:
       title:
