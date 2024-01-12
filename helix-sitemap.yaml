@@ -7,7 +7,22 @@ sitemaps:
     default: en-US
     languages:
       us:
-        source: /query-index.json
+        source: /en/query-index.json
         alternate: /{path}.html
         destination: /en/sitemap-internal.xml
         hreflang: en-US
+      jp:
+        source: /jp/query-index.json
+        alternate: /{path}.html
+        destination: /jp/sitemap-internal.xml
+        hreflang: jp-JA
+      kr:
+        source: /kr/query-index.json
+        alternate: /{path}.html
+        destination: /kr/sitemap-internal.xml
+        hreflang: kr-KO
+      cn:
+        source: /cn/query-index.json
+        alternate: /{path}.html
+        destination: /cn/sitemap-internal.xml
+        hreflang: zh-hans
