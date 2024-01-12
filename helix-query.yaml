@@ -1,7 +1,7 @@
 version: 1
 
 indices:
-  def: &def
+  en:
     exclude:
       - '**/gnav**'
       - '**/footer**'
@@ -9,7 +9,73 @@ indices:
       - '**/fragments/**'
     include:
       - /en/**
-    target: /query-index.xlsx
+    target: /en/query-index.xlsx
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, 'content')
+      image:
+        select: head > meta[property="og:image"]
+        value: match(attribute(el, 'content'), 'https:\/\/[^/]+(\/.*)')
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, 'content')
+      lastModified:
+        select: none
+        value: parseTimestamp(headers['last-modified'], 'ddd, DD MMM YYYY hh:mm:ss GMT')
+  jp:
+    exclude:
+      - '**/gnav**'
+      - '**/footer**'
+      - '**/drafts/**'
+      - '**/fragments/**'
+    include:
+      - /jp/**
+    target: /jp/query-index.xlsx
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, 'content')
+      image:
+        select: head > meta[property="og:image"]
+        value: match(attribute(el, 'content'), 'https:\/\/[^/]+(\/.*)')
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, 'content')
+      lastModified:
+        select: none
+        value: parseTimestamp(headers['last-modified'], 'ddd, DD MMM YYYY hh:mm:ss GMT')
+  kr:
+    exclude:
+      - '**/gnav**'
+      - '**/footer**'
+      - '**/drafts/**'
+      - '**/fragments/**'
+    include:
+      - /kr/**
+    target: /kr/query-index.xlsx
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, 'content')
+      image:
+        select: head > meta[property="og:image"]
+        value: match(attribute(el, 'content'), 'https:\/\/[^/]+(\/.*)')
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, 'content')
+      lastModified:
+        select: none
+        value: parseTimestamp(headers['last-modified'], 'ddd, DD MMM YYYY hh:mm:ss GMT')
+  cn:
+    exclude:
+      - '**/gnav**'
+      - '**/footer**'
+      - '**/drafts/**'
+      - '**/fragments/**'
+    include:
+      - /cn/**
+    target: /cn/query-index.xlsx
     properties:
       title:
         select: head > meta[property="og:title"]
