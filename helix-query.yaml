@@ -7,9 +7,12 @@ indices:
       - '**/footer**'
       - '**/drafts/**'
       - '**/fragments/**'
+      - '/jp/**'
+      - '/kr/**'
+      - '/cn/**'
     include:
-      - /en/**
-    target: /en/query-index.xlsx
+      - /**
+    target: /query-index.xlsx
     properties:
       title:
         select: head > meta[property="og:title"]
