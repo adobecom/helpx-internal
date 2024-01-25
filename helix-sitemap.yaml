@@ -7,9 +7,9 @@ sitemaps:
     default: en-US
     languages:
       us:
-        source: /en/query-index.json
+        source: /query-index.json
         alternate: /{path}.html
-        destination: /en/sitemap-internal.xml
+        destination: /sitemap-internal.xml
         hreflang: en-US
       jp:
         source: /jp/query-index.json
