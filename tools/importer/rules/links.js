@@ -15,9 +15,11 @@ export default (document, currentPage) => {
     if (!isInternalUrl(url)) return;
 
     const before = a.href;
-    const after = url.pathname.replaceAll(findExtraHyphens, '-').replace('/content/help', '');
+    const p = url.pathname.startsWith('/content/help/en') ? '/content/help/en' : '/content/help';
+    const after = url.pathname.replaceAll(findExtraHyphens, '-').replace(p, '');
     // assume any converted link should be relative
     a.href = after.slice(-5) === '.html' ? after.slice(0, -5) : after;
+
     console.info('LINK TRANSFORMATION: Replaced the link ', before, ' on the page ', transformCurrentPage(currentPage), ' with ', a.href);
   });
 };
