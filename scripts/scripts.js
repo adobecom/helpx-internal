@@ -27,8 +27,9 @@ const CONFIG = {
   // fallbackRouting: 'off',
   locales: {
     '': { ietf: 'en-US', tk: 'hah7vzn.css' },
-    de: { ietf: 'de-DE', tk: 'hah7vzn.css' },
+    jp: { ietf: 'ja-JP', tk: 'dvg6awq' },
     kr: { ietf: 'ko-KR', tk: 'zfo3ouc' },
+    cn: { ietf: 'zh-CN', tk: 'qxw8hzm' },
   },
 };
 
