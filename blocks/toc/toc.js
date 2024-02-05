@@ -182,10 +182,13 @@ export default (block) => {
     openCurrentNode();
   }, { passive: true, once: true });
   setTop(block, topOffset);
-  new ResizeObserver(() => setTop(block, topOffset)).observe(document.querySelector('.page-title'));
+  const title = document.querySelector('.page-title');
+  if (title) {
+    new ResizeObserver(() => setTop(block, topOffset))
+      .observe(title);
+  }
   window.addEventListener('scroll', () => preventScrollBelowContent(block));
   window.addEventListener('keydown', handleKeyDown);
-
 
   initListItems(block);
 
