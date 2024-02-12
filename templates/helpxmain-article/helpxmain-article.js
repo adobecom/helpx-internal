@@ -38,11 +38,6 @@ const giveImgTitles = () => {
   });
 };
 
-const dispatchMainEventsLoaded = () => {
-  const event = new Event('main-elements-loaded', { bubbles: false });
-  window.dispatchEvent(event);
-};
-
 const decorateFirstH2 = () => {
   document.querySelector('h2')?.classList.add('first');
 };
@@ -322,9 +317,6 @@ function buildAutoBlocks() {
     buildInternalBanner();
     fixTableHeaders();
     buildOnThisPageSection();
-
-    dispatchMainEventsLoaded();
-
     renderNestedBlocks();
     removeEmptyDivs();
     giveImgTitles();

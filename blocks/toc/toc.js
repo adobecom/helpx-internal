@@ -64,7 +64,7 @@ const initListItems = (block) => {
   });
 };
 
-const findCurrentNode = () => [...document.querySelectorAll('a')].find((a) => a.href === window.location.href);
+const findCurrentNode = () => [...document.querySelectorAll('a')].find((a) => a.pathname === window.location.pathname);
 
 const openCurrentNode = () => {
   const currentNode = findCurrentNode();
@@ -177,10 +177,6 @@ export default (block) => {
   createMobileTOC(block);
   setRole(block, 'tree');
 
-  window.addEventListener('main-elements-loaded', () => {
-    block.style.height = `${getTocHeight()}px`;
-    openCurrentNode();
-  }, { passive: true, once: true });
   setTop(block, topOffset);
   const title = document.querySelector('.page-title');
   if (title) {
@@ -192,5 +188,7 @@ export default (block) => {
 
   initListItems(block);
 
+  block.style.height = `${getTocHeight()}px`;
   document.body.insertAdjacentElement('afterbegin', block);
+  openCurrentNode();
 };
