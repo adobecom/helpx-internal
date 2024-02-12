@@ -168,11 +168,6 @@ const handleKeyDown = (event) => {
   }
 };
 
-// NOTE: This block is slightly different from others;
-// A couple of things can only be done once the page is
-// fully loaded. This means there is some coupling between
-// this block and scripts.js. Specifically, the coupling is in
-// the event listener for the 'main-elements-loaded' event.
 export default (block) => {
   createMobileTOC(block);
   setRole(block, 'tree');
