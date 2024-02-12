@@ -200,7 +200,7 @@ function fixTableHeaders() {
     if (!headerFirstRow) return;
     const nHeaderTDs = headerFirstRow.querySelectorAll('th')?.length;
     const bodyFirstRow = t.querySelector('tbody tr:first-of-type');
-    const nBodyTDs = bodyFirstRow.querySelectorAll('td')?.length;
+    const nBodyTDs = bodyFirstRow?.querySelectorAll('td')?.length;
     if (nHeaderTDs === 2 && nBodyTDs === 3) {
       const tHead = t.querySelector('thead');
       if (tHead) {
