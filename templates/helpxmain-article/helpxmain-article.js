@@ -157,7 +157,10 @@ async function buildInternalBanner() {
     const text = document.createElement('div');
     text.classList.add('content', 'last-updated');
     text.innerHTML = '&nbsp;';
-    banner.append(text);
+    document.body
+      .querySelector('main > div[class=section]')
+      .insertAdjacentElement('afterbegin', text);
+    text.addEventListener('click', () => text.classList.toggle('show-more'));
 
     // get last updated date from the http header
     let dateFormat;
