@@ -19,9 +19,12 @@ const STYLES = '/styles/styles.css';
 const LIBS = 'https://milo.adobe.com/libs';
 
 // Add any config options.
-const CONFIG = {
+export const CONFIG = {
   // codeRoot: '',
-  // contentRoot: '',
+  locale: {
+    contentRoot: `/${window?.location?.pathname?.split('/')?.[1]}`,
+    prefix: [],
+  },
   // imsClientId: 'college',
   // geoRouting: 'off',
   // fallbackRouting: 'off',
