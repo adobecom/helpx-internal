@@ -64,7 +64,7 @@ const initListItems = (block) => {
   });
 };
 
-const findCurrentNode = () => [...document.querySelectorAll('a')].find((a) => a.href === window.location.href);
+const findCurrentNode = () => [...document.querySelectorAll('a')].find((a) => a.pathname === window.location.pathname);
 
 const openCurrentNode = () => {
   const currentNode = findCurrentNode();
@@ -168,19 +168,10 @@ const handleKeyDown = (event) => {
   }
 };
 
-// NOTE: This block is slightly different from others;
-// A couple of things can only be done once the page is
-// fully loaded. This means there is some coupling between
-// this block and scripts.js. Specifically, the coupling is in
-// the event listener for the 'main-elements-loaded' event.
 export default (block) => {
   createMobileTOC(block);
   setRole(block, 'tree');
 
-  window.addEventListener('main-elements-loaded', () => {
-    block.style.height = `${getTocHeight()}px`;
-    openCurrentNode();
-  }, { passive: true, once: true });
   setTop(block, topOffset);
   const title = document.querySelector('.page-title');
   if (title) {
@@ -192,5 +183,7 @@ export default (block) => {
 
   initListItems(block);
 
+  block.style.height = `${getTocHeight()}px`;
   document.body.insertAdjacentElement('afterbegin', block);
+  openCurrentNode();
 };

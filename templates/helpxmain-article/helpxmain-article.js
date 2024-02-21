@@ -39,11 +39,6 @@ const giveImgTitles = () => {
   });
 };
 
-const dispatchMainEventsLoaded = () => {
-  const event = new Event('main-elements-loaded', { bubbles: false });
-  window.dispatchEvent(event);
-};
-
 const decorateFirstH2 = () => {
   document.querySelector('h2')?.classList.add('first');
 };
@@ -173,7 +168,10 @@ async function buildInternalBanner() {
     const text = document.createElement('div');
     text.classList.add('content', 'last-updated');
     text.innerHTML = '&nbsp;';
-    banner.append(text);
+    document.body
+      .querySelector('main > div[class=section]')
+      .insertAdjacentElement('afterbegin', text);
+    text.addEventListener('click', () => text.classList.toggle('show-more'));
 
     // get last updated date from the http header
     let dateFormat;
@@ -218,7 +216,7 @@ function fixTableHeaders() {
     if (!headerFirstRow) return;
     const nHeaderTDs = headerFirstRow.querySelectorAll('th')?.length;
     const bodyFirstRow = t.querySelector('tbody tr:first-of-type');
-    const nBodyTDs = bodyFirstRow.querySelectorAll('td')?.length;
+    const nBodyTDs = bodyFirstRow?.querySelectorAll('td')?.length;
     if (nHeaderTDs === 2 && nBodyTDs === 3) {
       const tHead = t.querySelector('thead');
       if (tHead) {
@@ -340,9 +338,6 @@ function buildAutoBlocks() {
     buildInternalBanner();
     fixTableHeaders();
     buildOnThisPageSection();
-
-    dispatchMainEventsLoaded();
-
     renderNestedBlocks();
     removeEmptyDivs();
     giveImgTitles();
