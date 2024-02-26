@@ -18,11 +18,21 @@ const STYLES = '/styles/styles.css';
 // Use '/libs' if your live site maps '/libs' to milo's origin.
 const LIBS = 'https://milo.adobe.com/libs';
 
+const getContentRoot = () => {
+  const root = window?.location?.pathname?.split('/')?.[1];
+  switch (root) {
+    case 'jp':
+    case 'kr':
+    case 'cn': return root;
+    default: return '';
+  }
+};
+
 // Add any config options.
 export const CONFIG = {
   // codeRoot: '',
   locale: {
-    contentRoot: `/${window?.location?.pathname?.split('/')?.[1]}`,
+    contentRoot: `/${getContentRoot()}`,
     prefix: [],
   },
   // imsClientId: 'college',
