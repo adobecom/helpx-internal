@@ -96,6 +96,8 @@ export default {
 
     handleLinks(document, url);
 
+    createVideosEmbed(main, document);
+
     /*
       clean
     */
