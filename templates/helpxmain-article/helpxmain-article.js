@@ -6,7 +6,7 @@ import { setLibs } from '../../scripts/utils.js';
   if (document.querySelector('.toc') || hasTOCFragment) {
     const styles = document.createElement('style');
     const newRule = `
-    body > main > div.section:not(.internal-banner, .page-title), body > main .content.last-updated {
+    body > main > div.section:not(.internal-banner, .page-title) {
       padding-left: 335px;
     }
     `;
