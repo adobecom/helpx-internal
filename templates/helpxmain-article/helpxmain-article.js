@@ -1,4 +1,4 @@
-import { decorateIcons, setTop } from '../../scripts/scripts.js';
+import { decorateIcons, setTop, CONFIG } from '../../scripts/scripts.js';
 import { setLibs } from '../../scripts/utils.js';
 
 (function preventCLS() {
@@ -26,6 +26,7 @@ const LIBS = 'https://milo.adobe.com/libs';
 
 const miloLibs = setLibs(LIBS);
 const { loadStyle } = await import(`${miloLibs}/utils/utils.js`);
+const { replaceText } = await import(`${miloLibs}/features/placeholders.js`);
 
 /**
  * Builds all synthetic blocks in a container element.
@@ -36,11 +37,6 @@ const giveImgTitles = () => {
   document.querySelectorAll('img').forEach((img) => {
     img.title = img?.alt;
   });
-};
-
-const dispatchMainEventsLoaded = () => {
-  const event = new Event('main-elements-loaded', { bubbles: false });
-  window.dispatchEvent(event);
 };
 
 const decorateFirstH2 = () => {
@@ -136,6 +132,16 @@ const renderNestedBlocks = () => {
   });
 };
 
+function getBCPTag() {
+  const loc = CONFIG.locale.contentRoot;
+  switch (loc) {
+    case '/jp': return 'ja-JP-u-ca-japanese';
+    case '/kr': return 'ko-KR';
+    case '/cn': return 'zh-Hans';
+    default: return 'en-US';
+  }
+}
+
 // internal banner
 async function buildInternalBanner() {
   const title = document.body.querySelector('.page-title');
@@ -162,7 +168,10 @@ async function buildInternalBanner() {
     const text = document.createElement('div');
     text.classList.add('content', 'last-updated');
     text.innerHTML = '&nbsp;';
-    banner.append(text);
+    document.body
+      .querySelector('main > div[class=section]')
+      .insertAdjacentElement('afterbegin', text);
+    text.addEventListener('click', () => text.classList.toggle('show-more'));
 
     // get last updated date from the http header
     let dateFormat;
@@ -174,11 +183,18 @@ async function buildInternalBanner() {
       console.error(e);
     }
 
+    dateFormat = new Intl.DateTimeFormat(getBCPTag(), {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }).format(dateFormat);
     const productNames = document.querySelector('meta[name="productnames"]')?.content.split(',');
     const primary = document.querySelector('meta[name="primaryproductname"]')?.content;
     const productList = productNames?.length ? productNames.filter((x) => x !== primary) : [];
-    const alsoAppliesTo = productList.length ? ` | Also Applies to ${productList.join(', ')} ` : '';
-    text.innerHTML = `Last updated on ${getMonthShortName((dateFormat.getMonth()))} ${dateFormat.getDate()}, ${dateFormat.getFullYear()}${alsoAppliesTo}`;
+    const aat = await replaceText('{{also-applies-to}}', CONFIG);
+    const alsoAppliesTo = productList.length ? ` | ${aat} ${productList.join(', ')} ` : '';
+    const lastUpdatedOn = await replaceText('{{last-updated-on}}', CONFIG);
+    text.innerHTML = `${lastUpdatedOn} ${dateFormat} ${alsoAppliesTo}`;
   }
 }
 
@@ -200,7 +216,7 @@ function fixTableHeaders() {
     if (!headerFirstRow) return;
     const nHeaderTDs = headerFirstRow.querySelectorAll('th')?.length;
     const bodyFirstRow = t.querySelector('tbody tr:first-of-type');
-    const nBodyTDs = bodyFirstRow.querySelectorAll('td')?.length;
+    const nBodyTDs = bodyFirstRow?.querySelectorAll('td')?.length;
     if (nHeaderTDs === 2 && nBodyTDs === 3) {
       const tHead = t.querySelector('thead');
       if (tHead) {
@@ -322,9 +338,6 @@ function buildAutoBlocks() {
     buildInternalBanner();
     fixTableHeaders();
     buildOnThisPageSection();
-
-    dispatchMainEventsLoaded();
-
     renderNestedBlocks();
     removeEmptyDivs();
     giveImgTitles();
