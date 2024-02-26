@@ -63,8 +63,6 @@ export default function createVideosEmbed(main, document) {
 
       video.insertAdjacentElement('beforebegin', el);
 
-      main.querySelectorAll('img').forEach((img) => { img.remove(); });
-
       // remove original video component
       video.remove();
     }
