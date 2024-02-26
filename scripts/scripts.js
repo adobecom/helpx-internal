@@ -23,7 +23,7 @@ const getContentRoot = () => {
   switch (root) {
     case 'jp':
     case 'kr':
-    case 'cn': return root;
+    case 'cn': return `/${root}`;
     default: return '';
   }
 };
@@ -32,7 +32,7 @@ const getContentRoot = () => {
 export const CONFIG = {
   // codeRoot: '',
   locale: {
-    contentRoot: `/${getContentRoot()}`,
+    contentRoot: getContentRoot(),
     prefix: [],
   },
   // imsClientId: 'college',
