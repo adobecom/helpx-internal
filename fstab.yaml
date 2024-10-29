@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p136506-e1369556.adobeaemcloud.com/bin/franklin.delivery/adisharm/help-ue-eds/main"
-    type: "markup"
+    url: https://440859-genesis-dev.adobeio-static.net/api/v1/web/genesis-aio/eds-markup/
+    type: markup
     suffix: ".html"
