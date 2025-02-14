@@ -63,7 +63,7 @@ Commit these files and push the changes to the repository
     +---------------------------------------------------------------------------------+
     | Name | path                                                                     |
     +---------------------------------------------------------------------------------+
-    | Note | https://main--helpx-internal--adobecom.hlx.page/docs/library/blocks/note |
+    | Note | https://main--helpx-internal--adobecom.aem.page/docs/library/blocks/note |
     +---------------------------------------------------------------------------------+
    ```
 
@@ -79,7 +79,7 @@ Commit these files and push the changes to the repository
 
 7. Preview and Publish `docs/library/library.xlsx`
 
-   This will expose `https://main--helpx-internal--adobecom.hlx.live/docs/library/library.json`
+   This will expose `https://main--helpx-internal--adobecom.aem.live/docs/library/library.json`
 
    The Library plugin will automatically load that json and know where to pick the samples for your custom blocks
 
@@ -104,7 +104,7 @@ Commit these files and push the changes to the repository
 9. If you are testing this feature in a branch, modify your Sidekick configuration (in your browser) and use  
    `https://github.com/adobecom/helpx-internal/tree/<YOUR_BRANCH_NAME>`
 
-   (in case you did not install it yet, check https://www.hlx.live/docs/sidekick)
+   (in case you did not install it yet, check https://www.aem.live/docs/sidekick)
 
 
 
@@ -125,7 +125,7 @@ Commit these files and push the changes to the repository
 ### Appendix
 
 * The Milo `Library` plugin uses convention for looking up at your custom blocks samples, it needs following URLs to exist:
-  * `https://main--helpx-internal--adobecom.hlx.live/docs/library/library.json`, the list of samples you want to expose
-  * `https://main--helpx-internal--adobecom.hlx.live/docs/library/blocks/<ONE_PER_CUSTOM_BLOCK_SAMPLE>.plain.html`, `.plain.html` is the, well, plain HTML rendition of a published document, it is used by the plugin to build the "Word block" to paste into your document
+  * `https://main--helpx-internal--adobecom.aem.live/docs/library/library.json`, the list of samples you want to expose
+  * `https://main--helpx-internal--adobecom.aem.live/docs/library/blocks/<ONE_PER_CUSTOM_BLOCK_SAMPLE>.plain.html`, `.plain.html` is the, well, plain HTML rendition of a published document, it is used by the plugin to build the "Word block" to paste into your document
 
 * The CORS header is needed because the content of the bottom left dialog is loaded in a iframe with a different origin, milo.adobe.com as origin. And the fetching of `library.json` and the custom blocks samples are done from this iframe.
