@@ -25,15 +25,17 @@ export const [setLibs, getLibs] = (() => {
     (prodLibs) => {
       const { hostname } = window.location;
       if (!hostname.includes('hlx.page')
+        && !hostname.includes('aem.page')
         && !hostname.includes('hlx.live')
+        && !hostname.includes('aem.live')
         && !hostname.includes('localhost')) {
         libs = prodLibs;
         return libs;
       }
       const branch = new URLSearchParams(window.location.search).get('milolibs') || 'main';
       if (branch === 'local') return 'http://localhost:6456/libs';
-      if (branch.indexOf('--') > -1) return `https://${branch}.hlx.page/libs`;
-      return `https://${branch}--milo--adobecom.hlx.page/libs`;
+      if (branch.indexOf('--') > -1) return `https://${branch}.aem.page/libs`;
+      return `https://${branch}--milo--adobecom.aem.page/libs`;
     }, () => libs,
   ];
 })();
