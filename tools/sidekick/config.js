@@ -41,7 +41,7 @@ function hasSchema(host) {
         button: {
           text: 'Library',
           action: (_, s) => {
-            const domain = 'https://main--milo--adobecom.hlx.page';
+            const domain = 'https://main--milo--adobecom.aem.page';
             const { config } = s;
             const script = document.createElement('script');
             script.type = 'module';
@@ -74,7 +74,7 @@ function hasSchema(host) {
         button: {
           text: 'Translate',
           action: (_, sk) => {
-            const domain = 'https://main--milo--adobecom.hlx.page';
+            const domain = 'https://main--milo--adobecom.aem.page';
             const { config } = sk;
             window.open(`${domain}/tools/translation/index.html?sp=${encodeURIComponent(window.location.href)}&owner=${config.owner}&repo=${config.repo}&ref=${config.ref}`, 'hlx-sidekick-spark-translation');
           },

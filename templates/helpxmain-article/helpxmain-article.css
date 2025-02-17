@@ -236,7 +236,7 @@ body > main > .section > .content {
 .internal-confidential > div {
   margin: 4px 0 20px 0;
   padding: 6px 2px;
-  background: url('https://main--helpx-internal--adobecom.hlx.page/media_1b45f544d71effad595a85747635d01832a3c0149.png') 20px -20px #eaeaea;
+  background: url('https://main--helpx-internal--adobecom.aem.page/media_1b45f544d71effad595a85747635d01832a3c0149.png') 20px -20px #eaeaea;
 }
 
 /*
@@ -266,7 +266,7 @@ body > main > .section > .content {
   flex-direction: column;
   gap: 2px;
   top: 20px;
-  background: url('https://main--helpx-internal--adobecom.hlx.page/media_1b45f544d71effad595a85747635d01832a3c0149.png');
+  background: url('https://main--helpx-internal--adobecom.aem.page/media_1b45f544d71effad595a85747635d01832a3c0149.png');
   background-color: var(--on-this-page-background);
   padding: 10px;
   margin: 0;
