@@ -3,6 +3,7 @@
   "host": "helpx-internal.adobe.com",
   "previewHost": "main--helpx-internal--adobecom.aem.page",
   "liveHost": "main--helpx-internal--adobecom.aem.live",
+  "trustedHosts": ["milo.adobe.com"],
   "plugins": [
     {
       "id": "tools",
