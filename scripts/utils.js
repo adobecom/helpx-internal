@@ -33,6 +33,7 @@ export const [setLibs, getLibs] = (() => {
         return libs;
       }
       const branch = new URLSearchParams(window.location.search).get('milolibs') || 'main';
+      if (!/^[a-zA-Z0-9_-]+$/.test(branch)) throw new Error('Invalid branch name.');
       if (branch === 'local') return 'http://localhost:6456/libs';
       if (branch.indexOf('--') > -1) return `https://${branch}.aem.page/libs`;
       return `https://${branch}--milo--adobecom.aem.page/libs`;
