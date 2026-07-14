@@ -21,7 +21,6 @@ notifications:
       fields:
         assignee:
           name: raghavs
-        customfield_11800: MWPW-164516 # Jira epic security tickets will be assigned to.
         watchers: # Everyone who is an admin on your repository should be a watcher.
           - casalino
         labels: # You can add additional labels to your tickets here. Do not delete/change the first three.
